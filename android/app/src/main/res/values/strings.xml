@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Puffy App</string>
+    <string name="fb_app_id">1148924051905363</string>
+    <string name="fb_login_protocol_scheme">fb1148924051905363</string>
+</resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "705622217406",
+    "firebase_url": "https://puffy-app.firebaseio.com",
+    "project_id": "puffy-app",
+    "storage_bucket": "puffy-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705622217406:android:2ba5d77b4517082e",
+        "android_client_info": {
+          "package_name": "com.puffy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705622217406-h6hr6rqk2q8ptt8ooq5r034h13u320nv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7N3OVJH2H5G-cQGqwlC4Wlv2UPgq7Cng"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
