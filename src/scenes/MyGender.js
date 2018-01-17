@@ -154,7 +154,7 @@ class MyGender extends Component {
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            alert("Modal has been closed.");
+            this.setModalVisible(false);
           }}
         >
           <View style={styles.container}>

@@ -242,6 +242,10 @@ class EventDetail extends Component {
 	createEvent() {
 		let showError = 0;
 
+		if (this.state.eventCost != "0" && isNaN(this.state.eventCost)) {
+			Alert.alert("Incomplete", "Event cost must be a number", [{ text: "OK", onPress: () => console.log("OK Pressed") }], { cancelable: false });
+			return false;
+		}
 		if (this.state.eventTitleText == "" || this.state.eventTitleText == " " || this.state.eventTitleText == "  " || this.state.eventTitleText == "   ") {
 			this.setState({ eventTitleTextError: true });
 			showError = 1;
@@ -522,7 +526,7 @@ class EventDetail extends Component {
 					transparent={false}
 					visible={this.state.modalVisibleLocation}
 					onRequestClose={() => {
-						alert("Modal has been closed.");
+						this.setModalVisibleLocation(false);
 					}}
 				>
 					<View style={styles.locationContainer}>
@@ -576,7 +580,7 @@ class EventDetail extends Component {
 					transparent={false}
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
-						alert("Modal has been closed.");
+						this.setModalVisible(false);
 					}}
 				>
 					<View style={styles.locationContainer}>

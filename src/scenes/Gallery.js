@@ -27,6 +27,7 @@ class Gallery extends Component {
 		this.key = this.props.navigation.state.key;
 		this.feed = this.props.navigation.state.params.feed;
 		this.showVideos = false;
+		this.showGallery = this.showGallery.bind(this);
 
 		if (this.feed == 1) {
 			//this.showVideos = false;
@@ -47,45 +48,17 @@ class Gallery extends Component {
 		//console.log("gallery unmount");
 	}
 
-	componentDidMount() {
+	showGallery() {
 		if (Platform.OS === "ios") {
-			Permissions.check("photo").then(response => {
-				//console.log(response);
-
-				this.setState({ photoPermission: response });
-
-				if (response == "denied" || response == "undetermined") {
-					Permissions.request("photo").then(response => {
-						this.setState({ photoPermission: response });
-
-						if (response == "denied") {
-							return false;
-						}
-
-						ImagePickerIOS.openSelectDialog(
-							{ showVideos: this.showVideos },
-							imageUri => {
-								this.uploadImage(imageUri);
-							},
-							error => {
-								this.props.navigation.goBack();
-							}
-						);
-					});
-
-					return false;
+			ImagePickerIOS.openSelectDialog(
+				{ showVideos: this.showVideos },
+				imageUri => {
+					this.uploadImage(imageUri);
+				},
+				error => {
+					this.props.navigation.goBack();
 				}
-
-				ImagePickerIOS.openSelectDialog(
-					{ showVideos: this.showVideos },
-					imageUri => {
-						this.uploadImage(imageUri);
-					},
-					error => {
-						this.props.navigation.goBack();
-					}
-				);
-			});
+			);
 		} else {
 			var options = {
 				storageOptions: {
@@ -112,6 +85,30 @@ class Gallery extends Component {
 				}
 			});
 		}
+	}
+
+	componentDidMount() {
+		Permissions.check("photo").then(response => {
+			//console.log(response);
+
+			this.setState({ photoPermission: response });
+
+			if (response == "denied" || response == "undetermined") {
+				Permissions.request("photo").then(response => {
+					this.setState({ photoPermission: response });
+
+					if (response == "denied") {
+						return false;
+					}
+
+					this.showGallery();
+				});
+
+				return false;
+			}
+
+			this.showGallery();
+		});
 	}
 
 	openSettings() {

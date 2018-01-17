@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, View, Text, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image } from "react-native";
+import { Alert, View, Text, Dimensions, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image } from "react-native";
 import FilterInput from "../components/FilterInput";
 import { CachedImage } from "react-native-img-cache";
 import { NavigationActions } from "react-navigation";
@@ -239,9 +239,10 @@ const styles = {
         color: "#41aaca"
     },
     eventImage: {
-        height: 300,
+        height: Dimensions.get("window").width,
+        width: null,
         marginTop: 5,
-        resizeMode: "stretch"
+        resizeMode: "contain"
     },
     eventEmptyContainer: {
         flex: 1,

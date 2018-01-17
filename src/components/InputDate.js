@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Image } from "react-native";
+import { View, TextInput, Platform, Image } from "react-native";
 import DatePicker from "react-native-datepicker";
 import Images from "../config/images";
 
@@ -28,7 +28,12 @@ const InputDate = props => {
           paddingTop: 10,
           paddingLeft: 15,
           paddingBottom: 10,
-          paddingRight: 15
+          paddingRight: 15,
+          ...Platform.select({
+            android: {
+              marginTop: 15
+            }
+          })
         },
         dateIcon: {
           position: "absolute",
@@ -37,7 +42,12 @@ const InputDate = props => {
           width: 22,
           height: 22,
           marginLeft: 25,
-          resizeMode: "contain"
+          resizeMode: "contain",
+          ...Platform.select({
+            android: {
+              top: 10
+            }
+          })
         },
         dateText: {
           fontSize: 15,
@@ -59,7 +69,12 @@ const styles = {
   container: {
     width: null,
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    ...Platform.select({
+      android: {
+        marginTop: 0
+      }
+    })
   }
 };
 

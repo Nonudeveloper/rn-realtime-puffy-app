@@ -39,6 +39,8 @@ class Photo extends Component {
 
   componentDidMount() {
     Permissions.checkMultiple(["camera", "photo"]).then(response => {
+      console.log(response);
+
       this.setState({ cameraPermission: response.camera, photoPermission: response.photo, isLoaded: 1 });
 
       if (response.camera == "undetermined") {

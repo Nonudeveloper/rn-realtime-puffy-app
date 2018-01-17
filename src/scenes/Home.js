@@ -105,9 +105,12 @@ class Home extends Component {
 			});
 		} else {
 			FCM.getInitialNotification().then(notif => {
-				console.log("get initial on home" + notif);
-				if (Platform.OS === "android") {
-					if (notif.opened_from_tray) {
+				if (notif == null) {
+					return false;
+				}
+
+				if (notif.opened_from_tray) {
+					if (notif.from) {
 						$this.props.navigation.dispatch(NavigationActions.navigate({ routeName: "NotificationTab" }));
 					}
 				}
