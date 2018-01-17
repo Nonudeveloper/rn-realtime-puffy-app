@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Text, View, ScrollView, Dimensions, Platform } from "react-native";
+import { Alert, Text, View, AsyncStorage, ScrollView, Dimensions, Platform } from "react-native";
 import { NavigationActions } from "react-navigation";
 import Header from "../components/Header";
 import BtnIcon from "../components/BtnIcon";
@@ -60,10 +60,8 @@ class Filter extends Component {
 				fdata["user_filter_gender"] = "";
 			}
 
-			let maxAgeText = fdata["user_filter_age_max"];
-
-			if (maxAgeText == "50") {
-				maxAgeText = "50+";
+			if (fdata["user_filter_age_max"] == "50") {
+				fdata["user_filter_age_max"] = "50+";
 			}
 
 			this.setState({
@@ -71,8 +69,14 @@ class Filter extends Component {
 				miles: fdata["user_filter_miles"],
 				minAge: fdata["user_filter_age_min"],
 				maxAge: fdata["user_filter_age_max"],
-				maxAgeText: maxAgeText
+				maxAgeText: fdata["user_filter_age_max"]
 			});
+
+			let localData = JSON.stringify(fdata);
+
+			if (localData) {
+				AsyncStorage.setItem("Filters", localData);
+			}
 		}
 	}
 
@@ -88,6 +92,19 @@ class Filter extends Component {
 
 		this.handleEmit(dataString);
 		this.puffyChannel.on("data_channel", this.filterListener);
+
+		AsyncStorage.getItem("Filters", (err, result) => {
+			if (!err && result != null) {
+				let fdata = JSON.parse(result);
+				this.setState({
+					gender: fdata["user_filter_gender"],
+					miles: fdata["user_filter_miles"],
+					minAge: fdata["user_filter_age_min"],
+					maxAge: fdata["user_filter_age_max"],
+					maxAgeText: fdata["user_filter_age_max"]
+				});
+			}
+		});
 	}
 
 	setGender(value) {

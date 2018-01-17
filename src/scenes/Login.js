@@ -208,6 +208,7 @@ class Login extends Component {
 		if (this.deviceTheme == "IphoneSmall") {
 			return this.renderSmall();
 		}
+
 		return (
 			<LinearGradient
 				start={{ x: 0.0, y: 0.25 }}
@@ -327,8 +328,8 @@ const styles = {
 		shadowRadius: 2
 	},
 	logo: {
-		width: 150,
-		height: 150,
+		width: 140,
+		height: 140,
 		resizeMode: "contain",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 2 },
@@ -397,7 +398,7 @@ const styles = {
 	signupForFree: {
 		marginLeft: 30,
 		marginRight: 30,
-		marginTop: 35
+		marginTop: 15
 	}
 };
 
