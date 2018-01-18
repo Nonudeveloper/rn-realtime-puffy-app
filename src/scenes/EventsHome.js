@@ -32,7 +32,8 @@ class EventsHome extends Component {
 			searchTerm: "",
 			items: [],
 			dataSource: [],
-			row_count: 0
+			row_count: 0,
+			isLoaded: 0
 		};
 	}
 
@@ -43,7 +44,7 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
 
 				let localData = JSON.stringify(data["result_data"]);
 
@@ -53,7 +54,7 @@ class EventsHome extends Component {
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_events_result") {
 			if (this.state.currentPage == 1) {
-				this.setState({ dataSource: [], items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_event_up_next_result") {
@@ -62,11 +63,11 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_event_up_next_result") {
 			if (this.state.currentPage == 2) {
-				this.setState({ dataSource: [], items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_host_events_result") {
@@ -75,11 +76,11 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_host_events_result") {
 			if (this.state.currentPage == 3) {
-				this.setState({ dataSource: [], items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_event_past_result") {
@@ -88,11 +89,11 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_event_past_result") {
 			if (this.state.currentPage == 4) {
-				this.setState({ dataSource: [], items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
 			}
 		}
 	}
@@ -177,7 +178,8 @@ class EventsHome extends Component {
 			dataSource: [],
 			row_count: 0,
 			searchTerm: "",
-			refreshing: true
+			refreshing: true,
+			isLoaded: 0
 		});
 	}
 

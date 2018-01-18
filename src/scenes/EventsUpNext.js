@@ -114,6 +114,10 @@ class EventsUpNext extends Component {
     }
 
     render() {
+        if (this.props.data.isLoaded == 0) {
+            return <View />;
+        }
+
         return (
             <View style={styles.container}>
                 {this.props.data.row_count == 0 ? (
