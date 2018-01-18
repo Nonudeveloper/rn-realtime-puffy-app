@@ -145,9 +145,9 @@ class App extends Component {
 					//this is a local notification
 				}
 				if (notif.opened_from_tray) {
-					//console.log("opened from tray");
-					if (Platform.OS === "android") {
+					if (notif.from) {
 						this.navigator && this.navigator.dispatch(NavigationActions.navigate({ routeName: "NotificationTab" }));
+						FCM.removeAllDeliveredNotifications();
 					}
 
 					//iOS: app is open/resumed because user clicked banner

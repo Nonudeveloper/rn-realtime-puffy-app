@@ -109,9 +109,6 @@ class Home extends Component {
 				if (notif == null) {
 					return false;
 				}
-
-				console.log(notif);
-
 				if (notif.opened_from_tray) {
 					if (notif.from) {
 						$this.props.navigation.dispatch(NavigationActions.navigate({ routeName: "NotificationTab" }));
