@@ -464,7 +464,7 @@ const styles = {
 	boxContainer: {
 		marginLeft: 10,
 		marginRight: 10,
-		marginTop: 15
+		marginTop: 5
 	},
 	labelContainer: {
 		marginTop: 12,
