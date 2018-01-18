@@ -149,7 +149,7 @@ class Login extends Component {
 				colors={["#23ACC0", "#339FBA", "#4395B7", "#4F8DB4", "#5C84B1", "#697CAE", "#7674AB", "#826DA8", "#9467A5"]}
 				style={styles.container}
 			>
-				<KeyboardAwareScrollView overScrollMode="never" keyboardShouldPersistTaps={"always"} scrollEnabled={false}>
+				<KeyboardAwareScrollView overScrollMode="never" keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
 					<View style={styles.headerSmall}>
 						<Image style={styles.logoSmall} source={Images.puffy_logo} />
 					</View>
@@ -217,7 +217,7 @@ class Login extends Component {
 				colors={["#23ACC0", "#339FBA", "#4395B7", "#4F8DB4", "#5C84B1", "#697CAE", "#7674AB", "#826DA8", "#9467A5"]}
 				style={styles.container}
 			>
-				<KeyboardAwareScrollView overScrollMode="never" keyboardShouldPersistTaps={"always"} scrollEnabled={false}>
+				<KeyboardAwareScrollView overScrollMode="never" keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
 					<View style={styles.header}>
 						<Image style={this.props.screenProps.deviceTheme === "IphoneX" ? styles.logoBig : styles.logo} source={Images.puffy_logo} />
 					</View>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { KeyboardAvoidingView, View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { KeyboardAvoidingView, Platform, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LinearGradient from "react-native-linear-gradient";
 import Images from "../config/images";
@@ -70,12 +70,19 @@ class ForgotPassword extends Component {
 								onChangeText={email => this.setState({ email })}
 							/>
 							<BtnWhite value="Submit" onPress={this.submitForgotPassword} />
+							{Platform.OS === "android" ? (
+								<View style={styles.footerAndroid}>
+									<BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
+								</View>
+							) : null}
 						</View>
 					</KeyboardAwareScrollView>
 				</LinearGradient>
-				<View style={styles.footer}>
-					<BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
-				</View>
+				{Platform.OS === "android" ? null : (
+					<View style={styles.footer}>
+						<BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
+					</View>
+				)}
 			</View>
 		);
 	}
@@ -124,6 +131,9 @@ const styles = {
 		bottom: 25,
 		left: 20,
 		right: 20
+	},
+	footerAndroid: {
+		marginTop: 60
 	}
 };
 
