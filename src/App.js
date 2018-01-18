@@ -1354,7 +1354,7 @@ class App extends Component {
 						transparent={true}
 						visible={this.state.pufferModalVisible}
 						onRequestClose={() => {
-							alert("Modal has been closed.");
+							console.log("press close");
 						}}
 					>
 						<LinearGradient
