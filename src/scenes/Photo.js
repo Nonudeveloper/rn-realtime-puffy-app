@@ -165,12 +165,27 @@ class Photo extends Component {
 
       if ($this.deviceTheme == "IphoneX") {
         yValue = 20;
+      } else if ($this.deviceTheme == "Android") {
+        yValue = 0;
       }
 
-      let cropData = {
-        offset: { x: 0, y: yValue },
-        size: { width: w, height: w }
-      };
+      console.log(w);
+      console.log(h);
+      console.log(yValue);
+
+      let cropData;
+
+      if (w > h) {
+        cropData = {
+          offset: { x: 0, y: yValue },
+          size: { width: h, height: h }
+        };
+      } else {
+        cropData = {
+          offset: { x: 0, y: yValue },
+          size: { width: w, height: w }
+        };
+      }
 
       ImageEditor.cropImage(
         data.path,

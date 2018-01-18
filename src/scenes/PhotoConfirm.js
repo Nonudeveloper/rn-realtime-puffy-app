@@ -298,7 +298,7 @@ class PhotoConfirm extends Component {
 				>
 					Photo Feed
 				</HeaderCamera>
-				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false}>
+				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={this.props.screenProps.deviceTheme === "Android" ? true : false}>
 					{this.state.photo === null ? null : (
 						<View style={styles.imagePreview}>
 							<ImageCrop
