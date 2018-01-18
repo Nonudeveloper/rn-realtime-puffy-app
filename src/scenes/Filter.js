@@ -61,7 +61,9 @@ class Filter extends Component {
 			}
 
 			if (fdata["user_filter_age_max"] == "50") {
-				fdata["user_filter_age_max"] = "50+";
+				fdata["user_filter_age_max_text"] = "50+";
+			} else {
+				fdata["user_filter_age_max_text"] = fdata["user_filter_age_max"];
 			}
 
 			this.setState({
@@ -69,7 +71,7 @@ class Filter extends Component {
 				miles: fdata["user_filter_miles"],
 				minAge: fdata["user_filter_age_min"],
 				maxAge: fdata["user_filter_age_max"],
-				maxAgeText: fdata["user_filter_age_max"]
+				maxAgeText: fdata["user_filter_age_max_text"]
 			});
 
 			let localData = JSON.stringify(fdata);
@@ -85,14 +87,6 @@ class Filter extends Component {
 	}
 
 	componentDidMount() {
-		let dataString = {
-			user_action: "select_user_filter",
-			user_data: {}
-		};
-
-		this.handleEmit(dataString);
-		this.puffyChannel.on("data_channel", this.filterListener);
-
 		AsyncStorage.getItem("Filters", (err, result) => {
 			if (!err && result != null) {
 				let fdata = JSON.parse(result);
@@ -101,10 +95,18 @@ class Filter extends Component {
 					miles: fdata["user_filter_miles"],
 					minAge: fdata["user_filter_age_min"],
 					maxAge: fdata["user_filter_age_max"],
-					maxAgeText: fdata["user_filter_age_max"]
+					maxAgeText: fdata["user_filter_age_max_text"]
 				});
 			}
 		});
+
+		let dataString = {
+			user_action: "select_user_filter",
+			user_data: {}
+		};
+
+		this.handleEmit(dataString);
+		this.puffyChannel.on("data_channel", this.filterListener);
 	}
 
 	setGender(value) {
@@ -356,12 +358,12 @@ class Filter extends Component {
 								<Text style={styles.locationLabel}>50</Text>
 								<Text style={styles.locationLabel}>25</Text>
 							</View>
-							<View style={styles.locationOptionRow}>
-								<View style={styles.locationOptionPink} />
-								{this.state.miles >= 100 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
-								{this.state.miles >= 75 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
-								{this.state.miles >= 50 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
-								{this.state.miles >= 25 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
+							<View style={styles.locationOptionRowAndroid}>
+								<View style={styles.locationOptionPinkAndroid} />
+								{this.state.miles >= 100 ? <View style={styles.locationOptionGreenAndroid} /> : <View style={styles.locationOptionPinkAndroid} />}
+								{this.state.miles >= 75 ? <View style={styles.locationOptionGreenAndroid} /> : <View style={styles.locationOptionPinkAndroid} />}
+								{this.state.miles >= 50 ? <View style={styles.locationOptionGreenAndroid} /> : <View style={styles.locationOptionPinkAndroid} />}
+								{this.state.miles >= 25 ? <View style={styles.locationOptionGreenAndroid} /> : <View style={styles.locationOptionPinkAndroid} />}
 							</View>
 							<MultiSlider
 								values={[this.state.miles]}
@@ -649,6 +651,16 @@ const styles = {
 		marginRight: 10,
 		justifyContent: "space-between"
 	},
+	locationOptionRowAndroid: {
+		position: "absolute",
+		top: 30,
+		left: 6,
+		right: 2,
+		flexDirection: "row",
+		marginLeft: 5,
+		marginRight: 10,
+		justifyContent: "space-between"
+	},
 	locationOptionGreen: {
 		height: 17,
 		width: 17,
@@ -660,6 +672,18 @@ const styles = {
 		width: 17,
 		backgroundColor: "#D453A2",
 		borderRadius: 17
+	},
+	locationOptionGreenAndroid: {
+		height: 12,
+		width: 12,
+		backgroundColor: "#18B5C3",
+		borderRadius: 12
+	},
+	locationOptionPinkAndroid: {
+		height: 12,
+		width: 12,
+		backgroundColor: "#D453A2",
+		borderRadius: 12
 	},
 	locationLabel: {
 		fontSize: 14,
