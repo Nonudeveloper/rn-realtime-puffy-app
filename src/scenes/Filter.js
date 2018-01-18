@@ -309,9 +309,137 @@ class Filter extends Component {
 		);
 	}
 
+	renderAndroid() {
+		return (
+			<View style={styles.container}>
+				<Header
+					deviceTheme={this.props.screenProps.deviceTheme}
+					LeftIcon={this.props.screenProps.hide_back == 1 ? null : "back_arrow"}
+					LeftText={this.props.screenProps.hide_back == 1 ? "cancel" : null}
+					LeftCallback={this.props.screenProps.hide_back == 1 ? this.cancel : this.goBack}
+					RightIcon="checkmark_button"
+					RightCallback={this.submitData}
+					title="Filters"
+					global={this.props.screenProps.global}
+				/>
+				<ScrollView scrollEnabled={this.state.allowVerticalScroll}>
+					<View style={styles.contentAndroid}>
+						<Text style={styles.headerTextGreen}>I am looking for:</Text>
+						<View style={styles.genderRow}>
+							<BtnIcon
+								label="Women"
+								icon="women_grey"
+								icon_active="women_pink"
+								theme_active="Pink"
+								active={this.state.gender === "female"}
+								onPress={() => this.setGender("female")}
+							/>
+							<BtnIcon
+								label="Man"
+								icon="men_grey"
+								icon_active="men_green"
+								theme_active="Green"
+								active={this.state.gender === "male"}
+								onPress={() => this.setGender("male")}
+							/>
+						</View>
+						<View style={styles.allRow}>
+							<BtnGrey value="Both" active={this.state.gender === "show all"} theme_active="Green" onPress={() => this.setGender("show all")} />
+						</View>
+						<Text style={styles.headerLocation}>Location</Text>
+
+						<View style={styles.locationWrapperAndroid}>
+							<View style={styles.locationRowAndroid}>
+								<Text style={styles.locationLabel}>All</Text>
+								<Text style={styles.locationLabel}>100</Text>
+								<Text style={styles.locationLabel}>75</Text>
+								<Text style={styles.locationLabel}>50</Text>
+								<Text style={styles.locationLabel}>25</Text>
+							</View>
+							<View style={styles.locationOptionRow}>
+								<View style={styles.locationOptionPink} />
+								{this.state.miles >= 100 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
+								{this.state.miles >= 75 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
+								{this.state.miles >= 50 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
+								{this.state.miles >= 25 ? <View style={styles.locationOptionGreen} /> : <View style={styles.locationOptionPink} />}
+							</View>
+							<MultiSlider
+								values={[this.state.miles]}
+								onValuesChange={this.setMiles}
+								onValuesChangeFinish={this.setMilesFinish}
+								customMarker={() => (
+									<View style={styles.markerStyle}>
+										<Text style={styles.markerText}>Mi.</Text>
+									</View>
+								)}
+								min={125}
+								max={25}
+								step={1}
+								sliderLength={238}
+								containerStyle={{
+									paddingLeft: 17
+								}}
+								trackStyle={{
+									height: 5,
+									borderRadius: 10
+								}}
+								selectedStyle={{
+									backgroundColor: "#D453A2"
+								}}
+								unselectedStyle={{
+									backgroundColor: "#18B5C3"
+								}}
+								snapped
+							/>
+						</View>
+
+						<Text style={styles.headerAge}>Age</Text>
+						<View style={styles.AgeWrapperAndroid}>
+							<View style={styles.ageRowAndroid}>
+								<Text style={styles.minAge}>{this.state.minAge}</Text>
+								<Text style={styles.maxAge}>{this.state.maxAgeText}</Text>
+							</View>
+							<MultiSlider
+								values={[this.state.minAge, this.state.maxAge]}
+								onValuesChange={this.ageSliderChange}
+								onValuesChangeFinish={this.setAgeFinish}
+								customMarker={() => (
+									<View style={styles.markerStyle}>
+										<Text style={styles.markerText}>Yr.</Text>
+									</View>
+								)}
+								min={18}
+								max={50}
+								sliderLength={238}
+								step={1}
+								containerStyle={{
+									paddingLeft: 17
+								}}
+								trackStyle={{
+									height: 5,
+									borderRadius: 10
+								}}
+								selectedStyle={{
+									backgroundColor: "#18B5C3"
+								}}
+								unselectedStyle={{
+									backgroundColor: "#D453A2"
+								}}
+								snapped
+							/>
+						</View>
+					</View>
+				</ScrollView>
+			</View>
+		);
+	}
+
 	render() {
 		if (this.deviceTheme == "IphoneSmall") {
 			return this.renderSmall();
+		}
+		if (this.deviceTheme == "Android") {
+			return this.renderAndroid();
 		}
 		return (
 			<View style={styles.container}>
@@ -455,6 +583,10 @@ const styles = {
 		marginLeft: 40,
 		marginRight: 40
 	},
+	contentAndroid: {
+		marginLeft: 25,
+		marginRight: 25
+	},
 	headerText: {
 		textAlign: "center",
 		fontSize: 16,
@@ -567,6 +699,28 @@ const styles = {
 	markerText: {
 		fontSize: 12,
 		color: "#7A7D83"
+	},
+	locationWrapperAndroid: {
+		width: 270,
+		alignSelf: "center"
+	},
+	locationRowAndroid: {
+		flexDirection: "row",
+		marginBottom: 15,
+		marginLeft: 5,
+		marginRight: 10,
+		justifyContent: "space-between"
+	},
+	AgeWrapperAndroid: {
+		width: 270,
+		alignSelf: "center"
+	},
+	ageRowAndroid: {
+		flexDirection: "row",
+		paddingBottom: 15,
+		marginLeft: 5,
+		marginRight: 10,
+		justifyContent: "space-between"
 	}
 };
 
