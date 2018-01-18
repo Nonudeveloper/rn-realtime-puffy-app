@@ -147,8 +147,8 @@ const images = {
 	flicks_black: require("../img/FLICKS_BLACK.png"),
 	flicks_green: require("../img/FLICKS_GREEN.png"),
 
-	games: require("../img/games.png"),
-	games_on: require("../img/games_on.png"),
+	games: require("../img/videogames.png"),
+	games_on: require("../img/videogames_on.png"),
 	games_white: require("../img/GAMES_WHITE.png"),
 	games_shadow: require("../img/GAMES_SHADOW.png"),
 	games_black: require("../img/GAMES_BLACK.png"),
@@ -182,8 +182,8 @@ const images = {
 	food_black: require("../img/FOOD_BLACK.png"),
 	food_green: require("../img/FOOD_GREEN.png"),
 
-	videogames: require("../img/videogames.png"),
-	videogames_on: require("../img/videogames_on.png"),
+	videogames: require("../img/games.png"),
+	videogames_on: require("../img/games_on.png"),
 	videogames_white: require("../img/CHAT_WHITE.png"),
 	videogames_shadow: require("../img/CHAT_SHADOW.png"),
 	videogames_black: require("../img/CHAT_BLACK.png"),
