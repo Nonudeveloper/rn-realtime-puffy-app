@@ -15,7 +15,21 @@ class Pending extends Component {
 		this.gotoProfile = this.gotoProfile.bind(this);
 		this.removePending = this.removePending.bind(this);
 		this.removeRow = this.removeRow.bind(this);
+		this.msgListenerPending = this.msgListenerPending.bind(this);
 		this.selectedRow = 0;
+	}
+
+	msgListenerPending(data) {
+		if (data["result"] == 1 && data["result_action"] == "like_user_result") {
+			if (data["result_data"]["likedislike"] == "1") {
+				let dataString = {
+					user_action: "list_pending_user_likes",
+					user_data: {}
+				};
+
+				this.handleEmit(dataString);
+			}
+		}
 	}
 
 	componentDidMount() {
@@ -28,6 +42,11 @@ class Pending extends Component {
 
 			this.handleEmit(dataString);
 		}
+
+		this.puffyChannel.on("data_channel", this.msgListenerPending);
+	}
+	componentWillUnmount() {
+		this.puffyChannel.removeListener("data_channel", this.msgListenerPending);
 	}
 
 	gotoProfile(props) {
