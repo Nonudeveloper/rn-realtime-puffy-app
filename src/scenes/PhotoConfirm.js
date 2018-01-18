@@ -244,7 +244,7 @@ class PhotoConfirm extends Component {
 						function(result) {
 							if (result === 0) {
 								setTimeout(function() {
-									$this.setState({ visible: false });
+									$this.setState({ visible: false, uploading: false });
 								}, 350);
 								setTimeout(function() {
 									Alert.alert("Upload Failed", "Please try to upload image again");

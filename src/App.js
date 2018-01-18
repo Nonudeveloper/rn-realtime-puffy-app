@@ -821,7 +821,7 @@ class App extends Component {
 		let rows = data["result_data"];
 
 		if (data["result"] == 1) {
-			//console.log(data);
+			console.log(data);
 
 			if (data["result_action"] == "show_alert") {
 				Alert.alert(data["result_data"]["alert_title"], data["result_data"]["alert_text"]);
