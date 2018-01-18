@@ -25,6 +25,7 @@ class Notification extends Component {
 			searching: 0,
 			refreshing: false,
 			selected: false,
+			isNavigating: false,
 			dataSource: []
 		};
 	}
@@ -158,6 +159,12 @@ class Notification extends Component {
 		if (rowData == null) {
 			return false;
 		}
+		if (this.state.isNavigating == true) {
+			return false;
+		}
+		const $this = this;
+
+		this.setState({ isNavigating: true });
 
 		let report_id = parseInt(rowData["report_id"]);
 
@@ -180,12 +187,22 @@ class Notification extends Component {
 
 			this.props.navigation.navigate("Profile", { user: rowData, tab: "Puffers" });
 		}
+
+		setTimeout(function() {
+			$this.setState({ isNavigating: false });
+		}, 500);
 	}
 
 	gotoProfile(user) {
 		if (user == null) {
 			return false;
 		}
+		if (this.state.isNavigating == true) {
+			return false;
+		}
+		const $this = this;
+
+		this.setState({ isNavigating: true });
 
 		console.log(user);
 
@@ -194,18 +211,23 @@ class Notification extends Component {
 		user["thumb"] = user["profileImage"];
 
 		this.props.navigation.navigate("Profile", { user: user });
+
+		setTimeout(function() {
+			$this.setState({ isNavigating: false });
+		}, 500);
 	}
 
 	renderRow({ item, index }) {
 		return (
 			<TouchableHighlight
 				key={index}
+				disabled={this.state.isNavigating}
 				onPress={() => {
 					this.selectRow(item);
 				}}
 			>
 				<View style={styles.row}>
-					<TouchableOpacity onPress={() => this.gotoProfile(item)}>
+					<TouchableOpacity disabled={this.state.isNavigating} onPress={() => this.gotoProfile(item)}>
 						<View style={styles.avatar}>
 							{item.profileImage == null ? null : <CachedImage style={styles.avatarImg} source={{ uri: item.profileImage, cache: "force-cache" }} />}
 						</View>

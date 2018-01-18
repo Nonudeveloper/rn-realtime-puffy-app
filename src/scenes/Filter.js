@@ -405,6 +405,7 @@ class Filter extends Component {
 							<MultiSlider
 								values={[this.state.minAge, this.state.maxAge]}
 								onValuesChange={this.ageSliderChange}
+								onValuesChangeFinish={this.setAgeFinish}
 								customMarker={() => (
 									<View style={styles.markerStyle}>
 										<Text style={styles.markerText}>Yr.</Text>

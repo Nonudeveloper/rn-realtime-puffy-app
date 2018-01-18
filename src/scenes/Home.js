@@ -89,6 +89,7 @@ class Home extends Component {
 			refreshing: false,
 			item: [],
 			isModalVisible: false,
+			isNavigating: false,
 			modalID: 0,
 			modalEventID: 0,
 			modalTitle: "",
@@ -112,6 +113,7 @@ class Home extends Component {
 				if (notif.opened_from_tray) {
 					if (notif.from) {
 						$this.props.navigation.dispatch(NavigationActions.navigate({ routeName: "NotificationTab" }));
+						FCM.removeAllDeliveredNotifications();
 					}
 				}
 			});
@@ -348,8 +350,22 @@ class Home extends Component {
 			console.log("please wait!");
 			return false;
 		}
-		console.log(this.user_id);
-		this.props.navigation.navigate("Profile", { user: this.state.item });
+		if (this.state.isNavigating == true) {
+			return false;
+		}
+		const $this = this;
+		this.setState({ isNavigating: true }, () => {
+			$this.props.navigation.navigate("Profile", { user: $this.state.item });
+			setTimeout(function() {
+				$this.setState({ isNavigating: false });
+			}, 500);
+		});
+
+		/*
+		setTimeout(function() {
+			$this.setState({ isNavigating: false });
+		}, 500);
+		*/
 	}
 
 	gotoFilters() {
@@ -630,12 +646,12 @@ class Home extends Component {
 						<Image style={{ width: 240, height: 120, resizeMode: "contain" }} source={Images.passed} />
 					</HideableView>
 
-					<TouchableWithoutFeedback onPress={this.gotoProfile}>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<View style={styles.detailOpen} />
 					</TouchableWithoutFeedback>
 
 					<View style={styles.detailContainer}>
-						<TouchableOpacity onPress={this.gotoProfile}>
+						<TouchableOpacity disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 							<Text style={styles.nameText}>
 								{this.state.item.name}, {this.state.item.age}
 							</Text>
