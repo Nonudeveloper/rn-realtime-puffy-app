@@ -13,6 +13,7 @@ class EventsHome extends Component {
 	constructor(props) {
 		super(props);
 
+		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.bug = this.props.screenProps.bug.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 		this.EventHomeListener = this.EventHomeListener.bind(this);
@@ -94,6 +95,17 @@ class EventsHome extends Component {
 		} else if (data["result"] == 0 && data["result_action"] == "get_event_past_result") {
 			if (this.state.currentPage == 4) {
 				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
+			}
+		}
+
+		if (data["result"] == 1 && data["result_action"] == "delete_rsvp_user_result") {
+			if (this.state.currentPage == 2) {
+				let dataString = {
+					user_action: "get_event_up_next",
+					user_data: {}
+				};
+
+				this.handleEmit(dataString);
 			}
 		}
 	}
