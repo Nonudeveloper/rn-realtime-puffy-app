@@ -39,7 +39,7 @@ class Login extends Component {
 	fbLogin() {
 		let $this = this;
 
-		//FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Browser);
+		FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Web);
 
 		FBLoginManager.loginWithPermissions(["public_profile", "email"], function(error, data) {
 			if (!error) {
@@ -60,7 +60,7 @@ class Login extends Component {
 					}
 				});
 			} else {
-				Alert.alert("Incorrect", "Facebook account not found");
+				//Alert.alert("Incorrect", "Facebook account not found");
 			}
 		});
 	}
