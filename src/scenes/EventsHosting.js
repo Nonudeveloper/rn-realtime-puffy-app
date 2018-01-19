@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, View, Text, Dimensions, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image } from "react-native";
+import { Alert, View, Text, Dimensions, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image } from "react-native";
 import FilterInput from "../components/FilterInput";
 import { CachedImage } from "react-native-img-cache";
 import { NavigationActions } from "react-navigation";
@@ -14,6 +14,7 @@ class EventsHosting extends Component {
         this.navigation = this.props.navigation;
         this.puffyChannel = this.props.screenProps.puffyChannel;
         this.setRefresh = this.props.setRefresh;
+        this.setItems = this.props.setItems;
 
         this.renderRow = this.renderRow.bind(this);
         this.gotoEventsView = this.gotoEventsView.bind(this);
@@ -23,6 +24,13 @@ class EventsHosting extends Component {
     }
 
     componentDidMount() {
+        AsyncStorage.getItem("EventsHost", (err, result) => {
+            if (!err && result != null) {
+                let items = JSON.parse(result);
+                this.setItems(items);
+            }
+        });
+
         let dataString = {
             user_action: "get_host_events",
             user_data: {}
@@ -120,6 +128,7 @@ class EventsHosting extends Component {
                             <RefreshControl refreshing={this.props.data.refreshing} onRefresh={this.onRefresh} tintColor="#57BBC7" colors={["#57BBC7", "#57BBC7", "#57BBC7"]} />
                         }
                         renderItem={this.renderRow}
+                        extraData={this.props.extraData}
                         horizontal={false}
                         numColumns={1}
                     />

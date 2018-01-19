@@ -298,13 +298,15 @@ class App extends Component {
 			let lat = parseFloat(parseFloat($this.state.lat).toFixed(2));
 			let lng = parseFloat(parseFloat($this.state.lng).toFixed(2));
 
-			appsFlyer.trackLocation(lat, lng, (error, coords) => {
-				if (error) {
-					//console.error(error);
-				} else {
-					//console.log(coords);
-				}
-			});
+			if (Platform.OS === "ios") {
+				appsFlyer.trackLocation(lat, lng, (error, coords) => {
+					if (error) {
+						//console.error(error);
+					} else {
+						//console.log(coords);
+					}
+				});
+			}
 		});
 	}
 

@@ -20,6 +20,7 @@ class EventsHome extends Component {
 		this.onChange = this.onChange.bind(this);
 		this.createEvent = this.createEvent.bind(this);
 		this.setRefresh = this.setRefresh.bind(this);
+		this.setItems = this.setItems.bind(this);
 
 		if (this.props.navigation.state.params == null) {
 			this.tab = null;
@@ -34,7 +35,8 @@ class EventsHome extends Component {
 			items: [],
 			dataSource: [],
 			row_count: 0,
-			isLoaded: 0
+			isLoaded: 0,
+			selected: false
 		};
 	}
 
@@ -45,7 +47,14 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({
+					dataSource: data["result_data"],
+					isLoaded: 1,
+					items: data["result_data"],
+					row_count: row_count,
+					refreshing: false,
+					selected: !this.state.selected
+				});
 
 				let localData = JSON.stringify(data["result_data"]);
 
@@ -55,7 +64,8 @@ class EventsHome extends Component {
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_events_result") {
 			if (this.state.currentPage == 1) {
-				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false, selected: !this.state.selected });
+				AsyncStorage.removeItem("Events");
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_event_up_next_result") {
@@ -64,11 +74,25 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({
+					dataSource: data["result_data"],
+					isLoaded: 1,
+					items: data["result_data"],
+					row_count: row_count,
+					refreshing: false,
+					selected: !this.state.selected
+				});
+
+				let localData = JSON.stringify(data["result_data"]);
+
+				if (localData) {
+					AsyncStorage.setItem("EventsNext", localData);
+				}
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_event_up_next_result") {
 			if (this.state.currentPage == 2) {
-				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false, selected: !this.state.selected });
+				AsyncStorage.removeItem("EventsNext");
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_host_events_result") {
@@ -77,11 +101,25 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({
+					dataSource: data["result_data"],
+					isLoaded: 1,
+					items: data["result_data"],
+					row_count: row_count,
+					refreshing: false,
+					selected: !this.state.selected
+				});
+
+				let localData = JSON.stringify(data["result_data"]);
+
+				if (localData) {
+					AsyncStorage.setItem("EventsHost", localData);
+				}
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_host_events_result") {
 			if (this.state.currentPage == 3) {
-				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false, selected: !this.state.selected });
+				AsyncStorage.removeItem("EventsHost");
 			}
 		}
 		if (data["result"] == 1 && data["result_action"] == "get_event_past_result") {
@@ -90,11 +128,25 @@ class EventsHome extends Component {
 					data["result_data"] = [];
 				}
 				let row_count = data["result_data"].length;
-				this.setState({ dataSource: data["result_data"], isLoaded: 1, items: data["result_data"], row_count: row_count, refreshing: false });
+				this.setState({
+					dataSource: data["result_data"],
+					isLoaded: 1,
+					items: data["result_data"],
+					row_count: row_count,
+					refreshing: false,
+					selected: !this.state.selected
+				});
+
+				let localData = JSON.stringify(data["result_data"]);
+
+				if (localData) {
+					AsyncStorage.setItem("EventsPast", localData);
+				}
 			}
 		} else if (data["result"] == 0 && data["result_action"] == "get_event_past_result") {
 			if (this.state.currentPage == 4) {
-				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false });
+				this.setState({ dataSource: [], isLoaded: 1, items: [], row_count: 0, refreshing: false, selected: !this.state.selected });
+				AsyncStorage.removeItem("EventsPast");
 			}
 		}
 
@@ -110,19 +162,26 @@ class EventsHome extends Component {
 		}
 	}
 
+	setItems(items) {
+		let row_count = 0;
+
+		if (items == null) {
+			items = [];
+			row_count = 0;
+		} else {
+			row_count = items.length;
+		}
+
+		console.log(items);
+
+		this.setState({ dataSource: items, items: items, row_count: row_count, refreshing: false, isLoaded: 1 });
+	}
+
 	componentWillUnmount() {
 		this.puffyChannel.removeListener("data_channel", this.EventHomeListener);
 	}
 
 	componentDidMount() {
-		AsyncStorage.getItem("Events", (err, result) => {
-			if (!err && result != null) {
-				let items = JSON.parse(result);
-				let row_count = items.length;
-				this.setState({ dataSource: items, items: items, row_count: row_count, refreshing: false });
-			}
-		});
-
 		this.puffyChannel.on("data_channel", this.EventHomeListener);
 	}
 
@@ -229,16 +288,44 @@ class EventsHome extends Component {
 				</View>
 				<View style={styles.container}>
 					{this.state.currentPage == 1 ? (
-						<Events navigation={this.props.navigation} data={this.state} setRefresh={this.setRefresh} screenProps={this.props.screenProps} />
+						<Events
+							navigation={this.props.navigation}
+							data={this.state}
+							setItems={this.setItems}
+							setRefresh={this.setRefresh}
+							extraData={this.state.selected}
+							screenProps={this.props.screenProps}
+						/>
 					) : null}
 					{this.state.currentPage == 2 ? (
-						<EventsUpNext navigation={this.props.navigation} data={this.state} setRefresh={this.setRefresh} screenProps={this.props.screenProps} />
+						<EventsUpNext
+							navigation={this.props.navigation}
+							data={this.state}
+							setItems={this.setItems}
+							setRefresh={this.setRefresh}
+							extraData={this.state.selected}
+							screenProps={this.props.screenProps}
+						/>
 					) : null}
 					{this.state.currentPage == 3 ? (
-						<EventsHosting navigation={this.props.navigation} data={this.state} setRefresh={this.setRefresh} screenProps={this.props.screenProps} />
+						<EventsHosting
+							navigation={this.props.navigation}
+							data={this.state}
+							setItems={this.setItems}
+							setRefresh={this.setRefresh}
+							extraData={this.state.selected}
+							screenProps={this.props.screenProps}
+						/>
 					) : null}
 					{this.state.currentPage == 4 ? (
-						<EventsPast navigation={this.props.navigation} data={this.state} setRefresh={this.setRefresh} screenProps={this.props.screenProps} />
+						<EventsPast
+							navigation={this.props.navigation}
+							data={this.state}
+							setItems={this.setItems}
+							setRefresh={this.setRefresh}
+							extraData={this.state.selected}
+							screenProps={this.props.screenProps}
+						/>
 					) : null}
 				</View>
 			</View>
