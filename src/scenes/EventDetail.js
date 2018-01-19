@@ -110,6 +110,7 @@ class EventDetail extends Component {
 			userId: 0,
 			isLoaded: 0,
 			isUpdating: 0,
+			notFound: 0,
 			modalVisibleLocation: false,
 			modalVisible: false,
 			fileEventId: file_id,
@@ -236,6 +237,8 @@ class EventDetail extends Component {
 				isLoaded: 1,
 				isUpdating: 0
 			});
+		} else if (data["result"] == 0 && data["result_action"] == "get_event_user_profile_result") {
+			this.setState({ isLoaded: 1, notFound: 1 });
 		}
 	}
 
@@ -505,6 +508,21 @@ class EventDetail extends Component {
 						title="Create an Event"
 						global={this.props.screenProps.global}
 					/>
+				</View>
+			);
+		} else if (this.state.notFound == 1) {
+			return (
+				<View style={styles.container}>
+					<Header
+						deviceTheme={this.props.screenProps.deviceTheme}
+						LeftIcon="back_arrow"
+						LeftCallback={this.props.navigation.goBack}
+						global={this.props.screenProps.global}
+					/>
+					<View style={styles.profileMessage}>
+						<Image style={styles.lockedEye} source={Images.neutral_big} />
+						<Text style={styles.profileMessageHeader}>Event not found!</Text>
+					</View>
 				</View>
 			);
 		}
@@ -994,6 +1012,29 @@ const styles = {
 		fontSize: 14,
 		fontFamily: "Helvetica",
 		color: "#181818"
+	},
+	profileMessage: {
+		marginTop: 50,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	lockedEye: {
+		height: 100,
+		width: 100,
+		resizeMode: "contain"
+	},
+	profileMessageHeader: {
+		fontSize: 24,
+		fontWeight: "bold",
+		textAlign: "center",
+		color: "#777980",
+		marginTop: 10,
+		marginBottom: 10
+	},
+	profileText: {
+		fontSize: 16,
+		textAlign: "center",
+		color: "#777980"
 	}
 };
 
