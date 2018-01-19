@@ -158,6 +158,14 @@ const TabContainer = TabNavigator(
       showIcon: true,
       showLabel: false,
       scrollEnabled: false,
+      iconStyle: {
+        width: 32,
+        height: 32
+      },
+      indicatorStyle: {
+        height: 0,
+        width: 0
+      },
       style: {
         backgroundColor: "#F8F8F8"
       }
