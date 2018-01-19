@@ -3,8 +3,12 @@ import config from "../config/config";
 
 export default function ajaxPost(dataString, url, callback) {
     dataString["device"] = Platform.OS;
-    const fullUrl = config.apiServer + url;
+    let fullUrl = config.apiServer + url;
     const data = JSON.stringify(dataString);
+
+    if (Platform.OS === "android") {
+        fullUrl = config.apiServerAndroid + url;
+    }
 
     //console.log(fullUrl);
     //console.log(data);

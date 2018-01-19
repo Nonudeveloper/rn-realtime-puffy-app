@@ -670,7 +670,11 @@ class App extends Component {
 
 	connectSocket(user_id, token, setLogged) {
 		const $this = this;
-		const apiServer = config.apiServerNode;
+		let apiServer = config.apiServerNode;
+
+		if (Platform.OS === "android") {
+			apiServer = config.apiServerNodeAndroid;
+		}
 
 		this.puffyChannel = io.connect(apiServer, {
 			transports: ["websocket"],
