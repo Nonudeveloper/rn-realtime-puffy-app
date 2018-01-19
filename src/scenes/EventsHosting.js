@@ -252,7 +252,7 @@ const styles = {
         color: "#41aaca"
     },
     eventImage: {
-        height: Dimensions.get("window").width,
+        height: Dimensions.get("window").width - 15,
         width: null,
         marginTop: 5,
         resizeMode: "contain"

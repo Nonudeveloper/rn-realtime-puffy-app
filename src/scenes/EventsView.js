@@ -700,7 +700,7 @@ const styles = {
 		margin: 10
 	},
 	cardImage: {
-		height: Dimensions.get("window").width,
+		height: Dimensions.get("window").width - 15,
 		width: null,
 		resizeMode: "contain",
 		margin: 5
