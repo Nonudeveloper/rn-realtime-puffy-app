@@ -22,7 +22,7 @@ import appsFlyer from "react-native-appsflyer";
 
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from "react-native-fcm";
 
-const APP_VERSION = "11.68";
+const APP_VERSION = "11.69";
 const { height, width } = Dimensions.get("window");
 const aspectRatio = height / width;
 
