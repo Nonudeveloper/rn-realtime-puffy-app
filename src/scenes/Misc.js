@@ -10,6 +10,7 @@ class Misc extends Component {
   constructor(props) {
     super(props);
 
+    this.logout = this.props.screenProps.logout.bind(this);
     this.puffyChannel = this.props.screenProps.puffyChannel;
     this.appVersion = this.props.screenProps.appVersion;
     this.handleEmit = this.props.screenProps.handleEmit.bind(this);
@@ -19,6 +20,8 @@ class Misc extends Component {
     this.gotoBlockList = this.gotoBlockList.bind(this);
     this.gotoSupport = this.gotoSupport.bind(this);
     this.admin = this.props.screenProps.global.user_admin;
+    this.showDeactivate = this.showDeactivate.bind(this);
+    this.deActivateAccount = this.deActivateAccount.bind(this);
 
     this.state = {
       text: "",
@@ -27,6 +30,10 @@ class Misc extends Component {
   }
 
   onListener(data) {
+    if (data["result"] == 1 && data["result_action"] == "deactivate_account_result") {
+      this.logout();
+    }
+
     if (data["result"] == 1 && data["result_action"] == "create_support_result") {
       Alert.alert("Completed", data["result_text"]);
 
@@ -84,6 +91,21 @@ class Misc extends Component {
     this.setState({ text: text, characterCount: characterCount });
   }
 
+  showDeactivate() {
+    Alert.alert("Deactivate Account", "Are you sure?", [{ text: "No", onPress: () => console.log("No Pressed!") }, { text: "Yes", onPress: () => this.deActivateAccount() }]);
+  }
+
+  deActivateAccount() {
+    let dataString = {
+      user_action: "deactivate_account",
+      user_data: {
+        reason: "USER"
+      }
+    };
+
+    this.handleEmit(dataString);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -139,6 +161,13 @@ class Misc extends Component {
               />
               <Text style={styles.version}>{this.appVersion}</Text>
             </View>
+            <View style={styles.sectionEnd}>
+              <TouchableOpacity onPress={this.showDeactivate}>
+                <View style={styles.rowEnd}>
+                  <Text style={styles.logoutBtn}>Deactivate my account</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </KeyboardAwareScrollView>
         </ScrollView>
       </View>
@@ -173,6 +202,11 @@ const styles = {
   row: {
     flexDirection: "row"
   },
+  rowEnd: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    height: 22
+  },
   rowImage: {
     alignItems: "flex-end",
     flex: 1
@@ -198,6 +232,22 @@ const styles = {
     fontFamily: "Helvetica",
     textAlign: "center",
     color: "#181818"
+  },
+  sectionEnd: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+    marginBottom: 10,
+    paddingTop: 15,
+    paddingBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    height: 25
+  },
+  logoutBtn: {
+    color: "red",
+    fontSize: 13,
+    fontFamily: "Helvetica"
   }
 };
 
