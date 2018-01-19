@@ -700,8 +700,9 @@ const styles = {
 		margin: 10
 	},
 	cardImage: {
-		height: 300,
-		resizeMode: "stretch",
+		height: Dimensions.get("window").width,
+		width: null,
+		resizeMode: "contain",
 		margin: 5
 	},
 	cardProfileImage: {
