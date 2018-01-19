@@ -245,6 +245,10 @@ class EventDetail extends Component {
 	createEvent() {
 		let showError = 0;
 
+		if (this.props.screenProps.global.networkStatus == false) {
+			Alert.alert("Incorrect", "You have no internet connection");
+			return false;
+		}
 		if (this.state.eventCost != "0" && isNaN(this.state.eventCost)) {
 			Alert.alert("Incomplete", "Event cost must be a number", [{ text: "OK", onPress: () => console.log("OK Pressed") }], { cancelable: false });
 			return false;
