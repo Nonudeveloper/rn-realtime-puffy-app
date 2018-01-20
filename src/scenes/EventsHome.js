@@ -172,8 +172,6 @@ class EventsHome extends Component {
 			row_count = items.length;
 		}
 
-		console.log(items);
-
 		this.setState({ dataSource: items, items: items, row_count: row_count, refreshing: false, isLoaded: 1 });
 	}
 

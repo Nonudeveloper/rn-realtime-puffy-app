@@ -11,6 +11,7 @@ export default async function videoUpload(fileURL, thumb, handleEmit, user_id, p
   var path = "uploads/" + year + "/" + month + "/" + day + "/";
   var pathThumb = "resized-uploads/" + year + "/" + month + "/" + day + "/";
   var fileName = user_id + "-" + now + ".mp4";
+  var fileNameThumb = user_id + "-" + now + ".jpg";
 
   const file = {
     uri: fileURL,
@@ -20,7 +21,7 @@ export default async function videoUpload(fileURL, thumb, handleEmit, user_id, p
 
   const file_thumb = {
     uri: thumb,
-    name: fileName,
+    name: fileNameThumb,
     type: "image/jpg"
   };
 

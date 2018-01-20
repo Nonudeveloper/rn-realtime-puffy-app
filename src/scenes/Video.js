@@ -237,14 +237,23 @@ class Video extends Component {
 
     if (duration > 10) {
       //console.log("trimming video");
-      ProcessingManager.trim(video, options).then(data => this.compressVideo(data, duration, width, height));
+      ProcessingManager.trim(video, options).then(data => this.getThumb(data, duration, width, height));
     } else {
       // console.log("skip trimming");
-      this.compressVideo(video, duration, width, height);
+      this.getThumb(video, duration, width, height);
     }
   }
 
-  compressVideo(video, duration, srcWidth, srcHeight) {
+  getThumb(video, duration, width, height) {
+    const maximumSize = { width: 150, height: 150 };
+    console.log(video);
+
+    ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
+      .then(data => this.compressVideo(video, data.uri, duration, width, height))
+      .catch(console.warn);
+  }
+
+  compressVideo(video, thumb, duration, srcWidth, srcHeight) {
     const maxWidth = 720;
     const maxHeight = 1280;
 
@@ -266,45 +275,19 @@ class Video extends Component {
     console.log("new");
     console.log(options);
     console.log(video);
+    console.log(thumb);
 
     //data.source android
-    ProcessingManager.compress(video, options).then(data => this.getThumb(data));
-
-    /*
-    let newWidth = 480;
-    let newHeight = 480;
-
-    if (srcHeight > 639 && srcWidth > 639) {
-      newWidth = 640;
-      newHeight = 640;
-    }
-
-    const options = {
-      width: newWidth,
-      height: newHeight
-    };
-
-    ProcessingManager.compress(video, options).then(data => this.getThumb(data));
-
-    */
-  }
-
-  getThumb(video) {
-    const maximumSize = { width: 150, height: 150 };
-    console.log(video);
-
-    ProcessingManager.getPreviewForSecond(video.source, 1, maximumSize, "JPEG")
-      .then(data => this.gotoVideoConfirm(video.source, data.uri))
-      .catch(console.warn);
+    ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));
   }
 
   gotoVideoConfirm(video, thumb) {
     this.setState({ recording: false, timePassed: 0 });
 
-    console.log("video:" + video);
-    console.log("thumb:" + thumb);
+    console.log(video);
+    console.log(thumb);
 
-    this.props.navigation.navigate("VideoConfirm", { video: video, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+    this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
   }
 
   noPhoto() {
