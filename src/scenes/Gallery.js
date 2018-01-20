@@ -60,12 +60,24 @@ class Gallery extends Component {
 				}
 			);
 		} else {
-			var options = {
-				storageOptions: {
-					skipBackup: true,
-					path: "images"
-				}
-			};
+			let options;
+
+			if (showVideos == true) {
+				options = {
+					storageOptions: {
+						skipBackup: true,
+						path: "images",
+						mediaType: "mixed"
+					}
+				};
+			} else {
+				options = {
+					storageOptions: {
+						skipBackup: true,
+						path: "images"
+					}
+				};
+			}
 			// Open Image Library:
 			ImagePicker.launchImageLibrary(options, response => {
 				//console.log("Response = ", response);
