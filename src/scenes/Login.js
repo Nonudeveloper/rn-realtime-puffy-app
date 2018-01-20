@@ -39,7 +39,11 @@ class Login extends Component {
 	fbLogin() {
 		let $this = this;
 
-		FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Web);
+		if (Platform.OS === "android") {
+			FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.WebView);
+		} else {
+			FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Web);
+		}
 
 		FBLoginManager.loginWithPermissions(["public_profile", "email"], function(error, data) {
 			if (!error) {
