@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.shahenlibrary.RNVideoProcessingPackage;
 import com.rnfs.RNFSPackage;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new PickerPackage(),
             new RCTCameraPackage(),
             new RNVideoProcessingPackage(),
             new RNFSPackage(),

@@ -7,7 +7,7 @@ import fileUpload from "../lib/fileUpload";
 import ImageResizer from "react-native-image-resizer";
 import Permissions from "react-native-permissions";
 import { ProcessingManager } from "react-native-video-processing";
-
+import ImageCropPicker from "react-native-image-crop-picker";
 var ImagePicker = require("react-native-image-picker");
 
 class Gallery extends Component {
@@ -60,42 +60,46 @@ class Gallery extends Component {
 				}
 			);
 		} else {
-			let options;
-
-			if (showVideos == true) {
-				options = {
-					storageOptions: {
-						skipBackup: true,
-						path: "images",
-						mediaType: "mixed"
-					}
-				};
-			} else {
-				options = {
-					storageOptions: {
-						skipBackup: true,
-						path: "images"
-					}
-				};
-			}
-			// Open Image Library:
-			ImagePicker.launchImageLibrary(options, response => {
-				//console.log("Response = ", response);
-
-				if (response.didCancel) {
-					//console.log("User cancelled image picker");
-					this.props.navigation.goBack();
-				} else if (response.error) {
-					//console.log("ImagePicker Error: ", response.error);
-					this.props.navigation.goBack();
-				} else if (response.customButton) {
-					//console.log("User tapped custom button: ", response.customButton);
-				} else {
-					let source = { uri: response.uri };
-
-					this.uploadImage(response.uri);
+			let options = {
+				storageOptions: {
+					skipBackup: true,
+					path: "images"
 				}
-			});
+			};
+
+			let options2 = {
+				mediaType: "any"
+			};
+
+			if (this.showVideos == true) {
+				ImageCropPicker.openPicker({
+					options2
+				})
+					.then(image => {
+						this.uploadImage(image.path);
+					})
+					.catch(e => {
+						this.props.navigation.goBack();
+					});
+			} else {
+				ImagePicker.launchImageLibrary(options, response => {
+					//console.log("Response = ", response);
+
+					if (response.didCancel) {
+						//console.log("User cancelled image picker");
+						this.props.navigation.goBack();
+					} else if (response.error) {
+						//console.log("ImagePicker Error: ", response.error);
+						this.props.navigation.goBack();
+					} else if (response.customButton) {
+						//console.log("User tapped custom button: ", response.customButton);
+					} else {
+						let source = { uri: response.uri };
+
+						this.uploadImage(response.uri);
+					}
+				});
+			}
 		}
 	}
 
@@ -128,32 +132,45 @@ class Gallery extends Component {
 	}
 
 	checkVideo(video) {
-		ProcessingManager.getVideoInfo(video).then(({ duration, size }) => this.trimVideo(video, duration, size));
+		ProcessingManager.getVideoInfo(video).then(({ duration, size }) => this.trimVideo(video, duration, size.width, size.height));
 	}
 
-	trimVideo(video, duration, size) {
+	trimVideo(video, duration, width, height) {
 		const options = {
 			startTime: 0,
 			endTime: 10
 		};
 
 		if (duration > 10) {
-			//console.log("trimming video");
-			ProcessingManager.trim(video, options).then(data => this.compressVideo(data, duration, size));
+			console.log("trimming video");
+			ProcessingManager.trim(video, options).then(data => this.getThumb(data, duration, width, height));
 		} else {
-			//console.log("skip trimming");
-			this.compressVideo(video, duration, size);
+			console.log("skip trimming");
+			this.getThumb(video, duration, width, height);
 		}
 	}
 
-	compressVideo(video, duration, size) {
-		const srcHeight = size.height;
-		const srcWidth = size.width;
+	getThumb(video, duration, width, height) {
+		const maximumSize = { width: 150, height: 150 };
+		console.log(video);
+		console.log(width);
+		console.log(height);
+
+		ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
+			.then(data => this.compressVideo(video, data.uri, duration, width, height))
+			.catch(console.warn);
+	}
+
+	compressVideo(video, thumb, duration, srcWidth, srcHeight) {
+		console.log(srcWidth);
+		console.log(srcHeight);
 
 		const maxWidth = 640;
 		const maxHeight = 640;
 
 		const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+		console.log(ratio);
 
 		let newWidth = srcWidth;
 		let newHeight = srcHeight;
@@ -168,25 +185,17 @@ class Gallery extends Component {
 			height: newHeight
 		};
 
-		console.log(size);
 		console.log("new");
 		console.log(options);
-
-		//data.source android
-		ProcessingManager.compress(video, options).then(data => this.getThumb(data));
-	}
-
-	getThumb(video) {
-		const maximumSize = { width: 150, height: 150 };
 		console.log(video);
 
-		ProcessingManager.getPreviewForSecond(video.source, 1, maximumSize, "JPEG")
-			.then(data => this.gotoVideoConfirm(video.source, data.uri))
-			.catch(console.warn);
+		//data.source android
+		ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));
 	}
 
 	gotoVideoConfirm(video, thumb) {
-		this.props.navigation.navigate("VideoConfirm", { video: video, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+		console.log(video);
+		this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
 	}
 
 	uploadImage(imageUri) {
@@ -196,11 +205,12 @@ class Gallery extends Component {
 		if (this.state.isLoaded == 1) {
 			return false;
 		}
+		console.log(imageUri);
 
 		let ext = imageUri.substr(imageUri.lastIndexOf(".") + 1);
 		this.setState({ isLoaded: 1 });
 
-		if (ext == "MOV" || ext == "MP4" || ext == "AVI") {
+		if (ext == "MOV" || ext == "MP4" || ext == "AVI" || ext == "mp4") {
 			//this.props.navigation.goBack();
 			//return false;
 

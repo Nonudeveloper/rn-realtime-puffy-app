@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00B7BD83D095443BBBB9FFEC /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C149FC32116D4C59BFB8A638 /* libReactNativeExceptionHandler.a */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -85,6 +84,7 @@
 		E3F72566EAB04F0796FE087D /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D47A9698FCC745C5B907801C /* libBVLinearGradient.a */; };
 		F94A504BD9594B9CAAEBCD46 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D079D5D53554D7EAA3FBA07 /* libRCTRestart.a */; };
 		FDF45FCB44844EC1AA4F193D /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B66AECBC5A7E441AA0EF6116 /* libRCTVideo.a */; };
+		1C949B6E0BCC4402A829DDBA /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A4C3C926AA41D9973A2E6D /* libimageCropPicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -667,6 +667,8 @@
 		E8C104A4CABE4BA8BCDF7355 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		F27A6AEB1B5A4002B7FB08E1 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		FEEEBB7D78D54B9A974908EF /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
+		5CC6D4433C6546B99A6B8D02 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; name = "imageCropPicker.xcodeproj"; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		80A4C3C926AA41D9973A2E6D /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -736,6 +738,7 @@
 				5F9B023CB7644686BFF27484 /* libReactNativePermissions.a in Frameworks */,
 				C4FF8A856B27448D8A09F3FA /* libRNFIRMessaging.a in Frameworks */,
 				AAE043B40A474B9EB4B16EAE /* libRNFS.a in Frameworks */,
+				1C949B6E0BCC4402A829DDBA /* libimageCropPicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,6 +1244,7 @@
 				9ACCE5FF6E88494DA66BF253 /* ReactNativePermissions.xcodeproj */,
 				C746B8175D7E4AD2A6F1DF6D /* RNFIRMessaging.xcodeproj */,
 				54820464B4144947A605DAB8 /* RNFS.xcodeproj */,
+				5CC6D4433C6546B99A6B8D02 /* imageCropPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -2080,11 +2084,15 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = PuffyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-ObjC",
@@ -2120,11 +2128,15 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = PuffyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-ObjC",
@@ -2174,6 +2186,7 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = Puffy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2225,6 +2238,7 @@
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = Puffy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
