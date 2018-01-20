@@ -161,14 +161,15 @@ class Gallery extends Component {
 		console.log(options);
 
 		//data.source android
-		ProcessingManager.compress(video, options).then(data => this.getThumb(data.source));
+		ProcessingManager.compress(video, options).then(data => this.getThumb(data));
 	}
 
 	getThumb(video) {
 		const maximumSize = { width: 150, height: 150 };
+		console.log(video);
 
-		ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
-			.then(data => this.gotoVideoConfirm(video, data.uri))
+		ProcessingManager.getPreviewForSecond(video.source, 1, maximumSize, "JPEG")
+			.then(data => this.gotoVideoConfirm(video.source, data.uri))
 			.catch(console.warn);
 	}
 

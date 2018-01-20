@@ -265,9 +265,10 @@ class Video extends Component {
 
     console.log("new");
     console.log(options);
+    console.log(video);
 
     //data.source android
-    ProcessingManager.compress(video, options).then(data => this.getThumb(data.source));
+    ProcessingManager.compress(video, options).then(data => this.getThumb(data));
 
     /*
     let newWidth = 480;
@@ -292,8 +293,8 @@ class Video extends Component {
     const maximumSize = { width: 150, height: 150 };
     console.log(video);
 
-    ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
-      .then(data => console.log(data))
+    ProcessingManager.getPreviewForSecond(video.source, 1, maximumSize, "JPEG")
+      .then(data => this.gotoVideoConfirm(video.source, data.uri))
       .catch(console.warn);
   }
 
