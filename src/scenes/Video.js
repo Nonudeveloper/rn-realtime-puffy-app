@@ -230,11 +230,6 @@ class Video extends Component {
       endTime: 10
     };
 
-    console.log("video:" + video);
-    console.log("width:" + width);
-    console.log("height:" + height);
-    console.log("duration:" + duration);
-
     if (duration > 10) {
       //console.log("trimming video");
       ProcessingManager.trim(video, options).then(data => this.getThumb(data, duration, width, height));
@@ -246,7 +241,6 @@ class Video extends Component {
 
   getThumb(video, duration, width, height) {
     const maximumSize = { width: 150, height: 150 };
-    console.log(video);
 
     ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
       .then(data => this.compressVideo(video, data.uri, duration, width, height))
@@ -272,20 +266,12 @@ class Video extends Component {
       height: newHeight
     };
 
-    console.log("new");
-    console.log(options);
-    console.log(video);
-    console.log(thumb);
-
     //data.source android
     ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));
   }
 
   gotoVideoConfirm(video, thumb) {
     this.setState({ recording: false, timePassed: 0 });
-
-    console.log(video);
-    console.log(thumb);
 
     this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
   }
