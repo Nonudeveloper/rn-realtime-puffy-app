@@ -166,7 +166,7 @@ class Photo extends Component {
       if ($this.deviceTheme == "IphoneX") {
         yValue = 20;
       } else if ($this.deviceTheme == "Android") {
-        yValue = 0;
+        yValue = 100;
       }
 
       console.log(w);

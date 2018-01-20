@@ -159,7 +159,9 @@ class Gallery extends Component {
 		console.log(size);
 		console.log("new");
 		console.log(options);
-		ProcessingManager.compress(video, options).then(data => this.getThumb(data));
+
+		//data.source android
+		ProcessingManager.compress(video, options).then(data => this.getThumb(data.source));
 	}
 
 	getThumb(video) {

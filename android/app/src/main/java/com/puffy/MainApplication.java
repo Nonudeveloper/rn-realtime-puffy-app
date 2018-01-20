@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.shahenlibrary.RNVideoProcessingPackage;
 import com.rnfs.RNFSPackage;
 import com.appsflyer.reactnative.RNAppsFlyerPackage;
@@ -20,7 +21,6 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.projectseptember.RNGL.RNGLPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -43,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RCTCameraPackage(),
             new RNVideoProcessingPackage(),
             new RNFSPackage(),
             new RNAppsFlyerPackage(MainApplication.this),
@@ -59,7 +60,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGLPackage(),
             new ReactNativePushNotificationPackage(),
             new ImageResizerPackage(),
-            new RCTCameraPackage(),
             new OpenSettingsPackage()
       );
     }

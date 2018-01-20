@@ -19,6 +19,7 @@ class Video extends Component {
     this.trimVideo = this.trimVideo.bind(this);
     this.setTimePassed = this.setTimePassed.bind(this);
     this.compressVideo = this.compressVideo.bind(this);
+    this.checkVideo = this.checkVideo.bind(this);
     this.getThumb = this.getThumb.bind(this);
     this.gotoVideoConfirm = this.gotoVideoConfirm.bind(this);
     this.key = this.props.navigation.state.key;
@@ -189,6 +190,10 @@ class Video extends Component {
     }
   }
 
+  checkVideo(video) {
+    ProcessingManager.getVideoInfo(video).then(({ duration, size }) => this.trimVideo(video, duration, size.width, size.height));
+  }
+
   showConfirm(data) {
     const $this = this;
 
@@ -196,8 +201,11 @@ class Video extends Component {
       return false;
     }
 
-    console.log(data);
-    this.trimVideo(data.path, data.duration, data.width, data.height);
+    if (data.width == null) {
+      this.checkVideo(data.path);
+    } else {
+      this.trimVideo(data.path, data.duration, data.width, data.height);
+    }
   }
 
   focusChange() {
@@ -222,8 +230,10 @@ class Video extends Component {
       endTime: 10
     };
 
+    console.log("video:" + video);
     console.log("width:" + width);
     console.log("height:" + height);
+    console.log("duration:" + duration);
 
     if (duration > 10) {
       //console.log("trimming video");
@@ -256,7 +266,8 @@ class Video extends Component {
     console.log("new");
     console.log(options);
 
-    ProcessingManager.compress(video, options).then(data => this.getThumb(data));
+    //data.source android
+    ProcessingManager.compress(video, options).then(data => this.getThumb(data.source));
 
     /*
     let newWidth = 480;
@@ -279,15 +290,19 @@ class Video extends Component {
 
   getThumb(video) {
     const maximumSize = { width: 150, height: 150 };
-    //console.log(video);
+    console.log(video);
 
-    ProcessingManager.getPreviewForSecond(video, 2, maximumSize, "JPEG")
-      .then(data => this.gotoVideoConfirm(video, data.uri))
+    ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
+      .then(data => console.log(data))
       .catch(console.warn);
   }
 
   gotoVideoConfirm(video, thumb) {
     this.setState({ recording: false, timePassed: 0 });
+
+    console.log("video:" + video);
+    console.log("thumb:" + thumb);
+
     this.props.navigation.navigate("VideoConfirm", { video: video, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
   }
 
