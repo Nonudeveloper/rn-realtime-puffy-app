@@ -159,8 +159,8 @@ const TabContainer = TabNavigator(
       showLabel: false,
       scrollEnabled: false,
       iconStyle: {
-        width: 32,
-        height: 32
+        width: 35,
+        height: 35
       },
       indicatorStyle: {
         height: 0,
