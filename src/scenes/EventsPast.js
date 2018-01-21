@@ -130,6 +130,8 @@ class EventsPast extends Component {
                         }
                         renderItem={this.renderRow}
                         extraData={this.props.extraData}
+                        removeClippedSubviews={true}
+                        initialNumToRender={3}
                         horizontal={false}
                         numColumns={1}
                     />

@@ -322,7 +322,8 @@ class Explorer extends Component {
 				extraData={this.state.selected}
 				renderItem={this.renderRow}
 				enableEmptySections={false}
-				removeClippedSubviews={false}
+				removeClippedSubviews={true}
+				initialNumToRender={15}
 				columnWrapperStyle={styles.flatList}
 				horizontal={false}
 				numColumns={3}

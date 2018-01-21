@@ -346,6 +346,8 @@ class Feed extends Component {
 									/>
 								}
 								onEndReached={this.handleLoad}
+								removeClippedSubviews={true}
+								initialNumToRender={3}
 								onEndReachedThreshold={5}
 								onViewableItemsChanged={this.handleScroll}
 								viewabilityConfig={{

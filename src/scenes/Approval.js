@@ -106,7 +106,8 @@ class Approval extends Component {
 				{this.props.dataSource.length > 0 ? (
 					<FlatList
 						enableEmptySections={true}
-						removeClippedSubviews={false}
+						removeClippedSubviews={true}
+						initialNumToRender={18}
 						contentContainerStyle={styles.list}
 						keyExtractor={(item, index) => index}
 						data={this.props.dataSource}

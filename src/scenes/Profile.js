@@ -926,7 +926,8 @@ class Profile extends Component {
             refreshControl={<RefreshControl refreshing={this.state.pullRefreshing} onRefresh={this.onRefresh} tintColor="#57BBC7" colors={["#57BBC7", "#57BBC7", "#57BBC7"]} />}
             onEndReached={this.handleLoad}
             onEndReachedThreshold={5}
-            removeClippedSubviews={false}
+            initialNumToRender={15}
+            removeClippedSubviews={true}
           />
         ) : (
           <ScrollView>

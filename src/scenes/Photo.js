@@ -166,26 +166,23 @@ class Photo extends Component {
       if ($this.deviceTheme == "IphoneX") {
         yValue = 20;
       } else if ($this.deviceTheme == "Android") {
-        yValue = 100;
+        if (Dimensions.get("window").width > 400) {
+          yValue = 130;
+        } else {
+          yValue = 150;
+        }
       }
 
       console.log(w);
       console.log(h);
+      console.log(Dimensions.get("window").width);
+      console.log(Dimensions.get("window").height);
       console.log(yValue);
 
-      let cropData;
-
-      if (w > h) {
-        cropData = {
-          offset: { x: 0, y: yValue },
-          size: { width: h, height: h }
-        };
-      } else {
-        cropData = {
-          offset: { x: 0, y: yValue },
-          size: { width: w, height: w }
-        };
-      }
+      let cropData = {
+        offset: { x: 0, y: yValue },
+        size: { width: w, height: w }
+      };
 
       ImageEditor.cropImage(
         data.path,
@@ -292,7 +289,7 @@ class Photo extends Component {
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}
             mirrorImage={this.state.camera.mirrorImage}
-            fixOrientation={this.state.camera.mirrorImage}
+            fixOrientation={Platform.OS === "android" ? true : this.state.camera.mirrorImage}
             onFocusChanged={this.focusChange}
             zoomChanged={this.zoomChange}
             defaultOnFocusComponent={true}

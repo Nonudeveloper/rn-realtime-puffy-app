@@ -546,6 +546,8 @@ class MyProfile extends Component {
             data={this.state.data}
             renderItem={this.renderRow}
             columnWrapperStyle={styles.flatList}
+            removeClippedSubviews={true}
+            initialNumToRender={15}
             horizontal={false}
             numColumns={3}
             refreshing={this.state.refreshing}

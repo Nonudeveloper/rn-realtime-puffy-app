@@ -399,7 +399,8 @@ class Message extends Component {
 							style={[{ transform: [{ scaleY: -1 }] }]}
 							inverted={false}
 							enableEmptySections={true}
-							removeClippedSubviews={false}
+							removeClippedSubviews={true}
+							initialNumToRender={30}
 							contentContainerStyle={styles.list}
 							keyExtractor={(item, index) => index}
 							data={this.state.dataSource}

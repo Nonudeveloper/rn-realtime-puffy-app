@@ -129,6 +129,8 @@ class EventsHosting extends Component {
                         }
                         renderItem={this.renderRow}
                         extraData={this.props.extraData}
+                        removeClippedSubviews={true}
+                        initialNumToRender={3}
                         horizontal={false}
                         numColumns={1}
                     />

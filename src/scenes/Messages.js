@@ -254,7 +254,8 @@ class Messages extends Component {
 
 				<SwipeListView
 					enableEmptySections={true}
-					removeClippedSubviews={false}
+					removeClippedSubviews={true}
+					initialNumToRender={18}
 					contentContainerStyle={styles.list}
 					dataSource={this.state.dataSource}
 					maxSwipeDistance={205}
