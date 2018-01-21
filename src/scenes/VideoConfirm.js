@@ -60,7 +60,7 @@ class VideoConfirm extends Component {
 			resizeMode: "cover",
 			duration: 0.0,
 			currentTime: 0.0,
-			controls: true,
+			controls: false,
 			paused: false,
 			skin: "custom",
 			ignoreSilentSwitch: null,
