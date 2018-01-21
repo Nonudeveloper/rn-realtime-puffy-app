@@ -120,12 +120,19 @@ class Reset extends Component {
                 passwordMatchTrue={this.state.password1 == this.state.password2 && this.state.password2.length > 5 ? true : false}
               />
               <BtnWhite value="Submit" onPress={this.updatePassword} />
+              {Platform.OS === "android" ? (
+                <View style={styles.footerAndroid}>
+                  <BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
+                </View>
+              ) : null}
             </View>
           </KeyboardAwareScrollView>
         </LinearGradient>
-        <View style={styles.footer}>
-          <BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
-        </View>
+        {Platform.OS === "android" ? null : (
+          <View style={styles.footer}>
+            <BtnOutline value="Back To Log In" onPress={this.cancelRequest} />
+          </View>
+        )}
       </View>
     );
   }
@@ -174,6 +181,9 @@ const styles = {
     bottom: 25,
     left: 20,
     right: 20
+  },
+  footerAndroid: {
+    marginTop: 60
   }
 };
 
