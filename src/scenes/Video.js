@@ -55,18 +55,31 @@ class Video extends Component {
       this.setState({ cameraPermission: response.camera, photoPermission: response.photo, microphonePermission: response.microphone, isLoaded: 1 });
 
       if (response.camera == "undetermined") {
-        Permissions.request("camera").then(response => {
-          this.setState({ cameraPermission: response });
+        Permissions.request("camera").then(response2 => {
+          this.setState({ cameraPermission: response2 });
+          if (response.photo == "undetermined") {
+            Permissions.request("photo").then(response2 => {
+              this.setState({ photoPermission: response2 });
+              if (response.microphone == "undetermined") {
+                Permissions.request("microphone").then(response3 => {
+                  this.setState({ microphonePermission: response3 });
+                });
+              }
+            });
+          }
         });
-      }
-      if (response.photo == "undetermined") {
-        Permissions.request("photo").then(response => {
-          this.setState({ photoPermission: response });
+      } else if (response.photo == "undetermined") {
+        Permissions.request("photo").then(response2 => {
+          this.setState({ photoPermission: response2 });
+          if (response.microphone == "undetermined") {
+            Permissions.request("microphone").then(response3 => {
+              this.setState({ microphonePermission: response3 });
+            });
+          }
         });
-      }
-      if (response.microphone == "undetermined") {
-        Permissions.request("microphone").then(response => {
-          this.setState({ microphonePermission: response });
+      } else if (response.microphone == "undetermined") {
+        Permissions.request("microphone").then(response2 => {
+          this.setState({ microphonePermission: response2 });
         });
       }
     });
@@ -349,12 +362,9 @@ class Video extends Component {
     if (this.state.photoPermission == "denied" || this.state.photoPermission == "undetermined") {
       return this.noPhoto();
     }
-
-    /*
     if (this.state.microphonePermission == "denied" || this.state.microphonePermission == "undetermined") {
       return this.noMicrophone();
     }
-*/
 
     let timeBarStyle = {
       width: Dimensions.get("window").width * 0.05

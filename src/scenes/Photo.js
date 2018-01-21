@@ -44,13 +44,17 @@ class Photo extends Component {
       this.setState({ cameraPermission: response.camera, photoPermission: response.photo, isLoaded: 1 });
 
       if (response.camera == "undetermined") {
-        Permissions.request("camera").then(response => {
-          this.setState({ cameraPermission: response });
+        Permissions.request("camera").then(response2 => {
+          this.setState({ cameraPermission: response2 });
+          if (response.photo == "undetermined") {
+            Permissions.request("photo").then(response2 => {
+              this.setState({ photoPermission: response2 });
+            });
+          }
         });
-      }
-      if (response.photo == "undetermined") {
-        Permissions.request("photo").then(response => {
-          this.setState({ photoPermission: response });
+      } else if (response.photo == "undetermined") {
+        Permissions.request("photo").then(response2 => {
+          this.setState({ photoPermission: response2 });
         });
       }
     });
