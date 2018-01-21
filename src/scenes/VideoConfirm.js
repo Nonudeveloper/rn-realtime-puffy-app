@@ -202,7 +202,7 @@ class VideoConfirm extends Component {
 				>
 					Video Feed
 				</HeaderCamera>
-				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false}>
+				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={this.props.screenProps.deviceTheme === "Android" ? true : false}>
 					{this.state.video === null ? null : (
 						<View style={styles.imagePreview}>
 							<TouchableWithoutFeedback onPress={this.playVideo}>
