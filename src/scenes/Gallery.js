@@ -152,9 +152,9 @@ class Gallery extends Component {
 
 	getThumb(video, duration, width, height) {
 		const maximumSize = { width: 150, height: 150 };
-		console.log(video);
-		console.log(width);
-		console.log(height);
+		//console.log(video);
+		//console.log(width);
+		//console.log(height);
 
 		ProcessingManager.getPreviewForSecond(video, 1, maximumSize, "JPEG")
 			.then(data => this.compressVideo(video, data.uri, duration, width, height))
@@ -162,8 +162,8 @@ class Gallery extends Component {
 	}
 
 	compressVideo(video, thumb, duration, srcWidth, srcHeight) {
-		console.log(srcWidth);
-		console.log(srcHeight);
+		//console.log(srcWidth);
+		//console.log(srcHeight);
 
 		const maxWidth = 640;
 		const maxHeight = 640;
@@ -185,16 +185,16 @@ class Gallery extends Component {
 			height: newHeight
 		};
 
-		console.log("new");
-		console.log(options);
-		console.log(video);
+		//console.log("new");
+		//console.log(options);
+		//console.log(video);
 
 		//data.source android
 		ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));
 	}
 
 	gotoVideoConfirm(video, thumb) {
-		console.log(video);
+		//console.log(video);
 		this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
 	}
 
@@ -205,7 +205,7 @@ class Gallery extends Component {
 		if (this.state.isLoaded == 1) {
 			return false;
 		}
-		console.log(imageUri);
+		//console.log(imageUri);
 
 		let ext = imageUri.substr(imageUri.lastIndexOf(".") + 1);
 		this.setState({ isLoaded: 1 });
