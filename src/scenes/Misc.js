@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Alert, TouchableOpacity, Image, ScrollView } from "react-native";
+import { Text, View, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
 import Header from "../components/Header";
 import InputTextMultiGreen from "../components/InputTextMultiGreen";
 import { NavigationActions } from "react-navigation";
@@ -139,7 +139,7 @@ class Misc extends Component {
               </View>
             </TouchableOpacity>
           ) : null}
-          <KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false}>
+          <KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false} style={styles.scrollContainer}>
             <View style={styles.sectionHeader}>
               <Text style={styles.boldHeader}>Support</Text>
             </View>
@@ -162,11 +162,11 @@ class Misc extends Component {
               <Text style={styles.version}>{this.appVersion}</Text>
             </View>
             <View style={styles.sectionEnd}>
-              <TouchableOpacity onPress={this.showDeactivate}>
+              <TouchableWithoutFeedback onPress={this.showDeactivate}>
                 <View style={styles.rowEnd}>
                   <Text style={styles.logoutBtn}>Deactivate my account</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             </View>
           </KeyboardAwareScrollView>
         </ScrollView>
@@ -236,7 +236,7 @@ const styles = {
   sectionEnd: {
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 20,
+    marginTop: 50,
     marginBottom: 10,
     paddingTop: 15,
     paddingBottom: 10,
@@ -248,6 +248,9 @@ const styles = {
     color: "red",
     fontSize: 13,
     fontFamily: "Helvetica"
+  },
+  scrollContainer: {
+    marginBottom: 25
   }
 };
 

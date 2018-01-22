@@ -735,7 +735,7 @@ class EventDetail extends Component {
 									{this.state.isFree ? null : (
 										<TextInput
 											style={styles.costText}
-											keyboardType="number-pad"
+											keyboardType="numeric"
 											returnKeyType="done"
 											onChangeText={eventCost => this.setState({ eventCost })}
 											placeholder="$00"
