@@ -121,9 +121,9 @@ class Gallery extends Component {
 				});
 
 				return false;
+			} else {
+				this.showGallery();
 			}
-
-			this.showGallery();
 		});
 	}
 
