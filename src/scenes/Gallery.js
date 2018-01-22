@@ -8,6 +8,7 @@ import ImageResizer from "react-native-image-resizer";
 import Permissions from "react-native-permissions";
 import { ProcessingManager } from "react-native-video-processing";
 import ImageCropPicker from "react-native-image-crop-picker";
+import OpenSettings from "react-native-open-settings";
 var ImagePicker = require("react-native-image-picker");
 
 class Gallery extends Component {
@@ -35,6 +36,7 @@ class Gallery extends Component {
 		}
 
 		this.state = {
+			cameraPermission: true,
 			photoPermission: true,
 			ios: 1,
 			isLoaded: 0
@@ -61,10 +63,7 @@ class Gallery extends Component {
 			);
 		} else {
 			let options = {
-				storageOptions: {
-					skipBackup: true,
-					path: "images"
-				}
+				mediaType: "photo"
 			};
 
 			let options2 = {
@@ -104,31 +103,73 @@ class Gallery extends Component {
 	}
 
 	componentDidMount() {
-		Permissions.check("photo").then(response => {
-			//console.log(response);
+		if (Platform.OS === "ios") {
+			Permissions.check("photo").then(response => {
+				//console.log(response);
 
-			this.setState({ photoPermission: response });
+				this.setState({ photoPermission: response, cameraPermission: true });
 
-			if (response == "denied" || response == "undetermined") {
-				Permissions.request("photo").then(response => {
-					this.setState({ photoPermission: response });
+				if (response == "denied" || response == "undetermined") {
+					Permissions.request("photo").then(response => {
+						this.setState({ photoPermission: response, cameraPermission: true });
 
-					if (response == "denied") {
-						return false;
-					}
+						if (response == "denied") {
+							return false;
+						}
 
+						this.showGallery();
+					});
+
+					return false;
+				} else {
 					this.showGallery();
-				});
+				}
+			});
+		} else {
+			Permissions.checkMultiple(["camera", "photo"]).then(response => {
+				console.log(response);
 
-				return false;
-			} else {
-				this.showGallery();
-			}
-		});
+				this.setState({ cameraPermission: response.camera, photoPermission: response.photo });
+
+				if (response.camera == "denied" || response.camera == "undetermined") {
+					Permissions.request("camera").then(response2 => {
+						this.setState({ cameraPermission: response2 });
+						if (response2 == "denied") {
+							return false;
+						}
+						Permissions.request("photo").then(response3 => {
+							this.setState({ photoPermission: response3 });
+
+							if (response3 == "denied") {
+								return false;
+							}
+
+							this.showGallery();
+						});
+					});
+				} else if (response.photo == "denied" || response.photo == "undetermined") {
+					Permissions.request("photo").then(response3 => {
+						this.setState({ photoPermission: response3 });
+
+						if (response3 == "denied") {
+							return false;
+						}
+
+						this.showGallery();
+					});
+				} else {
+					this.showGallery();
+				}
+			});
+		}
 	}
 
 	openSettings() {
-		Linking.openURL("app-settings:");
+		if (Platform.OS === "ios") {
+			Linking.openURL("app-settings:");
+		} else {
+			OpenSettings.openSettings();
+		}
 	}
 
 	checkVideo(video) {
@@ -232,7 +273,7 @@ class Gallery extends Component {
 		}
 	}
 
-	noCamera() {
+	noPhoto() {
 		return (
 			<View style={styles.container}>
 				<HeaderCamera
@@ -257,8 +298,28 @@ class Gallery extends Component {
 		);
 	}
 
+	noCamera() {
+		return (
+			<View style={styles.container}>
+				<HeaderCamera navigation={this.props.navigation} deviceTheme={this.props.screenProps.deviceTheme} cancel={true} nextFunction={this.uploadImage} nextText="">
+					Gallery
+				</HeaderCamera>
+
+				<View style={styles.profileMessage}>
+					<Image style={styles.lockedEye} source={Images.camera_icon} />
+					<Text style={styles.profileMessageHeader}>Allow access to your camera to start taking photos</Text>
+					<TouchableOpacity style={styles.btn} onPress={this.openSettings}>
+						<Text style={styles.btnText}>Go to Settings</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		);
+	}
 	render() {
-		if (this.state.photoPermission == "denied") {
+		if (this.state.photoPermission == "denied" || this.state.photoPermission == "undetermined") {
+			return this.noPhoto();
+		}
+		if (this.state.cameraPermission == "denied" || this.state.cameraPermission == "undetermined") {
 			return this.noCamera();
 		}
 		if (this.state.isLoaded == 0) {
