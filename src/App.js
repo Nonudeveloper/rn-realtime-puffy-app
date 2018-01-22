@@ -389,7 +389,16 @@ class App extends Component {
 		}
 
 		Permissions.check("location").then(response => {
-			if (response == "denied" || response == "undetermined") {
+			if (response == "undetermined") {
+				this.setState({ gpsError: 1, isLoaded: true });
+
+				Permissions.request("location").then(response2 => {
+					if (response2 == "denied") {
+					} else {
+						this.setState({ gpsError: 0, isLoaded: true });
+					}
+				});
+			} else if (response == "denied") {
 				this.setState({ gpsError: 1, isLoaded: true });
 			} else {
 				this.setState({ gpsError: 0 });

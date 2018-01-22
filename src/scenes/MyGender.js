@@ -4,7 +4,6 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import Header from "../components/Header";
 import BtnOutlineIcon from "../components/BtnOutlineIcon";
 import BtnDefault from "../components/BtnDefault";
-import HeaderLocation from "../components/HeaderLocation";
 import InputBtnIcon from "../components/InputBtnIcon";
 import InputBtnIcon2 from "../components/InputBtnIcon2";
 import Images from "../config/images";
@@ -158,7 +157,12 @@ class MyGender extends Component {
           }}
         >
           <View style={styles.container}>
-            <HeaderLocation callback={() => this.setModalVisible(false)} />
+            <Header
+              deviceTheme={this.props.screenProps.deviceTheme}
+              LeftIcon="back_arrow"
+              LeftCallback={() => this.setModalVisible(false)}
+              global={this.props.screenProps.global}
+            />
             <GooglePlacesAutocomplete
               placeholder="Enter City, State"
               minLength={1} // minimum length of text to search
