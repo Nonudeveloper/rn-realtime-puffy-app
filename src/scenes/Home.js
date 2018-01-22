@@ -133,6 +133,12 @@ class Home extends Component {
 				isModalVisible: true
 			});
 		}
+		if (data["result"] == 1 && data["result_action"] == "puff_action_result") {
+			Alert.alert(data["result_title"], data["result_text"]);
+			setTimeout(function() {
+				$this.setState({ actionCheck: false, showPass: false, showPuff: false });
+			}, 150);
+		}
 
 		if (data["result"] == 1 && data["result_action"] == "get_dash_result") {
 			this.items = data["result_data"];

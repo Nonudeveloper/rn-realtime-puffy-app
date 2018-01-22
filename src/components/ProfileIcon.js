@@ -28,7 +28,7 @@ class ProfileIcon extends Component {
     return (
       <View style={styles.container}>
         <View style={focused == true ? styles.viewActive : styles.view}>
-          <CachedImage source={{ uri: icon }} style={Platform.OS === "ios" ? styles.icon : styles.iconAndroid} />
+          <CachedImage source={{ uri: icon }} style={styles.icon} />
         </View>
       </View>
     );
@@ -46,30 +46,22 @@ const styles = {
   view: {
     width: 35,
     height: 35,
-    borderRadius: 17,
-    borderColor: "transparent",
+    borderRadius: 17.5,
+    borderColor: "#F8F8F8",
     borderWidth: 2
   },
   viewActive: {
     width: 35,
     height: 35,
-    borderRadius: 17,
+    borderRadius: 17.5,
     borderColor: "#00B1BB",
     borderWidth: 2
   },
   icon: {
     width: 31,
     height: 31,
-    resizeMode: "contain",
-    borderRadius: 15,
-    borderColor: "transparent",
-    borderWidth: 2
-  },
-  iconAndroid: {
-    width: 31,
-    height: 31,
-    resizeMode: "contain",
-    borderRadius: 31,
+    resizeMode: "cover",
+    borderRadius: 15.5,
     borderColor: "transparent",
     borderWidth: 2
   }
