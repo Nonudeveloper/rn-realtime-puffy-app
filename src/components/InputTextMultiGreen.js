@@ -22,6 +22,7 @@ const InputTextMultiGreen = props => {
         autoFocus={false}
         autoCorrect={false}
         numberOfLines={4}
+        underlineColorAndroid="transparent"
         maxLength={props.maxLength}
         multiline={props.multiline}
       />
