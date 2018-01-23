@@ -83,13 +83,13 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "com.puffy"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 6
         versionName "6.0"
         ndk {
@@ -144,6 +144,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fbsdk')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-video-processing')
     compile project(':react-native-fs')
@@ -156,7 +157,6 @@ dependencies {
     compile project(':react-native-fetch-blob')
     compile project(':react-native-image-picker')
     compile project(':react-native-svg')
-    compile project(':react-native-facebook-login')
     compile project(':react-native-geocoder')
     compile project(':react-native-linear-gradient')
     compile project(':gl-react-native')

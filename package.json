@@ -13,8 +13,8 @@
         "install": "^0.10.2",
         "lodash": "^4.17.4",
         "prop-types": "^15.6.0",
-        "react": "16.0.0-alpha.12",
-        "react-native": "0.48.4",
+        "react": "16.2.0",
+        "react-native": "0.52.1",
         "react-native-actionsheet": "^2.3.0",
         "react-native-appsflyer": "1.1.9",
         "react-native-auto-height-image": "^0.3.4",
@@ -23,7 +23,7 @@
         "react-native-check-box": "^2.0.2",
         "react-native-datepicker": "^1.6.0",
         "react-native-exception-handler": "^2.6.2",
-        "react-native-facebook-login": "^1.6.0",
+        "react-native-fbsdk": "0.7.0",
         "react-native-fcm": "^10.0.3",
         "react-native-fetch-blob": "^0.10.8",
         "react-native-fs": "^2.9.7",
@@ -38,7 +38,7 @@
         "react-native-img-cache": "^1.5.3",
         "react-native-keyboard-aware-scroll-view": "0.4.1",
         "react-native-letter-spacing": "0.0.5",
-        "react-native-linear-gradient": "^2.3.0",
+        "react-native-linear-gradient": "2.4.0",
         "react-native-loading-spinner-overlay": "^0.5.2",
         "react-native-modal": "^4.0.0",
         "react-native-modal-datetime-picker": "^4.12.0",
@@ -53,20 +53,20 @@
         "react-native-swiper": "^1.5.13",
         "react-native-thumbnail-video": "0.0.8",
         "react-native-video": "^2.0.0",
-        "react-native-video-processing": "1.12.6",
+        "react-native-video-processing": "1.13.0",
         "react-navigation": "1.0.0-beta.23",
         "rect-clamp": "^0.0.0",
         "rect-crop": "^0.0.0",
         "socket.io-client": "2.0.3"
     },
     "devDependencies": {
-        "babel-jest": "21.2.0",
+        "babel-jest": "22.1.0",
         "babel-preset-react-native": "4.0.0",
         "eslint-config-rallycoding": "^3.2.0",
         "eslint-plugin-react": "^6.10.3",
         "eslint-plugin-react-native": "^2.3.1",
-        "jest": "21.2.1",
-        "react-test-renderer": "16.0.0-alpha.12"
+        "jest": "22.1.4",
+        "react-test-renderer": "16.2.0"
     },
     "jest": {
         "preset": "react-native"

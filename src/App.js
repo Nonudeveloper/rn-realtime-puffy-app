@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { AsyncStorage, Alert, View, Text, Image, AppState, TouchableOpacity, Platform, Dimensions, PushNotificationIOS, Linking, NetInfo, Modal } from "react-native";
 import { NavigationActions } from "react-navigation";
 import io from "socket.io-client";
-import { FBLoginManager } from "react-native-facebook-login";
 import PushNotification from "react-native-push-notification";
 import Geocoder from "react-native-geocoder";
 import Auth from "./nav/Auth";
@@ -13,7 +12,6 @@ import Images from "./config/images";
 import { Begin, MyGender, Preferences, Filter, Gps } from "./scenes";
 import LinearGradient from "react-native-linear-gradient";
 import config from "./config/config";
-import { AppEventsLogger } from "react-native-facebook-login";
 import Permissions from "react-native-permissions";
 import RNRestart from "react-native-restart";
 import { setJSExceptionHandler } from "react-native-exception-handler";
@@ -22,7 +20,10 @@ import appsFlyer from "react-native-appsflyer";
 
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from "react-native-fcm";
 
-const APP_VERSION = "11.72";
+const FBSDK = require("react-native-fbsdk");
+const { LoginManager } = FBSDK;
+
+const APP_VERSION = "11.73";
 const { height, width } = Dimensions.get("window");
 const aspectRatio = height / width;
 
@@ -344,7 +345,7 @@ class App extends Component {
 		this.puffyChannel.removeListener("data_channel", this.appEventListener);
 		this.setState({ isLoaded: true, isLogged: false, isUserLoaded: false, user_id: 0, complete_check: 0, user_thumb: null });
 
-		FBLoginManager.logout(function(error, data) {});
+		LoginManager.logOut();
 	};
 
 	getCurrentRouteName(navigationState, index) {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Image, Text, TouchableOpacity, Alert, Dimensions, Platform, BackHandler } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { FBLoginManager } from "react-native-facebook-login";
 import LinearGradient from "react-native-linear-gradient";
 import InputText from "../components/InputText";
 import BtnWhite from "../components/BtnWhite";
@@ -11,6 +10,9 @@ import BtnOutline from "../components/BtnOutline";
 import ajaxPost from "../lib/ajaxPost";
 import ajaxPostDev from "../lib/ajaxPostDev";
 import Images from "../config/images";
+
+const FBSDK = require("react-native-fbsdk");
+const { LoginManager, AccessToken } = FBSDK;
 
 class Login extends Component {
 	constructor(props) {
@@ -39,34 +41,35 @@ class Login extends Component {
 	fbLogin() {
 		let $this = this;
 
-		if (Platform.OS === "android") {
-			FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.WebView);
-		} else {
-			FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Web);
-		}
+		LoginManager.logInWithReadPermissions(["public_profile", "email"]).then(
+			function(result) {
+				if (result.isCancelled) {
+					console.log("Login cancelled");
+				} else {
+					AccessToken.getCurrentAccessToken().then(data => {
+						let fb_id = data.userID;
+						let fb_token = data.accessToken;
 
-		FBLoginManager.loginWithPermissions(["public_profile", "email"], function(error, data) {
-			if (!error) {
-				let fb_id = data.credentials.userId;
-				let fb_token = data.credentials.token;
+						let dataString = { fb_id: fb_id, fb_token: fb_token };
 
-				let dataString = { fb_id: fb_id, fb_token: fb_token };
-
-				ajaxPost(dataString, "fbLogin", function(result) {
-					if (result.result == 1) {
-						console.log(result);
-						result["user_email"] = "";
-						$this.loginUser(result);
-					} else if (result == -1) {
-						Alert.alert("Incorrect", "You have no internet connection");
-					} else {
-						Alert.alert("Registered Email", "Email has an existing account");
-					}
-				});
-			} else {
-				//Alert.alert("Incorrect", "Facebook account not found");
+						ajaxPost(dataString, "fbLogin", function(result) {
+							if (result.result == 1) {
+								console.log(result);
+								result["user_email"] = "";
+								$this.loginUser(result);
+							} else if (result == -1) {
+								Alert.alert("Incorrect", "You have no internet connection");
+							} else {
+								Alert.alert("Registered Email", "Email has an existing account");
+							}
+						});
+					});
+				}
+			},
+			function(error) {
+				console.log("Login fail with error: " + error);
 			}
-		});
+		);
 	}
 
 	setDevCount() {
