@@ -227,16 +227,19 @@ class Gallery extends Component {
 		};
 
 		//console.log("new");
-		//console.log(options);
-		//console.log(video);
+		console.log(options);
+		console.log(video);
 
 		//data.source android
 		ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));
 	}
 
 	gotoVideoConfirm(video, thumb) {
-		//console.log(video);
-		this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+		if (Platform.OS === "android") {
+			this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+		} else {
+			this.props.navigation.navigate("VideoConfirm", { video: video, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+		}
 	}
 
 	uploadImage(imageUri) {

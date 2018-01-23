@@ -286,7 +286,11 @@ class Video extends Component {
   gotoVideoConfirm(video, thumb) {
     this.setState({ recording: false, timePassed: 0 });
 
-    this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+    if (Platform.OS === "android") {
+      this.props.navigation.navigate("VideoConfirm", { video: video.source, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+    } else {
+      this.props.navigation.navigate("VideoConfirm", { video: video, thumb: thumb, data: this.props.navigation.state.params, key: this.key });
+    }
   }
 
   noPhoto() {
