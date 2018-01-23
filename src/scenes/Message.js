@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, FlatList, TextInput, AsyncStorage, Clipboard, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { View, Text, Image, FlatList, TextInput, AsyncStorage, Clipboard, TouchableWithoutFeedback, TouchableOpacity, Platform } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { HeaderMessage } from "../components";
 import Images from "../config/images";

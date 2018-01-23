@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, FlatList, Image, Dimensions, TouchableOpacity, Text } from "react-native";
+import { View, FlatList, Image, Dimensions, TouchableOpacity, Text, Platform } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import HeaderSearch from "../components/HeaderSearch";
 import TopTabIcon from "../components/TopTabIcon";
@@ -390,7 +390,7 @@ class ExplorerHome extends Component {
 						{this.state.dataSource.length > 0 ? (
 							<FlatList
 								enableEmptySections={true}
-								removeClippedSubviews={true}
+								removeClippedSubviews={Platform.OS === "android" ? true : false}
 								initialNumToRender={18}
 								contentContainerStyle={styles.list}
 								keyExtractor={(item, index) => index}

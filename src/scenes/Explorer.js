@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, ScrollView, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { View, Text, Image, ScrollView, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableOpacity, TouchableWithoutFeedback, Platform } from "react-native";
 import FilterInput from "../components/FilterInput";
 import { NavigationActions } from "react-navigation";
 import { CachedImage } from "react-native-img-cache";
@@ -322,7 +322,7 @@ class Explorer extends Component {
 				extraData={this.state.selected}
 				renderItem={this.renderRow}
 				enableEmptySections={false}
-				removeClippedSubviews={true}
+				removeClippedSubviews={Platform.OS === "android" ? true : false}
 				initialNumToRender={15}
 				columnWrapperStyle={styles.flatList}
 				horizontal={false}

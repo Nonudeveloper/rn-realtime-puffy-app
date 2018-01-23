@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ListView, Alert, RefreshControl, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ListView, Alert, RefreshControl, Dimensions, Platform } from "react-native";
 import Images from "../config/images";
 import { CachedImage } from "react-native-img-cache";
 import PushNotification from "react-native-push-notification";

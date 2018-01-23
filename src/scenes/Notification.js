@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, AsyncStorage, TouchableOpacity, RefreshControl, FlatList, Image, TouchableHighlight } from "react-native";
+import { View, Text, AsyncStorage, TouchableOpacity, RefreshControl, FlatList, Image, TouchableHighlight, Platform } from "react-native";
 import Images from "../config/images";
 import { CachedImage } from "react-native-img-cache";
 import HeaderSearch from "../components/HeaderSearch";
@@ -259,7 +259,7 @@ class Notification extends Component {
 				{this.state.dataSource.length > 0 ? (
 					<FlatList
 						enableEmptySections={false}
-						removeClippedSubviews={true}
+						removeClippedSubviews={Platform.OS === "android" ? true : false}
 						initialNumToRender={18}
 						contentContainerStyle={styles.list}
 						keyExtractor={(item, index) => index}

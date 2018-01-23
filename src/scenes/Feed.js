@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, View, Text, Image, AsyncStorage, TouchableOpacity, RefreshControl, FlatList } from "react-native";
+import { Alert, View, Text, Image, AsyncStorage, TouchableOpacity, RefreshControl, FlatList, Platform } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import Images from "../config/images";
 import FilterInput from "../components/FilterInput";
@@ -26,6 +26,7 @@ class Feed extends Component {
 		this.user_id = this.props.screenProps.user_id;
 		this.onRefresh = this.onRefresh.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+		this.viewabilityConfig = { viewAreaCoveragePercentThreshold: 70 };
 
 		this.state = {
 			data: [],
@@ -346,13 +347,11 @@ class Feed extends Component {
 									/>
 								}
 								onEndReached={this.handleLoad}
-								removeClippedSubviews={true}
+								removeClippedSubviews={Platform.OS === "android" ? true : false}
 								initialNumToRender={3}
 								onEndReachedThreshold={5}
 								onViewableItemsChanged={this.handleScroll}
-								viewabilityConfig={{
-									itemVisiblePercentThreshold: 70
-								}}
+								viewabilityConfig={this.viewabilityConfig}
 							/>
 						)}
 					</View>

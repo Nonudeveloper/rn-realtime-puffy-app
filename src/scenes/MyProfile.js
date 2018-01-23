@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, FlatList, RefreshControl, TouchableOpacity, TouchableWithoutFeedback, Dimensions, AsyncStorage, ScrollView } from "react-native";
+import { View, Text, Image, FlatList, RefreshControl, TouchableOpacity, TouchableWithoutFeedback, Dimensions, AsyncStorage, ScrollView, Platform } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
@@ -546,7 +546,7 @@ class MyProfile extends Component {
             data={this.state.data}
             renderItem={this.renderRow}
             columnWrapperStyle={styles.flatList}
-            removeClippedSubviews={true}
+            removeClippedSubviews={Platform.OS === "android" ? true : false}
             initialNumToRender={15}
             horizontal={false}
             numColumns={3}
