@@ -478,7 +478,7 @@ const styles = {
 	},
 	topOverlay: {
 		position: "absolute",
-		padding: 16,
+		padding: 0,
 		right: 0,
 		left: 0,
 		alignItems: "center",
@@ -490,12 +490,12 @@ const styles = {
 		alignItems: "center"
 	},
 	typeButton: {
-		padding: 5,
-		transform: [{ rotate: "130deg" }]
+		padding: 20
 	},
 	typeIcon: {
 		height: 25,
 		width: 25,
+		transform: [{ rotate: "130deg" }],
 		resizeMode: "contain",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 1 },
