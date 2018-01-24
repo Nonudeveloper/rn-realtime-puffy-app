@@ -203,6 +203,8 @@ class Gallery extends Component {
 	}
 
 	compressVideo(video, thumb, duration, srcWidth, srcHeight) {
+		//console.log(video);
+		//console.log(thumb);
 		//console.log(srcWidth);
 		//console.log(srcHeight);
 
@@ -227,8 +229,8 @@ class Gallery extends Component {
 		};
 
 		//console.log("new");
-		console.log(options);
-		console.log(video);
+		//console.log(options);
+		//console.log(video);
 
 		//data.source android
 		ProcessingManager.compress(video, options).then(data => this.gotoVideoConfirm(data, thumb));

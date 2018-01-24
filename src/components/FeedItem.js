@@ -277,7 +277,8 @@ const styles = {
     resizeMode: "cover"
   },
   feedImgContainer: {
-    position: "relative"
+    position: "relative",
+    height: Dimensions.get("window").width
   },
   itemUri: {
     width: null,
