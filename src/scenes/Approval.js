@@ -109,7 +109,7 @@ class Approval extends Component {
 						removeClippedSubviews={true}
 						initialNumToRender={18}
 						contentContainerStyle={styles.list}
-						keyExtractor={(item, index) => index}
+						keyExtractor={item => item.user_id}
 						data={this.props.dataSource}
 						extraData={this.props.selected}
 						renderItem={this.renderRow}

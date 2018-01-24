@@ -334,7 +334,7 @@ class FeedAll extends Component {
 									/>
 								)}
 								refreshing={this.state.refreshing}
-								keyExtractor={(item, index) => index}
+								keyExtractor={item => item.file_id}
 								refreshControl={
 									<RefreshControl
 										refreshing={this.state.pullRefreshing}

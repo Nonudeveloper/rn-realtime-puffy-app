@@ -201,7 +201,7 @@ class MyProfile extends Component {
           file_count: file_count
         });
 
-        //console.log(data.result_data.rows);
+        console.log(data.result_data.rows);
 
         let localData = JSON.stringify(data.result_data.rows);
 
@@ -551,7 +551,7 @@ class MyProfile extends Component {
             horizontal={false}
             numColumns={3}
             refreshing={this.state.refreshing}
-            keyExtractor={(item, index) => index}
+            keyExtractor={item => item.file_id}
             refreshControl={<RefreshControl refreshing={this.state.pullRefreshing} onRefresh={this.onRefresh} tintColor="#57BBC7" colors={["#57BBC7", "#57BBC7", "#57BBC7"]} />}
             onEndReached={this.handleLoad}
             onEndReachedThreshold={5}

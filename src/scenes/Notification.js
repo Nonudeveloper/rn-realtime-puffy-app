@@ -106,6 +106,8 @@ class Notification extends Component {
 			isLoaded: 1
 		});
 
+		console.log(items);
+
 		let localData = JSON.stringify(items);
 
 		if (localData) {
@@ -162,6 +164,8 @@ class Notification extends Component {
 		if (this.state.isNavigating == true) {
 			return false;
 		}
+		console.log(rowData);
+
 		const $this = this;
 
 		this.setState({ isNavigating: true });
@@ -262,7 +266,7 @@ class Notification extends Component {
 						removeClippedSubviews={Platform.OS === "android" ? true : false}
 						initialNumToRender={18}
 						contentContainerStyle={styles.list}
-						keyExtractor={(item, index) => index}
+						keyExtractor={item => item.puffy_noti_id}
 						data={this.state.dataSource}
 						extraData={this.state.selected}
 						refreshControl={

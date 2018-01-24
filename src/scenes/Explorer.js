@@ -327,7 +327,7 @@ class Explorer extends Component {
 				columnWrapperStyle={styles.flatList}
 				horizontal={false}
 				numColumns={3}
-				keyExtractor={(item, index) => index}
+				keyExtractor={item => item.id}
 				refreshControl={
 					<RefreshControl
 						refreshing={this.state.pullRefreshing}

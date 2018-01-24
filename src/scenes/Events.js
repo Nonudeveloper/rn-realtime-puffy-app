@@ -131,6 +131,7 @@ class Events extends Component {
                         }
                         renderItem={this.renderRow}
                         extraData={this.props.extraData}
+                        keyExtractor={item => item.key}
                         removeClippedSubviews={true}
                         initialNumToRender={3}
                         horizontal={false}

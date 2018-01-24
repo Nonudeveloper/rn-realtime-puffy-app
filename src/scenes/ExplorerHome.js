@@ -393,7 +393,7 @@ class ExplorerHome extends Component {
 								removeClippedSubviews={Platform.OS === "android" ? true : false}
 								initialNumToRender={18}
 								contentContainerStyle={styles.list}
-								keyExtractor={(item, index) => index}
+								keyExtractor={item => item.user_id}
 								data={this.state.dataSource}
 								renderItem={this.renderRow}
 								extraData={this.state.selected}

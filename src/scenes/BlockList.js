@@ -137,7 +137,7 @@ class BlockList extends Component {
             removeClippedSubviews={true}
             initialNumToRender={18}
             contentContainerStyle={styles.list}
-            keyExtractor={(item, index) => index}
+            keyExtractor={item => item.user_id}
             data={this.state.dataSource}
             renderItem={this.renderRow}
           />
