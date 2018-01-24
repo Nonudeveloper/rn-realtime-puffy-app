@@ -286,7 +286,7 @@ class FeedAll extends Component {
 			const ref = this[`FeedItem_${key}`];
 
 			if (ref == null) {
-				console.log("no ref");
+				//console.log("no ref");
 			} else {
 				if (isViewable) {
 					ref.setPaused(false);

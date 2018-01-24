@@ -106,7 +106,7 @@ class Notification extends Component {
 			isLoaded: 1
 		});
 
-		console.log(items);
+		//console.log(items);
 
 		let localData = JSON.stringify(items);
 

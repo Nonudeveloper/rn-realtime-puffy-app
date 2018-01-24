@@ -201,7 +201,7 @@ class MyProfile extends Component {
           file_count: file_count
         });
 
-        console.log(data.result_data.rows);
+        //console.log(data.result_data.rows);
 
         let localData = JSON.stringify(data.result_data.rows);
 
