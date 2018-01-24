@@ -58,14 +58,14 @@ const styles = {
   },
   notificationContainerAndroid: {
     position: "absolute",
-    top: 5,
-    right: 15,
-    width: 24,
-    height: 24,
-    borderRadius: 40,
+    top: 1,
+    left: 15,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#FF843E",
-    backgroundColor: "#FF843E",
+    borderColor: "#FF4500",
+    backgroundColor: "#FF4500",
     justifyContent: "center",
     zIndex: 2
   }

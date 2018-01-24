@@ -188,7 +188,7 @@ class FeedItem extends Component {
                   paused={paused}
                   volume={this.state.volume}
                   muted={this.state.muted}
-                  ignoreSilentSwitch={this.state.ignoreSilentSwitch}
+                  ignoreSilentSwitch={"ignore"}
                   playInBackground={false}
                   resizeMode={this.state.resizeMode}
                   onLoad={this.onLoad}
