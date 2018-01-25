@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList, Alert } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, Alert, Platform } from "react-native";
 import Images from "../config/images";
 import HeaderSearch from "../components/HeaderSearch";
 import UserRow from "../components/UserRow";
@@ -106,7 +106,7 @@ class Approval extends Component {
 				{this.props.dataSource.length > 0 ? (
 					<FlatList
 						enableEmptySections={true}
-						removeClippedSubviews={true}
+						removeClippedSubviews={Platform.OS === "android" ? true : false}
 						initialNumToRender={18}
 						contentContainerStyle={styles.list}
 						keyExtractor={item => item.user_id}
