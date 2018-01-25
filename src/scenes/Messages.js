@@ -254,7 +254,7 @@ class Messages extends Component {
 
 				<SwipeListView
 					enableEmptySections={true}
-					removeClippedSubviews={true}
+					removeClippedSubviews={Platform.OS === "android" ? true : false}
 					initialNumToRender={18}
 					contentContainerStyle={styles.list}
 					dataSource={this.state.dataSource}
