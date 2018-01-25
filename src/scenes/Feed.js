@@ -285,9 +285,7 @@ class Feed extends Component {
 			const { isViewable, key } = row;
 			const ref = this[`FeedItem_${key}`];
 
-			if (ref == null) {
-				//console.log("no ref");
-			} else {
+			if (ref != null) {
 				if (isViewable) {
 					ref.setPaused(false);
 				} else {
@@ -320,7 +318,7 @@ class Feed extends Component {
 								renderItem={({ item, index }) => (
 									<FeedItem
 										ref={ref => {
-											this[`FeedItem_${index}`] = ref;
+											this[`FeedItem_${item.file_id}`] = ref;
 										}}
 										data={item}
 										index={index}
