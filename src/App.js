@@ -23,7 +23,7 @@ import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult,
 const FBSDK = require("react-native-fbsdk");
 const { LoginManager } = FBSDK;
 
-const APP_VERSION = "11.76";
+const APP_VERSION = "11.77";
 const { height, width } = Dimensions.get("window");
 const aspectRatio = height / width;
 

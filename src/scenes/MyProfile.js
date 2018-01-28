@@ -489,7 +489,7 @@ class MyProfile extends Component {
       <View style={styles.container}>
         <Header
           deviceTheme={this.props.screenProps.deviceTheme}
-          LeftIcon="white_add_photo_button"
+          LeftIcon="photo_plus"
           LeftCallback={this.showMenu2}
           RightIcon="white_setting_button"
           RightCallback={this.gotoSettings}

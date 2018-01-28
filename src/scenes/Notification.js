@@ -255,7 +255,7 @@ class Notification extends Component {
 					deviceTheme={this.props.screenProps.deviceTheme}
 					placeholder="Search"
 					onChange={this.onChange}
-					RightIcon="white_plane_button"
+					RightIcon="circle_chat"
 					RightCallback={() => this.props.navigation.navigate("Messages")}
 					unread_count={this.props.screenProps.unread_count}
 					global={this.props.screenProps.global}

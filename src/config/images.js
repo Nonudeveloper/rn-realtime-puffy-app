@@ -25,6 +25,11 @@ const images = {
 	back_new: require("../img/back.png"),
 	rounded_checkmark: require("../img/rounded_checkmark.png"),
 
+	circle_back: require("../img/circle_back.png"),
+	circle_chat: require("../img/circle_chat.png"),
+	circle_flag: require("../img/circle_flag.png"),
+	photo_plus: require("../img/photo_plus.png"),
+
 	puffy_letter: require("../img/puffy_letter.png"),
 	puffy_logo: require("../img/puffy_logo.png"),
 	logo_white: require("../img/logo_white.png"),
@@ -111,6 +116,8 @@ const images = {
 	smoke_shadow: require("../img/SMOKE_SHADOW.png"),
 	smoke_black: require("../img/SMOKE_BLACK.png"),
 	smoke_green: require("../img/SMOKE_GREEN.png"),
+	circle_smoke_on: require("../img/circlePref/circle_smoke_on.png"),
+	circle_smoke_off: require("../img/circlePref/circle_smoke_off.png"),
 
 	vape: require("../img/vape.png"),
 	vape_on: require("../img/vape_on.png"),
@@ -118,6 +125,8 @@ const images = {
 	vape_shadow: require("../img/VAPE_SHADOW.png"),
 	vape_black: require("../img/VAPE_BLACK.png"),
 	vape_green: require("../img/VAPE_GREEN.png"),
+	circle_vape_on: require("../img/circlePref/circle_vape_on.png"),
+	circle_vape_off: require("../img/circlePref/circle_vape_off.png"),
 
 	edibles: require("../img/edibles.png"),
 	edibles_on: require("../img/edibles_on.png"),
@@ -125,6 +134,8 @@ const images = {
 	edibles_shadow: require("../img/EDIBLES_SHADOW.png"),
 	edibles_black: require("../img/EDIBLES_BLACK.png"),
 	edibles_green: require("../img/EDIBLES_GREEN.png"),
+	circle_edibles_on: require("../img/circlePref/circle_edibles_on.png"),
+	circle_edibles_off: require("../img/circlePref/circle_edibles_off.png"),
 
 	chill: require("../img/chill.png"),
 	chill_on: require("../img/chill_on.png"),
@@ -132,6 +143,8 @@ const images = {
 	chill_shadow: require("../img/CHILL_SHADOW.png"),
 	chill_black: require("../img/CHILL_BLACK.png"),
 	chill_green: require("../img/CHILL_GREEN.png"),
+	circle_chill_on: require("../img/circlePref/circle_chill_on.png"),
+	circle_chill_off: require("../img/circlePref/circle_chill_off.png"),
 
 	outdoor: require("../img/outdoor.png"),
 	outdoor_on: require("../img/outdoor_on.png"),
@@ -139,6 +152,8 @@ const images = {
 	outdoor_shadow: require("../img/OUTDOR_SHADOW.png"),
 	outdoor_black: require("../img/OUTDOR_BLACK.png"),
 	outdoor_green: require("../img/OUTDOR_GREEN.png"),
+	circle_outdoor_on: require("../img/circlePref/circle_outdoor_on.png"),
+	circle_outdoor_off: require("../img/circlePref/circle_outdoor_off.png"),
 
 	flicks: require("../img/flicks.png"),
 	flicks_on: require("../img/flicks_on.png"),
@@ -146,6 +161,8 @@ const images = {
 	flicks_shadow: require("../img/FLICKS_SHADOW.png"),
 	flicks_black: require("../img/FLICKS_BLACK.png"),
 	flicks_green: require("../img/FLICKS_GREEN.png"),
+	circle_flicks_on: require("../img/circlePref/circle_flicks_on.png"),
+	circle_flicks_off: require("../img/circlePref/circle_flicks_off.png"),
 
 	games: require("../img/videogames.png"),
 	games_on: require("../img/videogames_on.png"),
@@ -153,6 +170,8 @@ const images = {
 	games_shadow: require("../img/GAMES_SHADOW.png"),
 	games_black: require("../img/GAMES_BLACK.png"),
 	games_green: require("../img/GAMES_GREEN.png"),
+	circle_games_on: require("../img/circlePref/circle_games_on.png"),
+	circle_games_off: require("../img/circlePref/circle_games_off.png"),
 
 	sports: require("../img/sports.png"),
 	sports_on: require("../img/sports_on.png"),
@@ -160,6 +179,8 @@ const images = {
 	sports_shadow: require("../img/SPORT_SHADOW.png"),
 	sports_black: require("../img/SPORT_BLACK.png"),
 	sports_green: require("../img/SPORT_GREEN.png"),
+	circle_sports_on: require("../img/circlePref/circle_sports_on.png"),
+	circle_sports_off: require("../img/circlePref/circle_sports_off.png"),
 
 	clubs: require("../img/clubs.png"),
 	clubs_on: require("../img/clubs_on.png"),
@@ -167,6 +188,8 @@ const images = {
 	clubs_shadow: require("../img/CLUB_SHADOW.png"),
 	clubs_black: require("../img/CLUB_BLACK.png"),
 	clubs_green: require("../img/CLUB_GREEN.png"),
+	circle_clubs_on: require("../img/circlePref/circle_clubs_on.png"),
+	circle_clubs_off: require("../img/circlePref/circle_clubs_off.png"),
 
 	concert: require("../img/concert.png"),
 	concert_on: require("../img/concert_on.png"),
@@ -174,6 +197,8 @@ const images = {
 	concert_shadow: require("../img/SHOW_SHADOW.png"),
 	concert_black: require("../img/SHOW_BLACK.png"),
 	concert_green: require("../img/SHOW_GREEN.png"),
+	circle_concert_on: require("../img/circlePref/circle_concert_on.png"),
+	circle_concert_off: require("../img/circlePref/circle_concert_off.png"),
 
 	food: require("../img/food.png"),
 	food_on: require("../img/food_on.png"),
@@ -181,6 +206,8 @@ const images = {
 	food_shadow: require("../img/FOOD_SHADOW.png"),
 	food_black: require("../img/FOOD_BLACK.png"),
 	food_green: require("../img/FOOD_GREEN.png"),
+	circle_food_on: require("../img/circlePref/circle_food_on.png"),
+	circle_food_off: require("../img/circlePref/circle_food_off.png"),
 
 	videogames: require("../img/games.png"),
 	videogames_on: require("../img/games_on.png"),
@@ -188,36 +215,50 @@ const images = {
 	videogames_shadow: require("../img/CHAT_SHADOW.png"),
 	videogames_black: require("../img/CHAT_BLACK.png"),
 	videogames_green: require("../img/CHAT_GREEN.png"),
+	circle_videogames_on: require("../img/circlePref/circle_chat_on.png"),
+	circle_videogames_off: require("../img/circlePref/circle_chat_off.png"),
 
 	friend: require("../img/friend.png"),
 	friend_black: require("../img/FRIEND_BLACK.png"),
 	friend_green: require("../img/FRIEND_GREEN.png"),
 	friend_shadow: require("../img/FRIEND_SHADOW.png"),
+	circle_friend_on: require("../img/circlePref/circle_friend_on.png"),
+	circle_friend_off: require("../img/circlePref/circle_friend_off.png"),
 
 	liquor: require("../img/liquor.png"),
 	liquor_black: require("../img/LIQUOR_BLACK.png"),
 	liquor_green: require("../img/LIQUOR_GREEN.png"),
 	liquor_shadow: require("../img/LIQUOR_SHADOW.png"),
+	circle_liquor_on: require("../img/circlePref/circle_liquor_on.png"),
+	circle_liquor_off: require("../img/circlePref/circle_liquor_off.png"),
 
 	love: require("../img/love.png"),
 	love_black: require("../img/LOVE_BLACK.png"),
 	love_green: require("../img/LOVE_GREEN.png"),
 	love_shadow: require("../img/LOVE_SHADOW.png"),
+	circle_love_on: require("../img/circlePref/circle_love_on.png"),
+	circle_love_off: require("../img/circlePref/circle_love_off.png"),
 
 	hotbox: require("../img/hotbox.png"),
 	hotbox_black: require("../img/HOTBOX_BLACK.png"),
 	hotbox_green: require("../img/HOTBOX_GREEN.png"),
 	hotbox_shadow: require("../img/HOTBOX_SHADOW.png"),
+	circle_hotbox_on: require("../img/circlePref/circle_hotbox_on.png"),
+	circle_hotbox_off: require("../img/circlePref/circle_hotbox_off.png"),
 
 	karaoke: require("../img/karaoke.png"),
 	karaoke_black: require("../img/KARAOKE_BLACK.png"),
 	karaoke_green: require("../img/KARAOKE_GREEN.png"),
 	karaoke_shadow: require("../img/KARAOKE_SHADOW.png"),
+	circle_karaoke_on: require("../img/circlePref/circle_karaoke_on.png"),
+	circle_karaoke_off: require("../img/circlePref/circle_karaoke_off.png"),
 
 	music: require("../img/music.png"),
 	music_black: require("../img/MUSIC_BLACK.png"),
 	music_green: require("../img/MUSIC_GREEN.png"),
 	music_shadow: require("../img/MUSIC_SHADOW.png"),
+	circle_music_on: require("../img/circlePref/circle_music_on.png"),
+	circle_music_off: require("../img/circlePref/circle_music_off.png"),
 
 	send_button: require("../img/send_button.png"),
 	filter: require("../img/filter.png"),

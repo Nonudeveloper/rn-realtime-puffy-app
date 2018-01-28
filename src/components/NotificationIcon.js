@@ -25,8 +25,8 @@ class NotificationIcon extends Component {
         <Image
           source={focused ? navImages.notification_on : navImages.notification_off}
           style={{
-            width: 28,
-            height: 28,
+            width: 45,
+            height: 45,
             resizeMode: "contain"
           }}
         />

@@ -376,11 +376,11 @@ class ExplorerHome extends Component {
 			<View style={styles.container}>
 				<HeaderSearch
 					deviceTheme={this.props.screenProps.deviceTheme}
-					LeftIcon="white_add_photo_button"
+					LeftIcon="photo_plus"
 					LeftCallback={this.showMenu}
 					placeholder="Search a user"
 					onChange={this.onChange}
-					RightIcon="white_plane_button"
+					RightIcon="circle_chat"
 					RightCallback={() => this.props.navigation.navigate("Messages")}
 					unread_count={this.props.screenProps.unread_count}
 					global={this.props.screenProps.global}

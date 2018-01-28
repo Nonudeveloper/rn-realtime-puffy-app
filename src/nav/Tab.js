@@ -159,15 +159,16 @@ const TabContainer = TabNavigator(
       showLabel: false,
       scrollEnabled: false,
       iconStyle: {
-        width: 35,
-        height: 35
+        width: 45,
+        height: 45
       },
       indicatorStyle: {
         height: 0,
         width: 0
       },
       style: {
-        backgroundColor: "#F8F8F8"
+        backgroundColor: "#EBF1F2",
+        height: 60
       }
     }
   }
@@ -175,23 +176,23 @@ const TabContainer = TabNavigator(
 
 const styles = {
   icon: {
-    width: 28,
-    height: 28,
+    width: 45,
+    height: 45,
     resizeMode: "contain"
   },
   iconDash: {
-    width: 31,
-    height: 31,
+    width: 45,
+    height: 45,
     resizeMode: "contain"
   },
   iconEvent: {
-    width: 27,
-    height: 27,
+    width: 45,
+    height: 45,
     resizeMode: "contain"
   },
   iconExplorer: {
-    width: 32,
-    height: 32,
+    width: 45,
+    height: 45,
     resizeMode: "contain"
   }
 };

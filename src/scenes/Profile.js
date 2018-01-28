@@ -735,6 +735,7 @@ class Profile extends Component {
         <TouchableWithoutFeedback onPress={() => this.gotoFile(data.item)}>
           <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: data.item.file_thumbnail_url, cache: "force-cache" }} />
         </TouchableWithoutFeedback>
+        {data.item.file_type == "video/mp4" ? <Image style={styles.vidIcon} source={Images.vid} /> : null}
       </View>
     );
   }
@@ -1263,6 +1264,18 @@ const styles = {
     fontSize: 13,
     fontWeight: "bold",
     marginLeft: 10
+  },
+  vidIcon: {
+    position: "absolute",
+    top: 2,
+    right: 8,
+    width: 20,
+    height: 25,
+    resizeMode: "contain",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.7,
+    shadowRadius: 2
   }
 };
 

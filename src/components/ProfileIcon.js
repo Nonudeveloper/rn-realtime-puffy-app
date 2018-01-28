@@ -17,8 +17,8 @@ class ProfileIcon extends Component {
         <Image
           source={focused ? navImages.profile_on : navImages.profile_off}
           style={{
-            width: 28,
-            height: 28,
+            width: 45,
+            height: 45,
             resizeMode: "contain"
           }}
         />
@@ -44,24 +44,24 @@ const styles = {
     alignItems: "center"
   },
   view: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     borderColor: "#F8F8F8",
     borderWidth: 2
   },
   viewActive: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     borderColor: "#00B1BB",
     borderWidth: 2
   },
   icon: {
-    width: 31,
-    height: 31,
+    width: 38,
+    height: 38,
     resizeMode: "cover",
-    borderRadius: 15.5,
+    borderRadius: 18.5,
     borderColor: "transparent",
     borderWidth: 2
   }

@@ -262,7 +262,7 @@ class EventsHome extends Component {
 					onChange={this.onChange}
 					LeftIcon="event_calendar_on_plus_white"
 					LeftCallback={this.createEvent}
-					RightIcon="white_plane_button"
+					RightIcon="circle_chat"
 					RightCallback={() => this.props.navigation.navigate("Messages")}
 					unread_count={this.props.screenProps.unread_count}
 					global={this.props.screenProps.global}
