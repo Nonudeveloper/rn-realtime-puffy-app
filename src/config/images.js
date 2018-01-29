@@ -327,6 +327,9 @@ const images = {
 	puffBtn2: require("../img/puffBtn2.png"),
 	passBtn3: require("../img/passBtn3.png"),
 	puffBtn3: require("../img/puffBtn3.png"),
+	passBtn5: require("../img/passbutton.png"),
+	puffBtn5: require("../img/puffbutton.png"),
+
 
 	puff_stamp: require("../img/puff_stamp.png"),
 	pass_stamp: require("../img/pass_stamp.png"),
@@ -346,6 +349,7 @@ const images = {
 	slide3: require("../img/slide/slide3.png"),
 	slide4: require("../img/slide/slide4.jpg"),
 	vid: require("../img/vid.png")
+
 };
 
 export default images;

@@ -30,6 +30,7 @@ export * from "./Events";
 export * from "./EventDetail";
 export * from "./EventsView";
 export * from "./EventApprove";
+export * from "./EventComment";
 export * from "./EventsUpNext";
 export * from "./EventsHosting";
 export * from "./EventsPast";

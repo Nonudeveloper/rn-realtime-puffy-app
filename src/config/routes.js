@@ -25,7 +25,8 @@ import {
 	SupportMsg,
 	Misc,
 	BlockList,
-	ChangePassword
+	ChangePassword,
+	EventComment,
 } from "../scenes";
 
 const routes = {
@@ -64,6 +65,9 @@ const routes = {
 	},
 	EventsRating: {
 		screen: EventsRating
+	},
+	EventComment: {
+		screen: EventComment
 	},
 	File: {
 		screen: File
