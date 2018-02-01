@@ -21,7 +21,7 @@ const Header = ({ deviceTheme, LeftIcon, LeftText, LeftCallback, RightIcon, Righ
             }}
             style={backStyle}
           >
-            <Image style={styles.backIcon} source={Images[LeftIcon]} />
+            <Image style={LeftIcon == "photo_plus" ? styles.backIconPlus : styles.backIcon} source={Images[LeftIcon]} />
           </TouchableOpacity>
         )}
         {LeftText == null ? null : (
@@ -143,13 +143,25 @@ const styles = {
     borderWidth: 1,
     paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 6,
+    paddingBottom: 5,
     paddingLeft: 5,
     borderColor: "transparent"
   },
   backIcon: {
     height: 30,
     width: 25,
+    marginRight: 5,
+    marginLeft: 5,
+    resizeMode: "contain",
+    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.7,
+    shadowRadius: 2
+  },
+  backIconPlus: {
+    height: 30,
+    width: 30,
     marginRight: 5,
     marginLeft: 5,
     resizeMode: "contain",
@@ -195,6 +207,7 @@ const styles = {
     width: 27,
     height: 27,
     marginRight: 5,
+    marginBottom: 1,
     resizeMode: "contain",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

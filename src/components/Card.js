@@ -63,7 +63,8 @@ export default class Card extends Component {
 
   componentWillMount() {
     this.panResponder = PanResponder.create({
-      onMoveShouldSetResponderCapture: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetResponderCapture: () => false,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         const isVerticalSwipe = Math.sqrt(Math.pow(gestureState.dx, 2) < Math.pow(gestureState.dy, 2));
         if (isVerticalSwipe) {
@@ -72,7 +73,7 @@ export default class Card extends Component {
         if (this.props.disable === true) {
           return false;
         }
-        return true;
+        return Math.sqrt(Math.pow(gestureState.dx, 2) + Math.pow(gestureState.dy, 2)) > 10;
       },
       onPanResponderGrant: (e, gestureState) => {
         this.state.pan.setValue({ x: 0, y: 0 });

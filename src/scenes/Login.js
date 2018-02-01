@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import { View, Image, Text, TouchableOpacity, Alert, Dimensions, Platform, BackHandler } from "react-native";
+import { View, Image, Text, TouchableOpacity, Alert, Dimensions, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LinearGradient from "react-native-linear-gradient";
-import InputText from "../components/InputText";
+import InputTextLogin from "../components/InputTextLogin";
 import BtnWhite from "../components/BtnWhite";
 import BtnWhiteSmall from "../components/BtnWhiteSmall";
 import BtnWhiteIcon from "../components/BtnWhiteIcon";
-import BtnOutline from "../components/BtnOutline";
+import BtnOutlineLogin from "../components/BtnOutlineLogin";
 import ajaxPost from "../lib/ajaxPost";
 import ajaxPostDev from "../lib/ajaxPostDev";
 import Images from "../config/images";
+import ImageSlider from "react-native-image-slider";
+import Swiper from "react-native-swiper";
 
+const DIMENSIONS = Dimensions.get("window");
 const FBSDK = require("react-native-fbsdk");
 const { LoginManager, AccessToken } = FBSDK;
 
@@ -28,6 +31,7 @@ class Login extends Component {
 		this.setDevCount = this.setDevCount.bind(this);
 		this.loginUser = this.props.screenProps.loginUser.bind(this);
 		this.loginUserAdmin = this.props.screenProps.loginUserAdmin.bind(this);
+		this.width = Dimensions.get("window").width;
 
 		let email = this.props.screenProps.user_email;
 
@@ -146,7 +150,6 @@ class Login extends Component {
 		this[id].focus();
 	}
 
-	//For IPAD in iphone mode.
 	renderSmall() {
 		return (
 			<LinearGradient
@@ -156,12 +159,59 @@ class Login extends Component {
 				colors={["#23ACC0", "#339FBA", "#4395B7", "#4F8DB4", "#5C84B1", "#697CAE", "#7674AB", "#826DA8", "#9467A5"]}
 				style={styles.container}
 			>
-				<KeyboardAwareScrollView overScrollMode="never" keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
-					<View style={styles.headerSmall}>
-						<Image style={styles.logoSmall} source={Images.puffy_logo} />
+				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false}>
+					<View style={DIMENSIONS.height > 500 ? styles.headerSmall : styles.headerSmaller}>
+						<Image style={DIMENSIONS.height > 500 ? styles.logoSmall : styles.logoSmaller} source={Images.puffy_logo} />
 					</View>
+					<TouchableOpacity style={styles.btnDevMode} onPress={this.setDevCount}>
+						<Text style={styles.btnDevModeText} />
+					</TouchableOpacity>
+					<Swiper
+						style={styles.wrapper}
+						showsButtons={false}
+						autoplay={false}
+						loop={false}
+						index={0}
+						paginationStyle={{
+							bottom: 0,
+							left: 0,
+							right: 0,
+							alignItems: "center"
+						}}
+						height={Dimensions.get("window").height * 0.3}
+					>
+						<View style={styles.slide1}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideTextSmall}>Meet New and Interesting</Text>
+								<Text style={styles.slideTextSmall}>Puffers Nearby</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide1} />
+						</View>
+						<View style={styles.slide2}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideTextSmall}>Pass by Swiping Left, Puff by</Text>
+								<Text style={styles.slideTextSmall}>Swiping Right and Connect</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide1} />
+							<Image style={styles.slideImgOverSmall} source={Images.slide2} />
+						</View>
+						<View style={styles.slide3}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideTextSmall}>Once They Puff Back then You</Text>
+								<Text style={styles.slideTextSmall}>Become Puffers</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide4} />
+						</View>
+						<View style={styles.slide4}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideTextSmall}>Be Able to Chat and Share</Text>
+								<Text style={styles.slideTextSmall}>Photos Freely with Puffers</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide3} />
+						</View>
+					</Swiper>
 					<View style={styles.contentSmall}>
-						<InputText
+						<InputTextLogin
 							inputRef={node => (this.email = node)}
 							value={this.state.email}
 							placeholderTextColor="#FFF"
@@ -173,7 +223,7 @@ class Login extends Component {
 							onSubmitEditing={() => this.focusNextField("password")}
 							onChangeText={email => this.setState({ email })}
 						/>
-						<InputText
+						<InputTextLogin
 							inputRef={node => (this.password = node)}
 							value={this.state.password}
 							placeholderTextColor="#FFF"
@@ -189,24 +239,15 @@ class Login extends Component {
 						<TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
 							<Text style={styles.btnForgotText}>Forgot password?</Text>
 						</TouchableOpacity>
-
-						<View style={styles.facebookSmall}>
+						<View style={styles.facebook}>
 							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
 						</View>
 					</View>
-					{Platform.OS === "android" ? (
-						<View style={styles.signupForFree}>
-							<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-							<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
-						</View>
-					) : null}
 				</KeyboardAwareScrollView>
-				{Platform.OS === "ios" ? (
-					<View style={styles.footerSmall}>
-						<Text style={styles.textNotPufferSmall}>Not a puffer yet?</Text>
-						<BtnOutline value="Sign up for FREE!" onPress={this.showRegister} />
-					</View>
-				) : null}
+				<View style={styles.footerSmall}>
+					<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
+					<BtnOutlineLogin value="Sign up for free!" onPress={this.showRegister} />
+				</View>
 			</LinearGradient>
 		);
 	}
@@ -224,19 +265,59 @@ class Login extends Component {
 				colors={["#23ACC0", "#339FBA", "#4395B7", "#4F8DB4", "#5C84B1", "#697CAE", "#7674AB", "#826DA8", "#9467A5"]}
 				style={styles.container}
 			>
-				<KeyboardAwareScrollView
-					overScrollMode="never"
-					keyboardShouldPersistTaps={"handled"}
-					scrollEnabled={this.props.screenProps.deviceTheme === "Android" ? true : false}
-				>
-					<View style={styles.header}>
-						<Image style={this.props.screenProps.deviceTheme === "IphoneX" ? styles.logoBig : styles.logo} source={Images.puffy_logo} />
+				<KeyboardAwareScrollView overScrollMode="never" scrollEnabled={false}>
+					<View style={this.deviceTheme == "IphoneX" ? styles.headerX : styles.header}>
+						<Image style={styles.logo} source={Images.puffy_logo} />
 					</View>
 					<TouchableOpacity style={styles.btnDevMode} onPress={this.setDevCount}>
 						<Text style={styles.btnDevModeText} />
 					</TouchableOpacity>
+					<Swiper
+						style={styles.wrapper}
+						showsButtons={false}
+						autoplay={false}
+						loop={false}
+						index={0}
+						paginationStyle={{
+							bottom: 10,
+							left: 0,
+							right: 0,
+							alignItems: "center"
+						}}
+						height={Dimensions.get("window").height * 0.4}
+					>
+						<View style={styles.slide1}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideText}>Meet New and Interesting</Text>
+								<Text style={styles.slideText}>Puffers Nearby</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide1} />
+						</View>
+						<View style={styles.slide2}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideText}>Pass by Swiping Left, Puff by</Text>
+								<Text style={styles.slideText}>Swiping Right and Connect</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide1} />
+							<Image style={styles.slideImgOver} source={Images.slide2} />
+						</View>
+						<View style={styles.slide3}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideText}>Once They Puff Back then You</Text>
+								<Text style={styles.slideText}>Become Puffers</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide4} />
+						</View>
+						<View style={styles.slide4}>
+							<View style={styles.slideTextContainer}>
+								<Text style={styles.slideText}>Be Able to Chat and Share</Text>
+								<Text style={styles.slideText}>Photos Freely with Puffers</Text>
+							</View>
+							<Image style={styles.slideImg} source={Images.slide3} />
+						</View>
+					</Swiper>
 					<View style={styles.content}>
-						<InputText
+						<InputTextLogin
 							inputRef={node => (this.email = node)}
 							value={this.state.email}
 							placeholderTextColor="#FFF"
@@ -248,7 +329,7 @@ class Login extends Component {
 							onSubmitEditing={() => this.focusNextField("password")}
 							onChangeText={email => this.setState({ email })}
 						/>
-						<InputText
+						<InputTextLogin
 							inputRef={node => (this.password = node)}
 							value={this.state.password}
 							placeholderTextColor="#FFF"
@@ -261,29 +342,18 @@ class Login extends Component {
 							onChangeText={password => this.setState({ password })}
 						/>
 						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
-
 						<TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
 							<Text style={styles.btnForgotText}>Forgot password?</Text>
 						</TouchableOpacity>
-
-						<View style={this.props.screenProps.deviceTheme === "IphoneX" ? styles.facebookBig : styles.facebook}>
+						<View style={styles.facebook}>
 							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
 						</View>
 					</View>
-
-					{Platform.OS === "android" ? (
-						<View style={styles.signupForFree}>
-							<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-							<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
-						</View>
-					) : null}
 				</KeyboardAwareScrollView>
-				{Platform.OS === "ios" ? (
-					<View style={this.props.screenProps.deviceTheme === "IphoneX" ? styles.footerBig : styles.footer}>
-						<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-						<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
-					</View>
-				) : null}
+				<View style={this.deviceTheme == "IphoneX" ? styles.footerX : styles.footer}>
+					<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
+					<BtnOutlineLogin value="Sign up for free!" onPress={this.showRegister} />
+				</View>
 			</LinearGradient>
 		);
 	}
@@ -294,6 +364,170 @@ const styles = {
 		flex: 1,
 		backgroundColor: "transparent"
 	},
+	headerX: {
+		marginTop: 55,
+		marginBottom: 10,
+		alignItems: "center",
+		backgroundColor: "transparent"
+	},
+	header: {
+		marginTop: 25,
+		marginBottom: 10,
+		alignItems: "center",
+		backgroundColor: "transparent"
+	},
+	headerSmall: {
+		marginTop: 25,
+		marginBottom: 5,
+		alignItems: "center",
+		backgroundColor: "transparent"
+	},
+	headerSmaller: {
+		marginTop: 17,
+		alignItems: "center",
+		backgroundColor: "transparent"
+	},
+	logoSmaller: {
+		width: 40,
+		height: 40,
+		resizeMode: "contain",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	logoSmall: {
+		width: 55,
+		height: 55,
+		resizeMode: "contain",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	logo: {
+		width: 65,
+		height: 65,
+		resizeMode: "contain",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	wrapper: {},
+	slideTextSmall: {
+		color: "#FFFFFF",
+		fontFamily: "Helvetica",
+		fontSize: 13
+	},
+	slideText: {
+		color: "#FFFFFF",
+		fontFamily: "Helvetica",
+		fontSize: 18
+	},
+	slideTextContainer: {
+		marginBottom: 5,
+		alignItems: "center"
+	},
+	slide1: {
+		flex: 1,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	slide2: {
+		flex: 1,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	slide3: {
+		flex: 1,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	slide4: {
+		flex: 1,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	slideImg: {
+		flex: 1,
+		resizeMode: "contain"
+	},
+	slideImgOverSmall: {
+		position: "absolute",
+		top: 35,
+		left: 30,
+		right: 0,
+		bottom: 0,
+		width: null,
+		height: Dimensions.get("window").height * 0.23,
+		resizeMode: "contain"
+	},
+	slideImgOver: {
+		position: "absolute",
+		top: 40,
+		left: 40,
+		right: 0,
+		bottom: 0,
+		width: null,
+		height: Dimensions.get("window").height * 0.33,
+		resizeMode: "contain"
+	},
+	content: {
+		marginTop: 10,
+		marginLeft: 35,
+		marginRight: 35
+	},
+	contentSmall: {
+		marginTop: 5,
+		marginLeft: 35,
+		marginRight: 35
+	},
+	btnForgot: {
+		marginTop: 7,
+		marginBottom: 2,
+		marginLeft: 2
+	},
+	btnForgotText: {
+		fontSize: 12,
+		color: "#0FB7ED"
+	},
+	footerSmall: {
+		position: "absolute",
+		bottom: 15,
+		left: 50,
+		right: 50
+	},
+	footer: {
+		position: "absolute",
+		bottom: 20,
+		left: 50,
+		right: 50
+	},
+	footerX: {
+		position: "absolute",
+		bottom: 55,
+		left: 50,
+		right: 50
+	},
+	textNotPuffer: {
+		marginBottom: 2,
+		fontSize: 12,
+		textAlign: "center",
+		color: "#FFF"
+	},
 	btnDevMode: {
 		position: "absolute",
 		top: 25,
@@ -302,114 +536,6 @@ const styles = {
 		paddingBottom: 32,
 		paddingLeft: 18,
 		paddingRight: 18
-	},
-	footerSmall: {
-		position: "absolute",
-		bottom: 10,
-		left: 30,
-		right: 30
-	},
-	footer: {
-		position: "absolute",
-		bottom: 25,
-		left: 30,
-		right: 30
-	},
-	footerBig: {
-		position: "absolute",
-		bottom: 55,
-		left: 30,
-		right: 30
-	},
-	header: {
-		marginTop: 40,
-		alignItems: "center"
-	},
-	headerSmall: {
-		marginTop: 20,
-		alignItems: "center"
-	},
-	logoSmall: {
-		width: 125,
-		height: 125,
-		resizeMode: "contain",
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.7,
-		shadowRadius: 2
-	},
-	logo: {
-		width: 140,
-		height: 140,
-		resizeMode: "contain",
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.7,
-		shadowRadius: 2
-	},
-	logoBig: {
-		marginTop: 45,
-		marginBottom: 10,
-		width: 190,
-		height: 190,
-		resizeMode: "contain",
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.7,
-		shadowRadius: 2
-	},
-	facebookSmall: {
-		marginTop: 5,
-		paddingTop: 5,
-		borderTopWidth: 1,
-		borderColor: "#FFF"
-	},
-	facebook: {
-		marginTop: 15,
-		paddingTop: 15,
-		borderTopWidth: 1,
-		borderColor: "#FFF"
-	},
-	facebookBig: {
-		marginTop: 30,
-		paddingTop: 25,
-		borderTopWidth: 1,
-		borderColor: "#FFF"
-	},
-	contentSmall: {
-		marginTop: 5,
-		marginLeft: 30,
-		marginRight: 30
-	},
-	content: {
-		marginTop: 25,
-		marginLeft: 30,
-		marginRight: 30
-	},
-	btnForgot: {
-		marginTop: 5,
-		marginLeft: 2
-	},
-	btnForgotText: {
-		fontSize: 14,
-		color: "#0FB7ED"
-	},
-	textNotPufferSmall: {
-		marginBottom: 2,
-		fontSize: 12,
-		textAlign: "center",
-		color: "#FFF"
-	},
-	textNotPuffer: {
-		marginBottom: 5,
-		fontSize: 14,
-		textAlign: "center",
-		color: "#FFF"
-	},
-	signupForFree: {
-		marginLeft: 30,
-		marginRight: 30,
-		marginTop: 10
 	}
 };
 

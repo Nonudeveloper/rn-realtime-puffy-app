@@ -52,7 +52,7 @@ class HeaderSearch extends Component {
               }}
               style={styles.backStyle}
             >
-              <Image style={styles.backIcon} source={Images[this.props.LeftIcon]} />
+              <Image style={this.props.LeftIcon == "photo_plus" ? styles.backIconPlus : styles.backIcon} source={Images[this.props.LeftIcon]} />
             </TouchableOpacity>
           )}
 
@@ -182,7 +182,7 @@ const styles = {
     borderWidth: 1,
     paddingTop: 10,
     paddingRight: 10,
-    paddingBottom: 6,
+    paddingBottom: 5,
     paddingLeft: 5,
     borderColor: "transparent"
   },
@@ -194,6 +194,18 @@ const styles = {
     resizeMode: "contain",
     alignSelf: "center",
     backgroundColor: "transparent",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.7,
+    shadowRadius: 2
+  },
+  backIconPlus: {
+    height: 30,
+    width: 30,
+    marginRight: 5,
+    marginLeft: 5,
+    resizeMode: "contain",
+    alignSelf: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.7,
@@ -303,6 +315,7 @@ const styles = {
     width: 27,
     height: 27,
     marginRight: 5,
+    marginBottom: 1,
     resizeMode: "contain",
     backgroundColor: "transparent",
     shadowColor: "#000",

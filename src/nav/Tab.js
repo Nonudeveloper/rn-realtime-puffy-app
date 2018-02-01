@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, Platform } from "react-native";
 import { TabNavigator, TabBarBottom, NavigationActions } from "react-navigation";
 import { HomeTab, FeedTab, ExplorerTab, HeartTab, ProfileTab, EventTab, NotificationTab } from "./";
 import ProfileIcon from "../components/ProfileIcon";
@@ -166,9 +166,12 @@ const TabContainer = TabNavigator(
         height: 0,
         width: 0
       },
+      tabStyle: {
+        height: 55
+      },
       style: {
         backgroundColor: "#EBF1F2",
-        height: 60
+        height: 55
       }
     }
   }

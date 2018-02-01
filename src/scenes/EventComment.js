@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, Image, AsyncStorage, TouchableHighlight, TouchableOpacity, Platform, FlatList } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, TextInput, Image, AsyncStorage, TouchableHighlight, TouchableOpacity, Platform, FlatList } from "react-native";
 import Images from "../config/images";
 import Header from "../components/Header";
 
@@ -12,7 +12,7 @@ class EventComment extends Component {
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 
-		var fakeData = [{key: 'a'}, {key: 'b'}]
+		var fakeData = [{ key: "a" }, { key: "b" }];
 
 		this.items = [];
 
@@ -43,18 +43,15 @@ class EventComment extends Component {
 		console.log(items);
 
 		let localData = JSON.stringify(items);
-
 	}
 
 	msgListenerEventComments(data) {
 		if (data["result"] == 1 && data["result_action"] == "get_event_comments") {
 			this.setItems(data["result_data"]);
 		}
-
 	}
 
 	componentDidMount() {
-		
 		let dataString = {
 			user_action: "get_event_comments",
 			user_data: {}
@@ -62,73 +59,63 @@ class EventComment extends Component {
 
 		this.handleEmit(dataString);
 		this.puffyChannel.on("data_channel", this.msgListenerEventComments);
-
 	}
 
 	renderRow({ item, index }) {
 		return (
 			<View style={styles.row}>
-			<Image style={styles.profileIcon} source={{uri:item.profileImage}} />
+				<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
 				<View style={styles.body}>
-						<Text><Text style={styles.username}>{item.user_name} </Text>{item.puffy_events_comments_text}</Text>
-
+					<Text>
+						<Text style={styles.username}>{item.user_name} </Text>
+						{item.puffy_events_comments_text}
+					</Text>
 				</View>
 			</View>
 		);
 	}
-	
 
-	render(){
+	render() {
 		return (
-				<View style={styles.container}>
-					<Header
-						deviceTheme={this.props.screenProps.deviceTheme}
-						LeftIcon="back_arrow"
-						LeftCallback={this.props.navigation.goBack}
-						global={this.props.screenProps.global}
-					/>
-					<View style={styles.section}>
-						<Text style={styles.boldHeader}>Messages</Text>
-					</View>
-				<FlatList
-					data={this.state.dataSource}
-					renderItem={this.renderRow}/>
-
-					<View style={styles.containerBottom}>
-						<TextInput
-							ref={component => (this._textInput = component)}
-							style={styles.inputMessage}
-							underlineColorAndroid="transparent"
-							autoFocus={false}
-							autoCorrect={true}
-							maxLength={250}
-							multiline={true}
-							blurOnSubmit={true}
-							onChangeText={msg_text => this.setState({ msg_text })}
-							returnKeyType="send"
-							placeholder="write a message..."
-							placeholderTextColor="#aaaaaa"
-							onSubmitEditing={this.sendMsg}
-						/>
-
-						<TouchableOpacity style={styles.sendPhoto} onPress={this.showMenu}>
-							<Image style={styles.plusIcon} source={{uri: this.props.screenProps.global.user_thumb}} />
-
-						</TouchableOpacity>
-
-						<TouchableOpacity style={styles.sendButton} onPress={this.sendMsg}>
-							<Text style={styles.sendButtonText}>Send</Text>
-						</TouchableOpacity>
-					</View>
+			<View style={styles.container}>
+				<Header deviceTheme={this.props.screenProps.deviceTheme} LeftIcon="back_arrow" LeftCallback={this.props.navigation.goBack} global={this.props.screenProps.global} />
+				<View style={styles.section}>
+					<Text style={styles.boldHeader}>Comments</Text>
 				</View>
+				<FlatList data={this.state.dataSource} keyExtractor={(item, index) => index} renderItem={this.renderRow} />
 
+				<View style={styles.containerBottom}>
+					<TextInput
+						ref={component => (this._textInput = component)}
+						style={styles.inputMessage}
+						underlineColorAndroid="transparent"
+						autoFocus={false}
+						autoCorrect={true}
+						maxLength={250}
+						multiline={true}
+						blurOnSubmit={true}
+						onChangeText={msg_text => this.setState({ msg_text })}
+						returnKeyType="send"
+						placeholder="write a comment..."
+						placeholderTextColor="#aaaaaa"
+						onSubmitEditing={this.sendMsg}
+					/>
 
-			);
+					<TouchableOpacity style={styles.sendPhoto} onPress={this.showMenu}>
+						<Image style={styles.plusIcon} source={{ uri: this.props.screenProps.global.user_thumb }} />
+					</TouchableOpacity>
+
+					<TouchableOpacity style={styles.sendButton} onPress={this.sendMsg}>
+						<Text style={styles.sendButtonText}>Send</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		);
 	}
 }
 
 const styles = {
-		container: {
+	container: {
 		flex: 1,
 		backgroundColor: "#FEFEFE"
 	},
@@ -187,7 +174,7 @@ const styles = {
 		paddingLeft: 10,
 		paddingTop: 5,
 		paddingBottom: 5,
-		flexDirection: "row",
+		flexDirection: "row"
 	},
 	containerBottom: {
 		backgroundColor: "#FEFEFE",
@@ -239,6 +226,6 @@ const styles = {
 		height: 150,
 		resizeMode: "contain"
 	}
-}
+};
 
 export { EventComment };

@@ -7,9 +7,8 @@ import fileUpload from "../lib/fileUpload";
 import fileUploadFeed from "../lib/fileUploadFeed";
 import ImageResizer from "react-native-image-resizer";
 import Images from "../config/images";
-//import { ImageCrop } from "react-native-image-cropper";
+import { ImageCrop } from "react-native-image-cropper";
 import BtnOption from "../components/BtnOption";
-import ImageCrop from "../components/ImageCrop";
 import InputTextMultiIcon from "../components/InputTextMultiIcon";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

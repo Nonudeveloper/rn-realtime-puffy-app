@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity, Dimensions, Platform, PushNotificationIOS, Alert, AsyncStorage, Modal } from "react-native";
+import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Platform, PushNotificationIOS, Alert, AsyncStorage, Modal } from "react-native";
 import { NavigationActions } from "react-navigation";
 import ActionSheet from "react-native-actionsheet";
 import LinearGradient from "react-native-linear-gradient";
@@ -34,8 +34,12 @@ class Home extends Component {
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.homeEventListener = this.homeEventListener.bind(this);
 		this.gotoMessages = this.gotoMessages.bind(this);
+		this.gotoProfile = this.gotoProfile.bind(this);
+		this.createCard = this.createCard.bind(this);
 		this.renderCard = this.renderCard.bind(this);
 		this.renderCardX = this.renderCardX.bind(this);
+		this.renderCardSmall = this.renderCardSmall.bind(this);
+		this.renderCardAndroid = this.renderCardAndroid.bind(this);
 
 		this.handlePress = this.handlePress.bind(this);
 		this.showBlockUser = this.showBlockUser.bind(this);
@@ -44,14 +48,17 @@ class Home extends Component {
 		this.blockUser = this.blockUser.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 
+		this.onRefresh = this.onRefresh.bind(this);
 		this.showMenu = this.showMenu.bind(this);
 		this.showMenu2 = this.showMenu2.bind(this);
 		this.gotoFeedPhoto = this.gotoFeedPhoto.bind(this);
 		this.gotoFeedVideo = this.gotoFeedVideo.bind(this);
 		this.gotoFeedGallery = this.gotoFeedGallery.bind(this);
 		this.handlePress2 = this.handlePress2.bind(this);
+		this.noMoreCards = this.noMoreCards.bind(this);
 
 		this.lastCard = 0;
+		this.matchCount = 5;
 		this.card = null;
 
 		this.state = {
@@ -60,6 +67,8 @@ class Home extends Component {
 			actionCheck: false,
 			isModalVisible: false,
 			isNavigating: false,
+			isLoaded: 0,
+			notFound: 0,
 			modalID: 0,
 			modalEventID: 0,
 			modalTitle: "",
@@ -104,36 +113,52 @@ class Home extends Component {
 			});
 		}
 
-		if (data["result"] == 1 && data["result_action"] == "get_dash_result") {
+		if (data["result"] == 0 && data["result_action"] == "get_swipe_users_result") {
+			if (data["matchCount"] == "5") {
+				this.matchCount = 5;
+			}
+			this.noMoreCards();
+		}
+
+		if (data["result"] == 1 && data["result_action"] == "get_swipe_users_result") {
 			let cards = data["result_data"].reverse();
 			this.lastCard = cards[0]["id"];
 
-			//console.log(cards);
 			let cardsLeft = cards.length;
-			const card = cards[cardsLeft - 1];
-			this.card = card;
 
-			this.setState({
-				cards: cards
-			});
-
-			let localData = JSON.stringify(cards);
-
-			if (localData) {
-				AsyncStorage.setItem("HomeItems", localData);
+			if (data["matchCount"] == "5") {
+				this.matchCount = 5;
 			}
 
+			if (cardsLeft == 0) {
+				this.noMoreCards();
+			} else {
+				this.setState({
+					cards: cards,
+					notFound: 0,
+					isLoaded: 1
+				});
+				const card = cards[cardsLeft - 1];
+				this.card = card;
+
+				let localData = JSON.stringify(cards);
+
+				if (localData) {
+					AsyncStorage.setItem("HomeItems", localData);
+				}
+			}
 			//console.log(cards);
 		}
 
-		if (data["result"] == 1 && data["result_action"] == "get_more_dash_result") {
+		if (data["result"] == 1 && data["result_action"] == "get_more_swipe_users_result") {
 			let cards = data["result_data"].reverse();
 			this.lastCard = cards[0]["id"];
 
 			let newCards = [...cards, ...this.state.cards];
 
 			this.setState({
-				cards: newCards
+				cards: newCards,
+				notFound: 0
 			});
 
 			let localData = JSON.stringify(newCards);
@@ -141,8 +166,6 @@ class Home extends Component {
 			if (localData) {
 				AsyncStorage.setItem("HomeItems", localData);
 			}
-
-			//console.log(newCards);
 		}
 	}
 
@@ -153,25 +176,83 @@ class Home extends Component {
 			if (!err && result != null) {
 				//console.log(result);
 				let cards = JSON.parse(result);
+				let cardsLeft = cards.length;
 
-				this.setState({
-					cards: cards
-				});
+				if (cardsLeft > 0) {
+					const card = cards[cardsLeft - 1];
+					this.card = card;
+
+					this.setState({
+						cards: cards,
+						notFound: 0
+					});
+				}
 			}
 		});
 
 		let dataString = {
-			user_action: "get_dash",
-			user_data: {}
+			user_action: "get_swipe_users",
+			user_data: {
+				matchCount: this.matchCount
+			}
 		};
 
 		this.handleEmit(dataString);
 
+		let dataString2 = {
+			user_action: "get_modal",
+			user_data: {}
+		};
+
+		this.handleEmit(dataString2);
+
 		this.puffyChannel.on("data_channel", this.homeEventListener);
+	}
+
+	noMoreCards() {
+		this.matchCount = this.matchCount - 1;
+
+		if (this.matchCount <= 0) {
+			this.setState({
+				cards: [],
+				notFound: 1,
+				actionCheck: true
+			});
+			AsyncStorage.removeItem("HomeItems");
+		} else {
+			let dataString = {
+				user_action: "get_swipe_users",
+				user_data: {
+					matchCount: this.matchCount
+				}
+			};
+
+			this.handleEmit(dataString);
+		}
 	}
 
 	componentWillUnmount() {
 		this.puffyChannel.removeListener("data_channel", this.homeEventListener);
+	}
+
+	gotoProfile() {
+		if (this.state.actionCheck === true) {
+			console.log("please wait!");
+			return false;
+		}
+		if (this.state.isNavigating == true) {
+			return false;
+		}
+
+		const card = this.card;
+		const $this = this;
+
+		this.setState({ isNavigating: true }, () => {
+			$this.props.navigation.navigate("Profile", { user: card });
+			setTimeout(function() {
+				$this.setState({ isNavigating: false });
+			}, 500);
+		});
 	}
 
 	gotoMessages() {
@@ -277,6 +358,21 @@ class Home extends Component {
 		this.swipeLeft();
 	}
 
+	onRefresh() {
+		this.matchCount = 5;
+
+		let dataString = {
+			user_action: "get_swipe_users",
+			user_data: {
+				refresh: 1,
+				matchCount: 5
+			}
+		};
+
+		this.handleEmit(dataString);
+		this.setState({ refreshing: true });
+	}
+
 	hideModal() {
 		let modalEventID = parseInt(this.state.modalEventID);
 
@@ -307,19 +403,21 @@ class Home extends Component {
 		const $this = this;
 
 		this.state.cards.pop();
-		this.setState({
-			cards: this.state.cards,
-			actionCheck: true
-		});
 
 		let cardsLeft = this.state.cards.length;
 
-		const card = this.state.cards[cardsLeft - 1];
-		this.card = card;
+		if (cardsLeft == 0) {
+			this.noMoreCards();
+		} else {
+			this.setState({
+				cards: this.state.cards,
+				actionCheck: true
+			});
 
-		console.log(card);
+			const card = this.state.cards[cardsLeft - 1];
+			this.card = card;
+		}
 
-		//check for more cards.
 		if (cardsLeft == 2) {
 			this.loadMore();
 		}
@@ -356,18 +454,22 @@ class Home extends Component {
 		this.state.cardsBack.push(item);
 		this.state.cards.pop();
 
-		this.setState({
-			cards: this.state.cards,
-			cardsBack: this.state.cardsBack,
-			actionCheck: true
-		});
-
 		let cardsLeft = this.state.cards.length;
 
-		const card = this.state.cards[cardsLeft - 1];
-		this.card = card;
+		if (cardsLeft == 0) {
+			this.noMoreCards();
+		} else {
+			this.setState({
+				cards: this.state.cards,
+				cardsBack: this.state.cardsBack,
+				actionCheck: true
+			});
 
-		console.log(card);
+			const card = this.state.cards[cardsLeft - 1];
+			this.card = card;
+		}
+
+		//console.log(card);
 
 		//check for more cards.
 		if (cardsLeft == 2) {
@@ -398,9 +500,10 @@ class Home extends Component {
 		//console.log("load more cards");
 
 		let dataString = {
-			user_action: "get_dash",
+			user_action: "get_swipe_users",
 			user_data: {
-				user_id: this.lastCard
+				user_id: this.lastCard,
+				matchCount: this.matchCount
 			}
 		};
 
@@ -444,6 +547,17 @@ class Home extends Component {
 		return 0;
 	}
 
+	createCard(cardObject) {
+		if (this.deviceTheme == "IphoneX") {
+			return this.renderCardX(cardObject);
+		} else if (this.deviceTheme == "IphoneSmall") {
+			return this.renderCardSmall(cardObject);
+		} else if (this.deviceTheme == "Android") {
+			return this.renderCardAndroid(cardObject);
+		}
+		return this.renderCard(cardObject);
+	}
+
 	renderCardX(cardObject) {
 		let pref_name1_active = this.checkPref(cardObject.i1);
 		let pref_name2_active = this.checkPref(cardObject.i2);
@@ -456,15 +570,17 @@ class Home extends Component {
 				<View style={styles.cardHeaderContainerX}>
 					{this.state.cardsBack.length > 0 ? (
 						<TouchableOpacity style={styles.backBtn} onPress={this.swipeBack}>
-							<Image style={{ width: 25, height: 25, resizeMode: "contain" }} source={Images.circle_back} />
+							<Image style={{ width: 27, height: 27, resizeMode: "contain" }} source={Images.circle_back} />
 						</TouchableOpacity>
 					) : null}
 					<TouchableOpacity style={styles.menuBtn} onPress={this.showMenu}>
-						<Image style={{ width: 30, height: 30, resizeMode: "contain" }} source={Images.circle_flag} />
+						<Image style={{ width: 27, height: 27, resizeMode: "contain" }} source={Images.circle_flag} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.cardImageContainerX}>
-					<CachedImage style={styles.cardImageX} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<CachedImage style={styles.cardImageX} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					</TouchableWithoutFeedback>
 					<View style={styles.cardNameContainer}>
 						<Text style={styles.nameText}>
 							{cardObject.name}, {cardObject.age}
@@ -475,10 +591,10 @@ class Home extends Component {
 				</View>
 				<View style={styles.interestContainerX}>
 					<CirclePref name={cardObject.i1} active={pref_name1_active} />
-					<CirclePref name={cardObject.i2} active={pref_name1_active} />
-					<CirclePref name={cardObject.i3} active={pref_name1_active} />
-					<CirclePref name={cardObject.i4} active={pref_name1_active} />
-					<CirclePref name={cardObject.i5} active={pref_name1_active} />
+					<CirclePref name={cardObject.i2} active={pref_name2_active} />
+					<CirclePref name={cardObject.i3} active={pref_name3_active} />
+					<CirclePref name={cardObject.i4} active={pref_name4_active} />
+					<CirclePref name={cardObject.i5} active={pref_name5_active} />
 				</View>
 				<View style={styles.imgBtnContainerX}>
 					<TouchableOpacity style={styles.imgBtnLeft} onPress={this.swipeLeft} disabled={this.state.actionCheck}>
@@ -486,6 +602,120 @@ class Home extends Component {
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.imgBtnRight} onPress={this.swipeRight} disabled={this.state.actionCheck}>
 						<Image style={styles.imgBtn} source={Images.puff_stamp} />
+					</TouchableOpacity>
+				</View>
+			</View>
+		);
+	}
+
+	renderCardSmall(cardObject) {
+		let pref_name1_active = this.checkPref(cardObject.i1);
+		let pref_name2_active = this.checkPref(cardObject.i2);
+		let pref_name3_active = this.checkPref(cardObject.i3);
+		let pref_name4_active = this.checkPref(cardObject.i4);
+		let pref_name5_active = this.checkPref(cardObject.i5);
+
+		return (
+			<View key={cardObject.id} style={styles.card}>
+				<View style={styles.cardHeaderContainerSmall}>
+					{this.state.cardsBack.length > 0 ? (
+						<TouchableOpacity style={styles.backBtn} onPress={this.swipeBack}>
+							<Image style={{ width: 21, height: 21, resizeMode: "contain" }} source={Images.circle_back} />
+						</TouchableOpacity>
+					) : null}
+					<TouchableOpacity style={styles.menuBtn} onPress={this.showMenu}>
+						<Image style={{ width: 20, height: 20, resizeMode: "contain" }} source={Images.circle_flag} />
+					</TouchableOpacity>
+				</View>
+				<View style={DIMENSIONS.height > 500 ? styles.cardImageContainerSmall : styles.cardImageContainerSmaller}>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<CachedImage style={DIMENSIONS.height > 500 ? styles.cardImageSmall : styles.cardImageSmaller} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					</TouchableWithoutFeedback>
+					<View style={styles.cardNameContainer}>
+						<Text style={styles.nameText}>
+							{cardObject.name}, {cardObject.age}
+						</Text>
+						<Text style={styles.locationText}>{cardObject.loc}</Text>
+					</View>
+					<Text style={styles.aboutText}>{cardObject.about}</Text>
+				</View>
+				<View style={styles.interestContainerSmall}>
+					<CirclePref name={cardObject.i1} active={pref_name1_active} />
+					<CirclePref name={cardObject.i2} active={pref_name2_active} />
+					<CirclePref name={cardObject.i3} active={pref_name3_active} />
+					<CirclePref name={cardObject.i4} active={pref_name4_active} />
+					<CirclePref name={cardObject.i5} active={pref_name5_active} />
+				</View>
+				<View style={styles.imgBtnContainer}>
+					<TouchableOpacity style={styles.imgBtnLeft} onPress={this.swipeLeft} disabled={this.state.actionCheck}>
+						<Image style={styles.imgBtnSmall} source={Images.pass_stamp} />
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.imgBtnRight} onPress={this.swipeRight} disabled={this.state.actionCheck}>
+						<Image style={styles.imgBtnSmall} source={Images.puff_stamp} />
+					</TouchableOpacity>
+				</View>
+			</View>
+		);
+	}
+
+	renderCardAndroid(cardObject) {
+		let pref_name1_active = this.checkPref(cardObject.i1);
+		let pref_name2_active = this.checkPref(cardObject.i2);
+		let pref_name3_active = this.checkPref(cardObject.i3);
+		let pref_name4_active = this.checkPref(cardObject.i4);
+		let pref_name5_active = this.checkPref(cardObject.i5);
+
+		const btnPassPuffShadow = {
+			height: 50,
+			width: DIMENSIONS.width * 0.4,
+			color: "#000",
+			radius: 25,
+			opacity: 0.7,
+			x: 0.1,
+			y: 6.2
+		};
+
+		return (
+			<View key={cardObject.id} style={styles.card}>
+				<View style={styles.cardHeaderContainer}>
+					{this.state.cardsBack.length > 0 ? (
+						<TouchableOpacity style={styles.backBtn} onPress={this.swipeBack}>
+							<Image style={{ width: 28, height: 28, resizeMode: "contain" }} source={Images.circle_back} />
+						</TouchableOpacity>
+					) : null}
+					<TouchableOpacity style={styles.menuBtn} onPress={this.showMenu}>
+						<Image style={{ width: 27, height: 27, resizeMode: "contain" }} source={Images.circle_flag} />
+					</TouchableOpacity>
+				</View>
+				<View style={styles.cardImageContainer}>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					</TouchableWithoutFeedback>
+					<View style={styles.cardNameContainer}>
+						<Text style={styles.nameText}>
+							{cardObject.name}, {cardObject.age}
+						</Text>
+						<Text style={styles.locationText}>{cardObject.loc}</Text>
+					</View>
+					<Text style={styles.aboutText}>{cardObject.about}</Text>
+				</View>
+				<View style={DIMENSIONS.height > 700 ? styles.interestContainerAndroid : styles.interestContainerAndroidSmall}>
+					<CirclePref name={cardObject.i1} active={pref_name1_active} />
+					<CirclePref name={cardObject.i2} active={pref_name2_active} />
+					<CirclePref name={cardObject.i3} active={pref_name3_active} />
+					<CirclePref name={cardObject.i4} active={pref_name4_active} />
+					<CirclePref name={cardObject.i5} active={pref_name5_active} />
+				</View>
+				<View style={styles.imgBtnContainer}>
+					<TouchableOpacity style={styles.imgBtnLeft} onPress={this.swipeLeft} disabled={this.state.actionCheck}>
+						<BoxShadow setting={btnPassPuffShadow}>
+							<Image style={styles.imgBtn} source={Images.pass_stamp} />
+						</BoxShadow>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.imgBtnRight} onPress={this.swipeRight} disabled={this.state.actionCheck}>
+						<BoxShadow setting={btnPassPuffShadow}>
+							<Image style={styles.imgBtn} source={Images.puff_stamp} />
+						</BoxShadow>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -514,7 +744,9 @@ class Home extends Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.cardImageContainer}>
-					<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
+					</TouchableWithoutFeedback>
 					<View style={styles.cardNameContainer}>
 						<Text style={styles.nameText}>
 							{cardObject.name}, {cardObject.age}
@@ -542,7 +774,44 @@ class Home extends Component {
 		);
 	}
 
+	notFound() {
+		return (
+			<View style={styles.container}>
+				<Header
+					deviceTheme={this.props.screenProps.deviceTheme}
+					LeftIcon="photo_plus"
+					LeftCallback={this.showMenu2}
+					RightIcon="circle_chat"
+					RightCallback={this.gotoMessages}
+					unread_count={this.props.screenProps.unread_count}
+					global={this.props.screenProps.global}
+					devMode={this.props.screenProps.global.devMode}
+				/>
+				<View style={styles.errorContainer}>
+					<TouchableOpacity onPress={this.onRefresh}>
+						<Image style={styles.errorIcon} source={Images.ref} />
+					</TouchableOpacity>
+					<Text style={styles.errorHeader}>Want to see more Puffers?</Text>
+					<Text style={styles.errorText}>Click the Refresh button above</Text>
+				</View>
+				<ActionSheet
+					ref={o => (this.ActionSheet = o)}
+					options={options}
+					destructiveButtonIndex={DESTRUCTIVE_INDEX}
+					cancelButtonIndex={CANCEL_INDEX}
+					onPress={this.handlePress}
+				/>
+				<ActionSheet ref={o => (this.ActionSheet2 = o)} title={title2} options={options2} cancelButtonIndex={CANCEL_INDEX} onPress={this.handlePress2} />
+				<ActionSheet ref={o => (this.ActionSheet3 = o)} title={this.state.reportTitle} options={options3} cancelButtonIndex={CANCEL_INDEX} onPress={this.reportUser} />
+			</View>
+		);
+	}
+
 	render() {
+		if (this.state.notFound == 1) {
+			return this.notFound();
+		}
+
 		return (
 			<View style={styles.container}>
 				<Header
@@ -562,7 +831,7 @@ class Home extends Component {
 						}}
 						cardList={this.state.cards}
 						disable={this.state.actionCheck}
-						renderCard={this.deviceTheme == "IphoneX" ? this.renderCardX : this.renderCard}
+						renderCard={this.createCard}
 						cardRotation={20}
 						cardOpacity={0.5}
 						onSwipeRight={this.onSwipeRight}
@@ -688,9 +957,31 @@ const styles = {
 		width: DIMENSIONS.width - 32,
 		height: DIMENSIONS.width + 32
 	},
+	cardImageContainerSmall: {
+		marginTop: 5,
+		width: DIMENSIONS.width - 32,
+		height: DIMENSIONS.width - 32
+	},
+	cardImageContainerSmaller: {
+		marginTop: 5,
+		width: DIMENSIONS.width - 32,
+		height: DIMENSIONS.width - 100
+	},
 	cardImage: {
 		width: DIMENSIONS.width - 32,
 		height: DIMENSIONS.width - 32,
+		resizeMode: "contain",
+		backgroundColor: "#EBF1F2"
+	},
+	cardImageSmall: {
+		width: DIMENSIONS.width - 32,
+		height: DIMENSIONS.width - 32,
+		resizeMode: "contain",
+		backgroundColor: "#EBF1F2"
+	},
+	cardImageSmaller: {
+		width: DIMENSIONS.width - 32,
+		height: DIMENSIONS.width - 100,
 		resizeMode: "contain",
 		backgroundColor: "#EBF1F2"
 	},
@@ -705,6 +996,9 @@ const styles = {
 	},
 	cardHeaderContainerX: {
 		height: 40
+	},
+	cardHeaderContainerSmall: {
+		height: 25
 	},
 	backBtn: {
 		position: "absolute",
@@ -790,11 +1084,38 @@ const styles = {
 		marginLeft: 20,
 		marginRight: 20
 	},
+	interestContainerSmall: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		alignItems: "center",
+		marginTop: 10,
+		marginBottom: 2,
+		marginLeft: 20,
+		marginRight: 20
+	},
 	interestContainerX: {
 		flexDirection: "row",
 		justifyContent: "space-around",
 		alignItems: "center",
 		marginTop: 20,
+		marginBottom: 15,
+		marginLeft: 20,
+		marginRight: 20
+	},
+	interestContainerAndroid: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		alignItems: "center",
+		marginTop: 25,
+		marginBottom: 25,
+		marginLeft: 20,
+		marginRight: 20
+	},
+	interestContainerAndroidSmall: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		alignItems: "center",
+		marginTop: 15,
 		marginBottom: 15,
 		marginLeft: 20,
 		marginRight: 20
@@ -832,12 +1153,44 @@ const styles = {
 	},
 	imgBtn: {
 		width: null,
-		height: 60,
+		height: 50,
 		resizeMode: "contain",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.7,
 		shadowRadius: 2
+	},
+	imgBtnSmall: {
+		width: null,
+		height: 35,
+		resizeMode: "contain",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 4 },
+		shadowOpacity: 0.7,
+		shadowRadius: 2
+	},
+	errorContainer: {
+		marginTop: 50,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	errorIcon: {
+		height: 75,
+		width: 75,
+		resizeMode: "contain"
+	},
+	errorHeader: {
+		fontSize: 24,
+		fontWeight: "bold",
+		textAlign: "center",
+		color: "#777980",
+		marginTop: 10,
+		marginBottom: 10
+	},
+	errorText: {
+		fontSize: 14,
+		textAlign: "center",
+		color: "#777980"
 	}
 };
 

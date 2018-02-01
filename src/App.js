@@ -23,7 +23,7 @@ import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult,
 const FBSDK = require("react-native-fbsdk");
 const { LoginManager } = FBSDK;
 
-const APP_VERSION = "11.77";
+const APP_VERSION = "11.82";
 const { height, width } = Dimensions.get("window");
 const aspectRatio = height / width;
 
@@ -250,8 +250,10 @@ class App extends Component {
 
 	findUser = () => {
 		let dataString = {
-			user_action: "get_dash",
-			user_data: {}
+			user_action: "get_swipe_users",
+			user_data: {
+				matchCount: 5
+			}
 		};
 
 		this.handleEmit(dataString);
@@ -460,7 +462,7 @@ class App extends Component {
 	}
 
 	_handleAppStateChange = nextAppState => {
-		//console.log(nextAppState);
+		console.log(nextAppState);
 
 		if (this.state.appState.match(/inactive|background/) && nextAppState === "active") {
 			//console.log(this.state.isLogged);
@@ -831,7 +833,7 @@ class App extends Component {
 	}
 
 	appEventListener(data) {
-		//console.log(data);
+		console.log(data);
 
 		const $this = this;
 
