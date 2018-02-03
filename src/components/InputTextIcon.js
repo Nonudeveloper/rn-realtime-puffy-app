@@ -36,7 +36,8 @@ const InputTextIcon = props => {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    marginBottom: 13
   },
   icon: {
     position: "absolute",
@@ -48,7 +49,6 @@ const styles = {
   },
   input: {
     height: 40,
-    marginBottom: 15,
     borderWidth: 1,
     borderRadius: 5,
     paddingTop: 10,

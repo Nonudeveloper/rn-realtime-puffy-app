@@ -3,7 +3,7 @@ import { View, Text, Alert, Image, FlatList, RefreshControl, TouchableOpacity, T
 import ActionSheet from "react-native-actionsheet";
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
-import Interest from "../components/InterestSmall";
+import CirclePrefSmall from "../components/CirclePrefSmall";
 import Header from "../components/Header";
 import BtnGreen from "../components/BtnGreen";
 import ImagePreview from "react-native-image-preview";
@@ -591,8 +591,8 @@ class Profile extends Component {
         };
 
         this.handleEmit(dataString);
-        this.setState({ refreshing: true });
       }, 100);
+      this.setState({ refreshing: true });
     } else {
       setTimeout(() => {
         let dataString = {
@@ -604,8 +604,8 @@ class Profile extends Component {
         };
 
         this.handleEmit(dataString);
-        this.setState({ refreshing: true });
       }, 100);
+      this.setState({ refreshing: true });
     }
   }
 
@@ -729,6 +729,21 @@ class Profile extends Component {
     this.handleEmit(dataString);
   }
 
+  checkPref(pref_name) {
+    if (this.props.screenProps.global.user_interest_name1 == pref_name) {
+      return 1;
+    } else if (this.props.screenProps.global.user_interest_name2 == pref_name) {
+      return 1;
+    } else if (this.props.screenProps.global.user_interest_name3 == pref_name) {
+      return 1;
+    } else if (this.props.screenProps.global.user_interest_name4 == pref_name) {
+      return 1;
+    } else if (this.props.screenProps.global.user_interest_name5 == pref_name) {
+      return 1;
+    }
+    return 0;
+  }
+
   renderRow(data) {
     return (
       <View style={styles.imageBtn}>
@@ -741,6 +756,12 @@ class Profile extends Component {
   }
 
   render() {
+    let pref_name1_active = this.checkPref(this.state.user_interest_name1);
+    let pref_name2_active = this.checkPref(this.state.user_interest_name2);
+    let pref_name3_active = this.checkPref(this.state.user_interest_name3);
+    let pref_name4_active = this.checkPref(this.state.user_interest_name4);
+    let pref_name5_active = this.checkPref(this.state.user_interest_name5);
+
     let actionBtn = <View />;
 
     if (this.state.isLoaded == 0) {
@@ -895,11 +916,11 @@ class Profile extends Component {
               </View>
               <View style={styles.detailContainerLast}>
                 <View style={styles.interestContainer}>
-                  <Interest name={this.state.user_interest_name1} />
-                  <Interest name={this.state.user_interest_name2} />
-                  <Interest name={this.state.user_interest_name3} />
-                  <Interest name={this.state.user_interest_name4} />
-                  <Interest name={this.state.user_interest_name5} />
+                  <CirclePrefSmall name={this.state.user_interest_name1} active={pref_name1_active} />
+                  <CirclePrefSmall name={this.state.user_interest_name2} active={pref_name2_active} />
+                  <CirclePrefSmall name={this.state.user_interest_name3} active={pref_name3_active} />
+                  <CirclePrefSmall name={this.state.user_interest_name4} active={pref_name4_active} />
+                  <CirclePrefSmall name={this.state.user_interest_name5} active={pref_name5_active} />
                 </View>
               </View>
             </View>
@@ -981,7 +1002,8 @@ const styles = {
     width: 110,
     height: 110,
     marginRight: 15,
-    marginBottom: 6
+    marginBottom: 4,
+    marginTop: 2
   },
   profileRight: {
     flex: 1
@@ -1024,7 +1046,7 @@ const styles = {
   detailContainer: {
     borderBottomColor: "#EEEEEE",
     borderBottomWidth: 1,
-    paddingBottom: 6
+    paddingBottom: 1
   },
   detailContainerAbout: {},
   detailContainerActionWrapper: {
@@ -1094,11 +1116,11 @@ const styles = {
   },
   interestContainer: {
     flexDirection: "row",
-    marginTop: 2,
-    paddingBottom: 3,
+    marginTop: 1,
+    paddingBottom: 1,
     marginLeft: 5,
-    marginRight: 15,
-    justifyContent: "space-around"
+    marginRight: 12,
+    justifyContent: "space-between"
   },
   aboutContainer: {
     borderBottomColor: "#EEEEEE",

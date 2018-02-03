@@ -277,10 +277,8 @@ class EventsView extends Component {
 		this.props.navigation.navigate("Profile", { user: props, user_id: user_id });
 	}
 
-	gotoEventComment(event_id){
-
-		this.props.navigation.navigate("EventComment", { event_id: event_id, });
-
+	gotoEventComment(event_id) {
+		this.props.navigation.navigate("EventComment", { event_id: event_id });
 	}
 
 	goToRatings(user_id) {
@@ -569,21 +567,19 @@ class EventsView extends Component {
 					<View style={styles.cardContainer}>
 						<Text style={styles.eventTitle}>{this.state.puffyEventsTitle}</Text>
 						<Image style={styles.cardImage} source={{ uri: this.state.puffyEventsImage }} />
-						
-						{this.state.puffyAlreadyRsvp == null ? (
-	    					<View style={styles.puffyBtnContainer}>
-									<TouchableOpacity style={styles.btnContainerLeft} onPress={() => this.onPass(this.state.puffyEventsId)}>
-										<Image style={styles.stampBtn} source={Images.passBtn5} />
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.btnContainerRight} onPress={() => this.onPuff(this.state.puffyEventsId)}>
-										<Image style={styles.stampBtn} source={Images.puffBtn5} />
-									</TouchableOpacity>
-							</View>
-							) : (
-								null
-							)}
 
-							<View style={styles.cardContainerrating}>
+						{this.state.puffyAlreadyRsvp == null ? (
+							<View style={styles.puffyBtnContainer}>
+								<TouchableOpacity style={styles.btnContainerLeft} onPress={() => this.onPass(this.state.puffyEventsId)}>
+									<Image style={styles.stampBtn} source={Images.passBtn5} />
+								</TouchableOpacity>
+								<TouchableOpacity style={styles.btnContainerRight} onPress={() => this.onPuff(this.state.puffyEventsId)}>
+									<Image style={styles.stampBtn} source={Images.puffBtn5} />
+								</TouchableOpacity>
+							</View>
+						) : null}
+
+						<View style={styles.cardContainerrating}>
 							<View style={styles.cardContainerRow}>
 								<TouchableOpacity onPress={() => this.gotoProfile(this.state.userId, this.state)}>
 									<Image style={styles.profileIcon} source={{ uri: this.state.userImage }} />
@@ -597,16 +593,10 @@ class EventsView extends Component {
 											<Rating starValue={this.state.starValue} />
 										</View>
 									</TouchableOpacity>
-								<TouchableOpacity onPress={() => this.gotoEventComment(this.state.userId)}>
-										<Image style={styles.eventCommentIcon} source={Images.message_friend} />
-								</TouchableOpacity>
-
 								</View>
 							</View>
-					</View>
+						</View>
 						<View style={styles.eventrow}>
-
-
 							<View style={styles.eventsDetailLeft}>
 								<Text style={styles.fontLabel}>
 									When: <Text style={styles.fontColor}>{this.state.puffyEventsDate}</Text>
@@ -636,8 +626,6 @@ class EventsView extends Component {
 						</View>
 					</View>
 
-					
-
 					{this.state.puffyEventsMoreInfo ? (
 						<View style={styles.cardContainer}>
 							<View style={styles.cardContainerRow}>
@@ -660,9 +648,7 @@ class EventsView extends Component {
 						</View>
 					) : (
 						<View>
-							{this.state.puffyAlreadyRsvp == null ? (
-								null
-							) : (
+							{this.state.puffyAlreadyRsvp == null ? null : (
 								<View style={styles.userAction}>
 									{this.events_type == 4 ? (
 										<TouchableOpacity style={styles.btnPreviousTouch}>
@@ -981,11 +967,11 @@ const styles = {
 	},
 	btnContainerLeft: {
 		position: "absolute",
-		left:80
+		left: 80
 	},
 	btnContainerRight: {
 		position: "absolute",
-		left:220
+		left: 220
 	},
 	profileMessage: {
 		marginTop: 50,
@@ -1011,17 +997,17 @@ const styles = {
 		color: "#777980"
 	},
 	puffyBtnContainer: {
-		flex:1,
+		flex: 1,
 		position: "absolute",
-		bottom:200
+		bottom: 200
 	},
 	eventComment: {
-		flex:1,
-		postion: 'absolute',
+		flex: 1,
+		postion: "absolute",
 		right: 10,
 		backgroundColor: "#fff"
 	},
-	eventCommentIcon:{
+	eventCommentIcon: {
 		position: "absolute",
 		left: 240,
 		bottom: 0,

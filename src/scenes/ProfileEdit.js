@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { AsyncStorage, Text, ScrollView, View, Button, Image, Picker, TouchableOpacity, Dimensions, Alert, Modal } from "react-native";
+import { AsyncStorage, Text, ScrollView, View, Button, Image, Picker, TouchableOpacity, FlatList, Dimensions, Alert, Modal } from "react-native";
 import DatePicker from "react-native-datepicker";
 import { ImgInput, ImgInputMultiline, GenderInput, BtnSaveTxt } from "../components";
 import Images from "../config/images";
 import Header from "../components/Header";
+import EthnicityModal from "../components/EthnicityModal";
 import FilterInput from "../components/FilterInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { NavigationActions } from "react-navigation";
@@ -11,7 +12,7 @@ import moment from "moment";
 import HeaderLocation from "../components/HeaderLocation";
 import InputTextIcon from "../components/InputTextIcon";
 import InputBtnIcon2 from "../components/InputBtnIcon2";
-import BtnOutlineIcon from "../components/BtnOutlineIcon";
+import BtnOutlineIcon from "../components/BtnOutlineIconSmall";
 import InputDateIcon from "../components/InputDateIcon";
 import InputTextMultiIcon from "../components/InputTextMultiIcon";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -27,7 +28,7 @@ class ProfileEdit extends Component {
   constructor(props) {
     super(props);
 
-    this.bug = this.props.screenProps.bug.bind(this);
+    this.deviceTheme = this.props.screenProps.deviceTheme;
     this.puffyChannel = this.props.screenProps.puffyChannel;
     this.handleEmit = this.props.screenProps.handleEmit.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
@@ -35,6 +36,9 @@ class ProfileEdit extends Component {
     this.setAboutme = this.setAboutme.bind(this);
     this.setLocation = this.setLocation.bind(this);
     this.setModalVisible = this.setModalVisible.bind(this);
+    this.setEthnicityModalVisible = this.setEthnicityModalVisible.bind(this);
+    this.setEthnicity = this.setEthnicity.bind(this);
+
     this.goBack = this.goBack.bind(this);
     this.editListener = this.editListener.bind(this);
     this.locations = [];
@@ -82,11 +86,13 @@ class ProfileEdit extends Component {
       location_full: "",
       lat: "",
       lng: "",
+      ethnicity: "No Preference",
       behavior: "padding",
       genderModal: false,
       locationModal: false,
       characterCount: 30,
-      modalVisible: false
+      modalVisible: false,
+      ethnicityModalVisible: false
     };
   }
 
@@ -116,7 +122,6 @@ class ProfileEdit extends Component {
       //this.bug(result);
 
       if (result) {
-        this.bug("found them profile");
         //convert to json array and applie to state
         let user_profile = JSON.parse(result);
 
@@ -130,6 +135,10 @@ class ProfileEdit extends Component {
 
         if (user_profile["user_gender"] == "undefined" || user_profile["user_gender"] == null) {
           user_profile["user_gender"] = "";
+        }
+
+        if (user_profile["user_ethnicity"] == "undefined" || user_profile["user_ethnicity"] == null) {
+          user_profile["user_ethnicity"] = "No Preference";
         }
 
         if (user_profile["user_aboutme"] == "undefined") {
@@ -154,10 +163,9 @@ class ProfileEdit extends Component {
           lat: user_profile["user_position_lat"],
           lng: user_profile["user_position_lng"],
           user_gender: user_profile["user_gender"],
-          user_dob: user_profile["user_dob_format"]
+          user_dob: user_profile["user_dob_format"],
+          ethnicity: user_profile["user_ethnicity"]
         });
-      } else {
-        this.bug("uhoh");
       }
     });
   }
@@ -229,13 +237,22 @@ class ProfileEdit extends Component {
         user_location: this.state.location_full,
         lat: this.state.lat,
         lng: this.state.lng,
-        user_dob: this.state.user_dob
+        user_dob: this.state.user_dob,
+        ethnicity: this.state.ethnicity
       }
     };
 
     //console.log(dataString);
 
     this.handleEmit(dataString);
+  }
+
+  setEthnicity(value) {
+    this.setState({ ethnicity: value, ethnicityModalVisible: false });
+  }
+
+  setEthnicityModalVisible(value) {
+    this.setState({ ethnicityModalVisible: value });
   }
 
   setModalVisible(value) {
@@ -283,7 +300,7 @@ class ProfileEdit extends Component {
         />
 
         <KeyboardAwareScrollView overScrollMode="never" scrollEnabled={true}>
-          <View style={styles.content}>
+          <View style={this.deviceTheme == "IphoneX" ? styles.contentX : styles.content}>
             <InputTextIcon
               inputRef={node => (this.name = node)}
               icon="profile_icon"
@@ -324,6 +341,7 @@ class ProfileEdit extends Component {
               />
             </View>
             <InputBtnIcon2 icon="location_icon" text={this.state.location} onPress={() => this.setModalVisible(true)} />
+            <InputBtnIcon2 icon="group_icon" text={this.state.ethnicity} onPress={() => this.setEthnicityModalVisible(true)} />
             <InputDateIcon icon="birthday_icon" value={this.state.user_dob} onDateChange={user_dob => this.setState({ user_dob })} />
             <InputTextMultiIcon
               inputRef={node => (this.about = node)}
@@ -340,6 +358,12 @@ class ProfileEdit extends Component {
             />
           </View>
         </KeyboardAwareScrollView>
+        <EthnicityModal
+          visible={this.state.ethnicityModalVisible}
+          setEthnicityModalVisible={this.setEthnicityModalVisible}
+          setEthnicity={this.setEthnicity}
+          screenProps={this.props.screenProps}
+        />
         <Modal
           animationType="slide"
           transparent={false}
@@ -407,22 +431,27 @@ const styles = {
     flex: 1,
     backgroundColor: "#FEFEFE"
   },
+  contentX: {
+    marginTop: 37,
+    marginLeft: 30,
+    marginRight: 30
+  },
   content: {
-    marginTop: 15,
+    marginTop: 10,
     marginLeft: 30,
     marginRight: 30
   },
   headerText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: "Helvetica",
     textAlign: "center",
-    color: "#000"
+    color: "#181818"
   },
   genderRow: {
     justifyContent: "space-between",
     flexDirection: "row",
-    marginBottom: 10,
-    marginTop: 15
+    marginBottom: 15,
+    marginTop: 10
   }
 };
 

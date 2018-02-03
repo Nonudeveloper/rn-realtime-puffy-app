@@ -8,6 +8,7 @@ const InterestSmall = props => {
 	}
 
 	const image = Images[props.name];
+	//const image = Images["circle_" + props.name + "_on"];
 
 	return (
 		<View style={{ width: 22, marginLeft: 4, marginRight: 4, alignItems: "center" }}>

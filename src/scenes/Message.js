@@ -487,7 +487,7 @@ const styles = {
 		marginLeft: 10,
 		height: 50,
 		width: 50,
-		resizeMode: "contain"
+		resizeMode: "cover"
 	},
 	myDateContainer: {
 		alignSelf: "flex-end",

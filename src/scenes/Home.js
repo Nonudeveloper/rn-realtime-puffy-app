@@ -569,7 +569,7 @@ class Home extends Component {
 			<View key={cardObject.id} style={styles.cardX}>
 				<View style={styles.cardHeaderContainerX}>
 					{this.state.cardsBack.length > 0 ? (
-						<TouchableOpacity style={styles.backBtn} onPress={this.swipeBack}>
+						<TouchableOpacity style={styles.backBtnX} onPress={this.swipeBack}>
 							<Image style={{ width: 27, height: 27, resizeMode: "contain" }} source={Images.circle_back} />
 						</TouchableOpacity>
 					) : null}
@@ -581,12 +581,14 @@ class Home extends Component {
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<CachedImage style={styles.cardImageX} source={{ uri: cardObject.file, cache: "force-cache" }} />
 					</TouchableWithoutFeedback>
-					<View style={styles.cardNameContainer}>
-						<Text style={styles.nameText}>
-							{cardObject.name}, {cardObject.age}
-						</Text>
-						<Text style={styles.locationText}>{cardObject.loc}</Text>
-					</View>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<View style={styles.cardNameContainer}>
+							<Text style={styles.nameText}>
+								{cardObject.name}, {cardObject.age}
+							</Text>
+							<Text style={styles.locationText}>{cardObject.loc}</Text>
+						</View>
+					</TouchableWithoutFeedback>
 					<Text style={styles.aboutText}>{cardObject.about}</Text>
 				</View>
 				<View style={styles.interestContainerX}>
@@ -631,12 +633,14 @@ class Home extends Component {
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<CachedImage style={DIMENSIONS.height > 500 ? styles.cardImageSmall : styles.cardImageSmaller} source={{ uri: cardObject.file, cache: "force-cache" }} />
 					</TouchableWithoutFeedback>
-					<View style={styles.cardNameContainer}>
-						<Text style={styles.nameText}>
-							{cardObject.name}, {cardObject.age}
-						</Text>
-						<Text style={styles.locationText}>{cardObject.loc}</Text>
-					</View>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<View style={styles.cardNameContainer}>
+							<Text style={styles.nameText}>
+								{cardObject.name}, {cardObject.age}
+							</Text>
+							<Text style={styles.locationText}>{cardObject.loc}</Text>
+						</View>
+					</TouchableWithoutFeedback>
 					<Text style={styles.aboutText}>{cardObject.about}</Text>
 				</View>
 				<View style={styles.interestContainerSmall}>
@@ -691,12 +695,14 @@ class Home extends Component {
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
 					</TouchableWithoutFeedback>
-					<View style={styles.cardNameContainer}>
-						<Text style={styles.nameText}>
-							{cardObject.name}, {cardObject.age}
-						</Text>
-						<Text style={styles.locationText}>{cardObject.loc}</Text>
-					</View>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<View style={styles.cardNameContainer}>
+							<Text style={styles.nameText}>
+								{cardObject.name}, {cardObject.age}
+							</Text>
+							<Text style={styles.locationText}>{cardObject.loc}</Text>
+						</View>
+					</TouchableWithoutFeedback>
 					<Text style={styles.aboutText}>{cardObject.about}</Text>
 				</View>
 				<View style={DIMENSIONS.height > 700 ? styles.interestContainerAndroid : styles.interestContainerAndroidSmall}>
@@ -747,12 +753,14 @@ class Home extends Component {
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
 					</TouchableWithoutFeedback>
-					<View style={styles.cardNameContainer}>
-						<Text style={styles.nameText}>
-							{cardObject.name}, {cardObject.age}
-						</Text>
-						<Text style={styles.locationText}>{cardObject.loc}</Text>
-					</View>
+					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
+						<View style={styles.cardNameContainer}>
+							<Text style={styles.nameText}>
+								{cardObject.name}, {cardObject.age}
+							</Text>
+							<Text style={styles.locationText}>{cardObject.loc}</Text>
+						</View>
+					</TouchableWithoutFeedback>
 					<Text style={styles.aboutText}>{cardObject.about}</Text>
 				</View>
 				<View style={styles.interestContainer}>
@@ -928,8 +936,8 @@ const styles = {
 	},
 	card: {
 		flex: 1,
-		paddingLeft: 12,
-		paddingRight: 12,
+		paddingLeft: 10,
+		paddingRight: 10,
 		paddingTop: 0,
 		paddingBottom: 12,
 		borderWidth: 1,
@@ -939,8 +947,8 @@ const styles = {
 	},
 	cardX: {
 		flex: 1,
-		paddingLeft: 12,
-		paddingRight: 12,
+		paddingLeft: 10,
+		paddingRight: 10,
 		paddingTop: 5,
 		paddingBottom: 12,
 		borderWidth: 1,
@@ -1000,7 +1008,7 @@ const styles = {
 	cardHeaderContainerSmall: {
 		height: 25
 	},
-	backBtn: {
+	backBtnX: {
 		position: "absolute",
 		top: 1,
 		left: 0,
@@ -1011,6 +1019,22 @@ const styles = {
 		paddingLeft: 1,
 		paddingRight: 10,
 		paddingTop: 5,
+		paddingBottom: 10,
+		borderWidth: 1,
+		backgroundColor: "transparent",
+		borderColor: "transparent"
+	},
+	backBtn: {
+		position: "absolute",
+		top: 1,
+		left: 0,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 1 },
+		shadowOpacity: 0.7,
+		shadowRadius: 1,
+		paddingLeft: 1,
+		paddingRight: 10,
+		paddingTop: 4,
 		paddingBottom: 10,
 		borderWidth: 1,
 		backgroundColor: "transparent",
@@ -1155,6 +1179,7 @@ const styles = {
 		width: null,
 		height: 50,
 		resizeMode: "contain",
+		backgroundColor: "transparent",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.7,
@@ -1164,6 +1189,7 @@ const styles = {
 		width: null,
 		height: 35,
 		resizeMode: "contain",
+		backgroundColor: "transparent",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.7,

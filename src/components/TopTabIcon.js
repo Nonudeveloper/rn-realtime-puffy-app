@@ -37,6 +37,7 @@ const styles = {
   icon: {
     width: 35,
     height: 35,
+    marginBottom: 2,
     resizeMode: "contain",
     backgroundColor: "transparent",
     shadowColor: "#000",

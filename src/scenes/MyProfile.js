@@ -3,15 +3,13 @@ import { View, Text, Image, FlatList, RefreshControl, TouchableOpacity, Touchabl
 import ActionSheet from "react-native-actionsheet";
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
-import Interest from "../components/InterestSmall";
+import CirclePrefSmall from "../components/CirclePrefSmall";
 import ImagePreview from "react-native-image-preview";
 import Header from "../components/Header";
 
 const CANCEL_INDEX = 0;
 const options = ["Cancel", "Take Photo", "Choose From Gallery"];
 const title = "Change Profile Photo";
-
-//const options2 = ["Cancel", "Take Photo", "Choose From Gallery"];
 const options2 = ["Cancel", "Take Photo", "Take Video", "Choose From Gallery"];
 const title2 = "Upload Feed Photo";
 
@@ -348,16 +346,6 @@ class MyProfile extends Component {
   }
 
   handlePress2(i) {
-    /*
-    if (i == 1) {
-      this.gotoFeedPhoto();
-    } else if (i == 2) {
-      this.gotoFeedGallery();
-    } else if (i == 3) {
-      this.gotoFeedGallery();
-    }
-    */
-
     if (i == 1) {
       this.gotoFeedPhoto();
     } else if (i == 2) {
@@ -431,8 +419,8 @@ class MyProfile extends Component {
         };
 
         this.handleEmit(dataString);
-        this.setState({ refreshing: true });
       }, 100);
+      this.setState({ refreshing: true });
     } else {
       setTimeout(() => {
         let dataString = {
@@ -443,8 +431,8 @@ class MyProfile extends Component {
         };
 
         this.handleEmit(dataString);
-        this.setState({ refreshing: true });
       }, 100);
+      this.setState({ refreshing: true });
     }
   }
 
@@ -521,11 +509,11 @@ class MyProfile extends Component {
               </View>
               <View style={styles.detailContainerLast}>
                 <View style={styles.interestContainer}>
-                  <Interest name={this.props.screenProps.global.user_interest_name1} />
-                  <Interest name={this.props.screenProps.global.user_interest_name2} />
-                  <Interest name={this.props.screenProps.global.user_interest_name3} />
-                  <Interest name={this.props.screenProps.global.user_interest_name4} />
-                  <Interest name={this.props.screenProps.global.user_interest_name5} />
+                  <CirclePrefSmall name={this.props.screenProps.global.user_interest_name1} active={1} />
+                  <CirclePrefSmall name={this.props.screenProps.global.user_interest_name2} active={1} />
+                  <CirclePrefSmall name={this.props.screenProps.global.user_interest_name3} active={1} />
+                  <CirclePrefSmall name={this.props.screenProps.global.user_interest_name4} active={1} />
+                  <CirclePrefSmall name={this.props.screenProps.global.user_interest_name5} active={1} />
                 </View>
               </View>
             </View>
@@ -599,7 +587,8 @@ const styles = {
     width: 110,
     height: 110,
     marginRight: 15,
-    marginBottom: 6
+    marginBottom: 4,
+    marginTop: 2
   },
   profileRight: {
     flex: 1
@@ -644,7 +633,7 @@ const styles = {
   detailContainer: {
     borderBottomColor: "#EEEEEE",
     borderBottomWidth: 1,
-    paddingBottom: 6
+    paddingBottom: 1
   },
   detailContainerAbout: {},
   detailContainerActionWrapper: {
@@ -716,11 +705,11 @@ const styles = {
   },
   interestContainer: {
     flexDirection: "row",
-    marginTop: 2,
-    paddingBottom: 3,
+    marginTop: 1,
+    paddingBottom: 1,
     marginLeft: 5,
-    marginRight: 15,
-    justifyContent: "space-around"
+    marginRight: 12,
+    justifyContent: "space-between"
   },
   aboutContainer: {
     borderBottomColor: "#EEEEEE",

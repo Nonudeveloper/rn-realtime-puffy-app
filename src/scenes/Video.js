@@ -257,7 +257,7 @@ class Video extends Component {
   }
 
   getThumb(video, duration, width, height) {
-    const maximumSize = { width: 150, height: 150 };
+    const maximumSize = { width: 300, height: 300 };
 
     //console.log(video);
     //console.log(width);

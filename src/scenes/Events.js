@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, View, Text, Dimensions, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image } from "react-native";
+import { Alert, View, Text, Dimensions, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback, RefreshControl, FlatList, Image, Platform } from "react-native";
 import FilterInput from "../components/FilterInput";
 import { CachedImage } from "react-native-img-cache";
 import { NavigationActions } from "react-navigation";
@@ -132,7 +132,7 @@ class Events extends Component {
                         renderItem={this.renderRow}
                         extraData={this.props.extraData}
                         keyExtractor={item => item.key}
-                        removeClippedSubviews={true}
+                        removeClippedSubviews={Platform.OS === "android" ? true : false}
                         initialNumToRender={3}
                         horizontal={false}
                         numColumns={1}

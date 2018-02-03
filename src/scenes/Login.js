@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { View, Image, Text, TouchableOpacity, Alert, Dimensions, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LinearGradient from "react-native-linear-gradient";
-import InputTextLogin from "../components/InputTextLogin";
+import InputTextLogin from "../components/InputText";
 import BtnWhite from "../components/BtnWhite";
 import BtnWhiteSmall from "../components/BtnWhiteSmall";
 import BtnWhiteIcon from "../components/BtnWhiteIcon";
+import BtnOutline from "../components/BtnOutline";
 import BtnOutlineLogin from "../components/BtnOutlineLogin";
 import ajaxPost from "../lib/ajaxPost";
 import ajaxPostDev from "../lib/ajaxPostDev";
@@ -178,7 +179,7 @@ class Login extends Component {
 							right: 0,
 							alignItems: "center"
 						}}
-						height={Dimensions.get("window").height * 0.3}
+						height={DIMENSIONS.height > 500 ? 175 : 115}
 					>
 						<View style={styles.slide1}>
 							<View style={styles.slideTextContainer}>
@@ -193,7 +194,7 @@ class Login extends Component {
 								<Text style={styles.slideTextSmall}>Swiping Right and Connect</Text>
 							</View>
 							<Image style={styles.slideImg} source={Images.slide1} />
-							<Image style={styles.slideImgOverSmall} source={Images.slide2} />
+							<Image style={DIMENSIONS.height > 500 ? styles.slideImgOverSmall : styles.slideImgOverSmaller} source={Images.slide2} />
 						</View>
 						<View style={styles.slide3}>
 							<View style={styles.slideTextContainer}>
@@ -205,7 +206,7 @@ class Login extends Component {
 						<View style={styles.slide4}>
 							<View style={styles.slideTextContainer}>
 								<Text style={styles.slideTextSmall}>Be Able to Chat and Share</Text>
-								<Text style={styles.slideTextSmall}>Photos Freely with Puffers</Text>
+								<Text style={styles.slideTextSmall}>Photos with Puffers for Free</Text>
 							</View>
 							<Image style={styles.slideImg} source={Images.slide3} />
 						</View>
@@ -279,12 +280,12 @@ class Login extends Component {
 						loop={false}
 						index={0}
 						paginationStyle={{
-							bottom: 10,
+							bottom: 5,
 							left: 0,
 							right: 0,
 							alignItems: "center"
 						}}
-						height={Dimensions.get("window").height * 0.4}
+						height={this.deviceTheme == "IphoneX" ? 280 : 230}
 					>
 						<View style={styles.slide1}>
 							<View style={styles.slideTextContainer}>
@@ -299,7 +300,7 @@ class Login extends Component {
 								<Text style={styles.slideText}>Swiping Right and Connect</Text>
 							</View>
 							<Image style={styles.slideImg} source={Images.slide1} />
-							<Image style={styles.slideImgOver} source={Images.slide2} />
+							<Image style={this.deviceTheme == "IphoneX" ? styles.slideImgOverLarge : styles.slideImgOver} source={Images.slide2} />
 						</View>
 						<View style={styles.slide3}>
 							<View style={styles.slideTextContainer}>
@@ -311,7 +312,7 @@ class Login extends Component {
 						<View style={styles.slide4}>
 							<View style={styles.slideTextContainer}>
 								<Text style={styles.slideText}>Be Able to Chat and Share</Text>
-								<Text style={styles.slideText}>Photos Freely with Puffers</Text>
+								<Text style={styles.slideText}>Photos with Puffers for Free</Text>
 							</View>
 							<Image style={styles.slideImg} source={Images.slide3} />
 						</View>
@@ -342,7 +343,7 @@ class Login extends Component {
 							onChangeText={password => this.setState({ password })}
 						/>
 						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
-						<TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
+						<TouchableOpacity style={this.deviceTheme == "IphoneX" ? styles.btnForgotLarge : styles.btnForgot} onPress={this.showForgot}>
 							<Text style={styles.btnForgotText}>Forgot password?</Text>
 						</TouchableOpacity>
 						<View style={styles.facebook}>
@@ -352,7 +353,7 @@ class Login extends Component {
 				</KeyboardAwareScrollView>
 				<View style={this.deviceTheme == "IphoneX" ? styles.footerX : styles.footer}>
 					<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-					<BtnOutlineLogin value="Sign up for free!" onPress={this.showRegister} />
+					<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
 				</View>
 			</LinearGradient>
 		);
@@ -372,7 +373,7 @@ const styles = {
 	},
 	header: {
 		marginTop: 25,
-		marginBottom: 10,
+		marginBottom: 5,
 		alignItems: "center",
 		backgroundColor: "transparent"
 	},
@@ -465,24 +466,44 @@ const styles = {
 		flex: 1,
 		resizeMode: "contain"
 	},
-	slideImgOverSmall: {
+	slideImgOverSmaller: {
 		position: "absolute",
-		top: 35,
-		left: 30,
+		top: 39,
+		left: 15,
 		right: 0,
 		bottom: 0,
 		width: null,
-		height: Dimensions.get("window").height * 0.23,
+		height: 75,
+		resizeMode: "contain"
+	},
+	slideImgOverSmall: {
+		position: "absolute",
+		top: 39,
+		left: 22,
+		right: 0,
+		bottom: 0,
+		width: null,
+		height: 135,
 		resizeMode: "contain"
 	},
 	slideImgOver: {
 		position: "absolute",
-		top: 40,
-		left: 40,
+		top: 45,
+		left: 28,
 		right: 0,
 		bottom: 0,
 		width: null,
-		height: Dimensions.get("window").height * 0.33,
+		height: 185,
+		resizeMode: "contain"
+	},
+	slideImgOverLarge: {
+		position: "absolute",
+		top: 40,
+		left: 28,
+		right: 0,
+		bottom: 0,
+		width: null,
+		height: 235,
 		resizeMode: "contain"
 	},
 	content: {
@@ -497,7 +518,12 @@ const styles = {
 	},
 	btnForgot: {
 		marginTop: 7,
-		marginBottom: 2,
+		marginBottom: 5,
+		marginLeft: 2
+	},
+	btnForgotLarge: {
+		marginTop: 10,
+		marginBottom: 8,
 		marginLeft: 2
 	},
 	btnForgotText: {
@@ -518,7 +544,7 @@ const styles = {
 	},
 	footerX: {
 		position: "absolute",
-		bottom: 55,
+		bottom: 57,
 		left: 50,
 		right: 50
 	},

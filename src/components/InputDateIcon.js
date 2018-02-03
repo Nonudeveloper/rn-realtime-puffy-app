@@ -23,24 +23,17 @@ const InputDateIcon = props => {
           dateInput: {
             alignItems: "flex-start",
             height: 40,
-            marginBottom: 10,
             borderWidth: 1,
             borderColor: "#18B5C3",
             borderRadius: 5,
             paddingTop: 10,
             paddingLeft: 40,
             paddingBottom: 10,
-            paddingRight: 15,
-            ...Platform.select({
-              android: {
-                height: 37,
-                marginBottom: 3
-              }
-            })
+            paddingRight: 15
           },
           dateIcon: {
             position: "absolute",
-            top: 5,
+            top: 10,
             right: 10,
             width: 22,
             height: 22,
@@ -66,7 +59,8 @@ const InputDateIcon = props => {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    marginBottom: 13
   },
   icon: {
     position: "absolute",
@@ -77,14 +71,12 @@ const styles = {
     resizeMode: "contain",
     ...Platform.select({
       android: {
-        top: 18,
+        top: 18
       }
     })
   },
   date: {
-    width: null,
-    marginTop: 10,
-    marginBottom: 10
+    width: null
   }
 };
 

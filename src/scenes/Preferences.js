@@ -3,12 +3,15 @@ import { View, Text, TouchableOpacity, Image, ScrollView, Alert, AsyncStorage, P
 import { BtnSaveTxt } from "../components";
 import Header from "../components/Header";
 import Pref from "../components/PrefLarge";
+import BoxPref from "../components/BoxPref";
 import Images from "../config/images";
 import { NavigationActions } from "react-navigation";
 
 class Preferences extends Component {
 	constructor(props) {
 		super(props);
+
+		this.deviceTheme = this.props.screenProps.deviceTheme;
 		this.updatePreference = this.updatePreference.bind(this);
 		this.bug = this.props.screenProps.bug.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
@@ -185,94 +188,96 @@ class Preferences extends Component {
 					LeftCallback={this.props.screenProps.hide_back == 1 ? this.cancel : this.goBack}
 					RightIcon="checkmark_button"
 					RightCallback={this.updatePreference}
-					title="My Interests"
 					global={this.props.screenProps.global}
 				/>
+				<View style={this.deviceTheme == "IphoneX" ? styles.sectionX : styles.section}>
+					<Text style={styles.boldHeader}>My Interests</Text>
+					<Text style={styles.sub_sub_title}>Select 5</Text>
+				</View>
 
-				<Text style={styles.sub_sub_title}>Select 5</Text>
-				<ScrollView style={styles.content}>
+				<ScrollView style={this.deviceTheme == "IphoneX" ? styles.contentX : styles.content}>
 					<View>
-						<View style={styles.section3}>
+						<View style={this.deviceTheme == "IphoneX" ? styles.section3X : styles.section3}>
 							<TouchableOpacity onPress={() => this.setModal("smoke")}>
-								<Pref prefstate={this.state.smoke} name={"smoke"} />
+								<BoxPref prefstate={this.state.smoke} name={"smoke"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("vape")}>
-								<Pref prefstate={this.state.vape} name={"vape"} />
+								<BoxPref prefstate={this.state.vape} name={"vape"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("edibles")}>
-								<Pref prefstate={this.state.edibles} name={"edibles"} />
+								<BoxPref prefstate={this.state.edibles} name={"edibles"} />
 							</TouchableOpacity>
 						</View>
 
-						<View style={styles.section3}>
+						<View style={this.deviceTheme == "IphoneX" ? styles.section3X : styles.section3}>
 							<TouchableOpacity onPress={() => this.setModal("chill")}>
-								<Pref prefstate={this.state.chill} name={"chill"} />
+								<BoxPref prefstate={this.state.chill} name={"chill"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("outdoor")}>
-								<Pref prefstate={this.state.outdoor} name={"outdoor"} />
+								<BoxPref prefstate={this.state.outdoor} name={"outdoor"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("flicks")}>
-								<Pref prefstate={this.state.flicks} name={"flicks"} />
+								<BoxPref prefstate={this.state.flicks} name={"flicks"} />
 							</TouchableOpacity>
 						</View>
 
-						<View style={styles.section3}>
+						<View style={this.deviceTheme == "IphoneX" ? styles.section3X : styles.section3}>
 							<TouchableOpacity onPress={() => this.setModal("videogames")}>
-								<Pref prefstate={this.state.videogames} name={"videogames"} />
+								<BoxPref prefstate={this.state.videogames} name={"videogames"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("sports")}>
-								<Pref prefstate={this.state.sports} name={"sports"} />
+								<BoxPref prefstate={this.state.sports} name={"sports"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("clubs")}>
-								<Pref prefstate={this.state.clubs} name={"clubs"} />
+								<BoxPref prefstate={this.state.clubs} name={"clubs"} />
 							</TouchableOpacity>
 						</View>
 
-						<View style={styles.section3}>
+						<View style={this.deviceTheme == "IphoneX" ? styles.section3X : styles.section3}>
 							<TouchableOpacity onPress={() => this.setModal("concert")}>
-								<Pref prefstate={this.state.concert} name={"concert"} />
+								<BoxPref prefstate={this.state.concert} name={"concert"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("food")}>
-								<Pref prefstate={this.state.food} name={"food"} />
+								<BoxPref prefstate={this.state.food} name={"food"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("games")}>
-								<Pref prefstate={this.state.games} name={"games"} />
+								<BoxPref prefstate={this.state.games} name={"games"} />
 							</TouchableOpacity>
 						</View>
 
-						<View style={styles.section3}>
+						<View style={this.deviceTheme == "IphoneX" ? styles.section3X : styles.section3}>
 							<TouchableOpacity onPress={() => this.setModal("friend")}>
-								<Pref prefstate={this.state.friend} name={"friend"} />
+								<BoxPref prefstate={this.state.friend} name={"friend"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("liquor")}>
-								<Pref prefstate={this.state.liquor} name={"liquor"} />
+								<BoxPref prefstate={this.state.liquor} name={"liquor"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("love")}>
-								<Pref prefstate={this.state.love} name={"love"} />
+								<BoxPref prefstate={this.state.love} name={"love"} />
 							</TouchableOpacity>
 						</View>
 
 						<View style={styles.section3Last}>
 							<TouchableOpacity onPress={() => this.setModal("hotbox")}>
-								<Pref prefstate={this.state.hotbox} name={"hotbox"} />
+								<BoxPref prefstate={this.state.hotbox} name={"hotbox"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("karaoke")}>
-								<Pref prefstate={this.state.karaoke} name={"karaoke"} />
+								<BoxPref prefstate={this.state.karaoke} name={"karaoke"} />
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={() => this.setModal("music")}>
-								<Pref prefstate={this.state.music} name={"music"} />
+								<BoxPref prefstate={this.state.music} name={"music"} />
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -287,21 +292,51 @@ const styles = {
 		flex: 1,
 		backgroundColor: "#FEFEFE"
 	},
+	sectionX: {
+		borderBottomColor: "#EEEEEE",
+		borderBottomWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		paddingTop: 23,
+		paddingBottom: 10,
+		paddingLeft: 20,
+		paddingRight: 20
+	},
+	section: {
+		borderBottomColor: "#EEEEEE",
+		borderBottomWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		paddingTop: 18,
+		paddingBottom: 5,
+		paddingLeft: 20,
+		paddingRight: 20
+	},
 	section_border: {
 		borderBottomColor: "#EEEEEE",
 		borderBottomWidth: 1,
 		marginTop: 12,
 		marginBottom: 5
 	},
+	contentX: {
+		paddingTop: 45,
+		paddingLeft: 50,
+		paddingRight: 50
+	},
 	content: {
-		paddingTop: 15,
+		paddingTop: 20,
 		paddingLeft: 50,
 		paddingRight: 50
 	},
 	section3: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		paddingBottom: 12
+		paddingBottom: 13
+	},
+	section3X: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		paddingBottom: 20
 	},
 	section3Last: {
 		flexDirection: "row",
@@ -325,9 +360,9 @@ const styles = {
 	sub_sub_title: {
 		textAlign: "center",
 		fontFamily: "Helvetica",
-		fontSize: 16,
+		fontSize: 12,
 		color: "#18B5C3",
-		marginTop: 10
+		marginTop: 2
 	},
 	downContainer: {
 		marginTop: 50
@@ -360,21 +395,11 @@ const styles = {
 		alignSelf: "center",
 		resizeMode: "contain"
 	},
-	section: {
-		borderBottomColor: "#EEEEEE",
-		borderBottomWidth: 1,
-		marginLeft: 10,
-		marginRight: 10,
-		paddingTop: 20,
-		paddingBottom: 20,
-		paddingLeft: 15,
-		paddingRight: 15
-	},
 	boldHeader: {
 		fontSize: 16,
 		fontFamily: "Helvetica",
-		fontWeight: "bold",
-		textAlign: "center"
+		textAlign: "center",
+		color: "#181818"
 	}
 };
 

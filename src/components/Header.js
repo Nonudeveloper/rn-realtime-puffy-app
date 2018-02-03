@@ -78,7 +78,7 @@ const Header = ({ deviceTheme, LeftIcon, LeftText, LeftCallback, RightIcon, Righ
         )}
       </LinearGradient>
       {title == null ? null : (
-        <View style={styles.section}>
+        <View style={deviceTheme == "IphoneX" ? styles.sectionX : styles.section}>
           <Text style={styles.boldHeader}>{title}</Text>
         </View>
       )}
@@ -160,8 +160,8 @@ const styles = {
     shadowRadius: 2
   },
   backIconPlus: {
-    height: 30,
-    width: 30,
+    height: 31,
+    width: 31,
     marginRight: 5,
     marginLeft: 5,
     resizeMode: "contain",
@@ -207,7 +207,7 @@ const styles = {
     width: 27,
     height: 27,
     marginRight: 5,
-    marginBottom: 1,
+    marginBottom: 2,
     resizeMode: "contain",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -253,6 +253,16 @@ const styles = {
     paddingTop: 30,
     paddingLeft: 30,
     borderColor: "transparent"
+  },
+  sectionX: {
+    borderBottomColor: "#EEEEEE",
+    borderBottomWidth: 1,
+    marginLeft: 20,
+    marginRight: 20,
+    paddingTop: 23,
+    paddingBottom: 23,
+    paddingLeft: 20,
+    paddingRight: 20
   },
   section: {
     borderBottomColor: "#EEEEEE",

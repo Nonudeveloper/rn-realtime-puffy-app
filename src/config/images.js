@@ -347,7 +347,8 @@ const images = {
 	slide2: require("../img/slide/slide2.png"),
 	slide3: require("../img/slide/slide3.png"),
 	slide4: require("../img/slide/slide4.png"),
-	vid: require("../img/vid.png")
+	vid: require("../img/vid.png"),
+	contact: require("../img/contact.png")
 };
 
 export default images;

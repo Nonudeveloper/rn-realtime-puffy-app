@@ -200,8 +200,8 @@ const styles = {
     shadowRadius: 2
   },
   backIconPlus: {
-    height: 30,
-    width: 30,
+    height: 31,
+    width: 31,
     marginRight: 5,
     marginLeft: 5,
     resizeMode: "contain",
@@ -315,7 +315,7 @@ const styles = {
     width: 27,
     height: 27,
     marginRight: 5,
-    marginBottom: 1,
+    marginBottom: 2,
     resizeMode: "contain",
     backgroundColor: "transparent",
     shadowColor: "#000",

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Alert, ScrollView, Text, Image, View, Modal } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Header from "../components/Header";
-import BtnOutlineIcon from "../components/BtnOutlineIcon";
+import EthnicityModal from "../components/EthnicityModal";
+import BtnOutlineIcon from "../components/BtnOutlineIconSmall";
 import BtnDefault from "../components/BtnDefault";
 import InputBtnIcon from "../components/InputBtnIcon";
 import InputBtnIcon2 from "../components/InputBtnIcon2";
@@ -27,6 +28,9 @@ class MyGender extends Component {
     this.setGender = this.setGender.bind(this);
     this.setLocation = this.setLocation.bind(this);
     this.setModalVisible = this.setModalVisible.bind(this);
+    this.setEthnicityModalVisible = this.setEthnicityModalVisible.bind(this);
+    this.setEthnicity = this.setEthnicity.bind(this);
+
     this.locations = [homePlace1, homePlace2, homePlace3, homePlace4, homePlace5, homePlace6];
     this.logout = this.props.screenProps.logout.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -46,7 +50,9 @@ class MyGender extends Component {
       location_full: "",
       lat: 0,
       lng: 0,
-      modalVisible: false
+      ethnicity: "No Preference",
+      modalVisible: false,
+      ethnicityModalVisible: false
     };
   }
 
@@ -100,6 +106,7 @@ class MyGender extends Component {
       user_data: {
         gender: this.state.gender,
         location: this.state.location_full,
+        ethnicity: this.state.ethnicity,
         lat: this.state.lat,
         lng: this.state.lng
       }
@@ -113,6 +120,15 @@ class MyGender extends Component {
   setModalVisible(value) {
     this.setState({ modalVisible: value });
   }
+
+  setEthnicity(value) {
+    this.setState({ ethnicity: value, ethnicityModalVisible: false });
+  }
+
+  setEthnicityModalVisible(value) {
+    this.setState({ ethnicityModalVisible: value });
+  }
+
   cancel() {
     Alert.alert("Confirmation", "Are you sure you want to cancel?", [{ text: "No", onPress: () => console.log("No Pressed!") }, { text: "Yes", onPress: () => this.logout() }]);
   }
@@ -142,12 +158,19 @@ class MyGender extends Component {
             />
             <BtnOutlineIcon label="Man" icon="man_off" icon_active="man_on" theme_active="Green" active={this.state.gender === "Male"} onPress={() => this.setGender("Male")} />
           </View>
+          <Text style={styles.headerTextGreen}>My Ethnicity</Text>
+          <InputBtnIcon2 icon="group_icon" text={this.state.ethnicity} onPress={() => this.setEthnicityModalVisible(true)} />
           <Text style={styles.headerTextGreen}>My Location</Text>
           <View style={styles.locationRow}>
             <InputBtnIcon2 icon="location_icon" text={this.state.location} onPress={() => this.setModalVisible(true)} />
           </View>
         </ScrollView>
-
+        <EthnicityModal
+          visible={this.state.ethnicityModalVisible}
+          setEthnicityModalVisible={this.setEthnicityModalVisible}
+          setEthnicity={this.setEthnicity}
+          screenProps={this.props.screenProps}
+        />
         <Modal
           animationType="slide"
           transparent={false}
@@ -237,8 +260,8 @@ const styles = {
     color: "#18B5C3",
     marginLeft: 15,
     marginRight: 15,
-    marginTop: 20,
-    marginBottom: 20
+    marginTop: 15,
+    marginBottom: 15
   },
   genderRow: {
     justifyContent: "space-between",

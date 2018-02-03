@@ -466,9 +466,8 @@ const styles = {
 		backgroundColor: "#00B1BB"
 	},
 	tabNavContainer: {
-		marginTop: 1,
+		marginTop: 4,
 		backgroundColor: "#FAFAFA",
-		borderTopWidth: 2,
 		borderColor: "#D3D3D3",
 		borderBottomWidth: 2,
 		borderColor: "#D3D3D3"
