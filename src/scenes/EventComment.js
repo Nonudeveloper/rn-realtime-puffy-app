@@ -7,21 +7,17 @@ class EventComment extends Component {
 	constructor(props) {
 		super(props);
 
+		this.sendMsg = this.sendMsg.bind(this);
 		this.renderRow = this.renderRow.bind(this);
 		this.msgListenerEventComments = this.msgListenerEventComments.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
-
-		var fakeData = [{ key: "a" }, { key: "b" }];
-
+		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
+		this.user_id = this.props.screenProps.global.user_id;
+		this.event_id = this.props.navigation.state.params.event_id;
 		this.items = [];
 
 		this.state = {
-			isLoaded: 0,
-			searching: 0,
-			refreshing: false,
-			selected: false,
-			isNavigating: false,
 			dataSource: []
 		};
 	}
@@ -34,10 +30,7 @@ class EventComment extends Component {
 		this.items = items;
 
 		this.setState({
-			dataSource: items,
-			refreshing: false,
-			selected: !this.state.selected,
-			isLoaded: 1
+			dataSource: items
 		});
 
 		console.log(items);
@@ -54,7 +47,9 @@ class EventComment extends Component {
 	componentDidMount() {
 		let dataString = {
 			user_action: "get_event_comments",
-			user_data: {}
+			user_data: {
+				event_id: this.event_id
+			}
 		};
 
 		this.handleEmit(dataString);
@@ -75,6 +70,39 @@ class EventComment extends Component {
 		);
 	}
 
+	sendMsg() {
+		if (this.state.msg_text === "" || this.state.msg_text === " " || this.state.msg_text === "   ") {
+			return false;
+		}
+
+		let dataString = {
+			user_action: "create_events_comments",
+			user_data: {
+				user_id: this.user_id,
+				event_id: this.event_id,
+				puffy_events_comments_text: this.state.msg_text
+			}
+		};
+
+		let newMessage = {
+			puffy_events_comments_text: this.state.msg_text,
+			user_name: this.props.screenProps.global.user_name,
+			profileImage: this.props.screenProps.global.user_thumb
+		};
+
+		this.handleEmit(dataString);
+
+		this.items.unshift(newMessage);
+		this.setState({
+			dataSource: this.items
+		});
+		this._textInput.setNativeProps({ text: "" });
+
+		this.setState({
+			msg_text: ""
+		});
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -82,7 +110,13 @@ class EventComment extends Component {
 				<View style={styles.section}>
 					<Text style={styles.boldHeader}>Comments</Text>
 				</View>
-				<FlatList data={this.state.dataSource} keyExtractor={(item, index) => index} renderItem={this.renderRow} />
+				<FlatList
+					data={this.state.dataSource}
+					style={[{ transform: [{ scaleY: -1 }] }]}
+					inverted={true}
+					keyExtractor={(item, index) => index}
+					renderItem={this.renderRow}
+				/>
 
 				<View style={styles.containerBottom}>
 					<TextInput
@@ -95,8 +129,9 @@ class EventComment extends Component {
 						multiline={true}
 						blurOnSubmit={true}
 						onChangeText={msg_text => this.setState({ msg_text })}
+						value={this.msg_text}
 						returnKeyType="send"
-						placeholder="write a comment..."
+						placeholder={this.placeHolder}
 						placeholderTextColor="#aaaaaa"
 						onSubmitEditing={this.sendMsg}
 					/>
@@ -200,11 +235,11 @@ const styles = {
 	sendButton: {
 		position: "absolute",
 		top: 18,
-		right: 22,
+		right: 20,
 		padding: 5
 	},
 	sendButtonText: {
-		color: "#FFF",
+		color: "#aaaaaa",
 		fontSize: 12,
 		fontWeight: "bold",
 		fontFamily: "Helvetica"

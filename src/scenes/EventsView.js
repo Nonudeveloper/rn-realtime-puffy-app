@@ -44,6 +44,7 @@ class EventsView extends Component {
 		this.showMenu2 = this.showMenu2.bind(this);
 		this.handlePress2 = this.handlePress2.bind(this);
 		this.reportEvent = this.reportEvent.bind(this);
+		this.gotoEventComment = this.gotoEventComment.bind(this);
 		this.key = this.props.navigation.state.key;
 		this.events_id = this.props.navigation.state.params.events_id;
 		this.past = this.props.navigation.state.params.past;
@@ -277,8 +278,8 @@ class EventsView extends Component {
 		this.props.navigation.navigate("Profile", { user: props, user_id: user_id });
 	}
 
-	gotoEventComment(event_id) {
-		this.props.navigation.navigate("EventComment", { event_id: event_id });
+	gotoEventComment() {
+		this.props.navigation.navigate("EventComment", { event_id: this.events_id });
 	}
 
 	goToRatings(user_id) {
@@ -592,6 +593,9 @@ class EventsView extends Component {
 										<View>
 											<Rating starValue={this.state.starValue} />
 										</View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={this.gotoEventComment}>
+										<Image style={styles.eventCommentIcon} source={Images.message_friend} />
 									</TouchableOpacity>
 								</View>
 							</View>
