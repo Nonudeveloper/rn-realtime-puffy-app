@@ -43,6 +43,11 @@ class EventComment extends Component {
 		}
 	}
 
+	componentWillUnmount() {
+		//console.log("feed all unmount");
+		this.puffyChannel.removeListener("data_channel", this.msgListenerEventComments);
+	}
+
 	componentDidMount() {
 		let dataString = {
 			user_action: "get_event_comments",

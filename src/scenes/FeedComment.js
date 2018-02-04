@@ -10,7 +10,7 @@ class FeedComment extends Component {
 
 		this.sendMsg = this.sendMsg.bind(this);
 		this.renderRow = this.renderRow.bind(this);
-		this.msgListenerEventComments = this.msgListenerEventComments.bind(this);
+		this.msgListenerFeedComments = this.msgListenerFeedComments.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
@@ -37,10 +37,15 @@ class FeedComment extends Component {
 		let localData = JSON.stringify(items);
 	}
 
-	msgListenerEventComments(data) {
+	msgListenerFeedComments(data) {
 		if (data["result"] == 1 && data["result_action"] == "get_feed_comments") {
 			this.setItems(data["result_data"]);
 		}
+	}
+
+	componentWillUnmount() {
+		//console.log("feed all unmount");
+		this.puffyChannel.removeListener("data_channel", this.msgListenerFeedComments);
 	}
 
 	componentDidMount() {
@@ -52,7 +57,7 @@ class FeedComment extends Component {
 		};
 
 		this.handleEmit(dataString);
-		this.puffyChannel.on("data_channel", this.msgListenerEventComments);
+		this.puffyChannel.on("data_channel", this.msgListenerFeedComments);
 	}
 
 	renderRow({ item, index }) {
