@@ -227,12 +227,6 @@ class FeedItem extends Component {
                       <Text style={styles.likerText}>Likers+</Text>
                     </View>
                   </TouchableOpacity>
-
-                  <TouchableOpacity onPress={this.gotoFeedComment}>
-                    <View>
-                      <Image style={styles.commenterImg} source={Images.message_friend} />
-                    </View>
-                  </TouchableOpacity>
                 </View>
               ) : null}
             </View>
@@ -249,6 +243,11 @@ class FeedItem extends Component {
               )}
             </View>
           )}
+          <View style={styles.commenterContainer}>
+            <TouchableOpacity onPress={this.gotoFeedComment}>
+              <Image style={styles.commenterImg} source={Images.message_friend} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.aboutText}>{props.data.file_caption}</Text>
         </View>
         <Text style={styles.timeAgo}>{props.data.timeago}</Text>
@@ -297,7 +296,6 @@ const styles = {
     resizeMode: "contain"
   },
   loveImgContainer: {
-    flexDirection: "row",
     position: "absolute",
     bottom: 30,
     left: 10,
@@ -310,7 +308,10 @@ const styles = {
   commenterImg: {
     width: 50,
     height: 50,
-    paddingBottom: 10
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.7,
+    shadowRadius: 2
   },
   likerText: {
     color: "#FFF",
@@ -319,10 +320,10 @@ const styles = {
   },
   loveImg: {
     width: 40,
-    height: 42,
+    height: 40,
     resizeMode: "contain",
     position: "absolute",
-    bottom: 30,
+    bottom: 44,
     left: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -400,6 +401,12 @@ const styles = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.7,
     shadowRadius: 2
+  },
+  commenterContainer: {
+    position: "absolute",
+    bottom: 40,
+    left: 55,
+    backgroundColor: "transparent"
   }
 };
 
