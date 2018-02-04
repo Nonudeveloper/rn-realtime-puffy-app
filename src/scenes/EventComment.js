@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, Image, AsyncStorage, TouchableHighlight, TouchableOpacity, Platform, FlatList } from "react-native";
 import Images from "../config/images";
 import Header from "../components/Header";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 class EventComment extends Component {
 	constructor(props) {
@@ -112,40 +113,50 @@ class EventComment extends Component {
 				<View style={styles.section}>
 					<Text style={styles.boldHeader}>Comments</Text>
 				</View>
-				<FlatList
-					data={this.state.dataSource}
-					style={[{ transform: [{ scaleY: -1 }] }]}
-					inverted={true}
-					keyExtractor={(item, index) => index}
-					renderItem={this.renderRow}
-				/>
+				<KeyboardAwareScrollView
+					overScrollMode="never"
+					extraHeight={this.props.screenProps.deviceTheme == "IphoneX" ? 160 : 140}
+					keyboardShouldPersistTaps="always"
+					scrollEnabled={false}
+					contentContainerStyle={{ flex: 1 }}
+				>
+					<View style={styles.containerList}>
+						<FlatList
+							data={this.state.dataSource}
+							contentContainerStyle={styles.list}
+							style={[{ transform: [{ scaleY: -1 }] }]}
+							inverted={true}
+							keyExtractor={(item, index) => index}
+							renderItem={this.renderRow}
+						/>
+					</View>
+					<View style={styles.containerBottom}>
+						<TextInput
+							ref={component => (this._textInput = component)}
+							style={styles.inputMessage}
+							underlineColorAndroid="transparent"
+							autoFocus={false}
+							autoCorrect={true}
+							maxLength={250}
+							multiline={true}
+							blurOnSubmit={true}
+							onChangeText={msg_text => this.setState({ msg_text })}
+							value={this.msg_text}
+							returnKeyType="send"
+							placeholder={this.placeHolder}
+							placeholderTextColor="#aaaaaa"
+							onSubmitEditing={this.sendMsg}
+						/>
 
-				<View style={styles.containerBottom}>
-					<TextInput
-						ref={component => (this._textInput = component)}
-						style={styles.inputMessage}
-						underlineColorAndroid="transparent"
-						autoFocus={false}
-						autoCorrect={true}
-						maxLength={250}
-						multiline={true}
-						blurOnSubmit={true}
-						onChangeText={msg_text => this.setState({ msg_text })}
-						value={this.msg_text}
-						returnKeyType="send"
-						placeholder={this.placeHolder}
-						placeholderTextColor="#aaaaaa"
-						onSubmitEditing={this.sendMsg}
-					/>
+						<TouchableOpacity style={styles.sendPhoto} onPress={this.showMenu}>
+							<Image style={styles.plusIcon} source={{ uri: this.props.screenProps.global.user_thumb }} />
+						</TouchableOpacity>
 
-					<TouchableOpacity style={styles.sendPhoto} onPress={this.showMenu}>
-						<Image style={styles.plusIcon} source={{ uri: this.props.screenProps.global.user_thumb }} />
-					</TouchableOpacity>
-
-					<TouchableOpacity style={styles.sendButton} onPress={this.sendMsg}>
-						<Text style={styles.sendButtonText}>Send</Text>
-					</TouchableOpacity>
-				</View>
+						<TouchableOpacity style={styles.sendButton} onPress={this.sendMsg}>
+							<Text style={styles.sendButtonText}>Send</Text>
+						</TouchableOpacity>
+					</View>
+				</KeyboardAwareScrollView>
 			</View>
 		);
 	}
@@ -155,6 +166,12 @@ const styles = {
 	container: {
 		flex: 1,
 		backgroundColor: "#FEFEFE"
+	},
+	containerList: {
+		flex: 1
+	},
+	list: {
+		marginTop: 0
 	},
 	section: {
 		borderBottomColor: "#EEEEEE",
