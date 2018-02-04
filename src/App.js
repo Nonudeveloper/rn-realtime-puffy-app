@@ -833,7 +833,7 @@ class App extends Component {
 	}
 
 	appEventListener(data) {
-		console.log(data);
+		//console.log(data);
 
 		const $this = this;
 
