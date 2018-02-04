@@ -1015,7 +1015,7 @@ const styles = {
 		width: 50
 	},
 	btnContainerRight: {
-		marginLeft: 30
+		marginLeft: 45
 	}
 };
 
