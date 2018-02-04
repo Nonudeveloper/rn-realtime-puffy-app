@@ -1009,7 +1009,7 @@ const styles = {
 	},
 	eventCommentIcon: {
 		position: "absolute",
-		left: 240,
+		right: 0,
 		bottom: 0,
 		height: 50,
 		width: 50
