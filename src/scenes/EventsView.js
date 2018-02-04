@@ -594,11 +594,11 @@ class EventsView extends Component {
 											<Rating starValue={this.state.starValue} />
 										</View>
 									</TouchableOpacity>
-									<TouchableOpacity onPress={this.gotoEventComment}>
-										<Image style={styles.eventCommentIcon} source={Images.message_friend} />
-									</TouchableOpacity>
 								</View>
 							</View>
+							<TouchableOpacity onPress={this.gotoEventComment}>
+								<Image style={styles.eventCommentIcon} source={Images.message_friend} />
+							</TouchableOpacity>
 						</View>
 						<View style={styles.eventrow}>
 							<View style={styles.eventsDetailLeft}>
@@ -969,14 +969,6 @@ const styles = {
 		width: 60,
 		height: 60
 	},
-	btnContainerLeft: {
-		position: "absolute",
-		left: 80
-	},
-	btnContainerRight: {
-		position: "absolute",
-		left: 220
-	},
 	profileMessage: {
 		marginTop: 50,
 		justifyContent: "center",
@@ -1002,8 +994,12 @@ const styles = {
 	},
 	puffyBtnContainer: {
 		flex: 1,
+		flexDirection: "row",
 		position: "absolute",
-		bottom: 200
+		justifyContent: "center",
+		bottom: 140,
+		left: 0,
+		right: 0
 	},
 	eventComment: {
 		flex: 1,
@@ -1017,6 +1013,9 @@ const styles = {
 		bottom: 0,
 		height: 50,
 		width: 50
+	},
+	btnContainerRight: {
+		marginLeft: 30
 	}
 };
 
