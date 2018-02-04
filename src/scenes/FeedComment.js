@@ -3,7 +3,7 @@ import { View, Text, TextInput, Image, AsyncStorage, TouchableHighlight, Touchab
 import Images from "../config/images";
 import Header from "../components/Header";
 
-class EventComment extends Component {
+class FeedComment extends Component {
 	constructor(props) {
 		super(props);
 
@@ -14,7 +14,7 @@ class EventComment extends Component {
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
 		this.user_id = this.props.screenProps.global.user_id;
-		this.event_id = this.props.navigation.state.params.event_id;
+		this.file_id = this.props.navigation.state.params.file_id;
 		this.items = [];
 
 		this.state = {
@@ -37,16 +37,16 @@ class EventComment extends Component {
 	}
 
 	msgListenerEventComments(data) {
-		if (data["result"] == 1 && data["result_action"] == "get_event_comments") {
+		if (data["result"] == 1 && data["result_action"] == "get_feed_comments") {
 			this.setItems(data["result_data"]);
 		}
 	}
 
 	componentDidMount() {
 		let dataString = {
-			user_action: "get_event_comments",
+			user_action: "get_feed_comments",
 			user_data: {
-				event_id: this.event_id
+				file_id: this.file_id
 			}
 		};
 
@@ -61,7 +61,7 @@ class EventComment extends Component {
 				<View style={styles.body}>
 					<Text style={styles.bodyText}>
 						<Text style={styles.username}>{item.user_name} </Text>
-						{item.puffy_events_comments_text}
+						{item.puffy_feed_comments_text}
 					</Text>
 				</View>
 				<Text style={styles.timeAgo}>{item.timeago} </Text>
@@ -75,16 +75,16 @@ class EventComment extends Component {
 		}
 
 		let dataString = {
-			user_action: "create_events_comments",
+			user_action: "create_feed_comments",
 			user_data: {
 				user_id: this.user_id,
-				event_id: this.event_id,
-				puffy_events_comments_text: this.state.msg_text
+				file_id: this.file_id,
+				puffy_feed_comments_text: this.state.msg_text
 			}
 		};
 
 		let newMessage = {
-			puffy_events_comments_text: this.state.msg_text,
+			puffy_feed_comments_text: this.state.msg_text,
 			user_name: this.props.screenProps.global.user_name,
 			profileImage: this.props.screenProps.global.user_thumb,
 			timeago: "1s"
@@ -278,4 +278,4 @@ const styles = {
 	}
 };
 
-export { EventComment };
+export { FeedComment };

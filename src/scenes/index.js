@@ -37,6 +37,7 @@ export * from "./EventsHosting";
 export * from "./EventsPast";
 export * from "./EventsRating";
 export * from "./Feed";
+export * from "./FeedComment";
 export * from "./FeedAll";
 export * from "./Explorer";
 export * from "./ExplorerHome";
@@ -48,4 +49,5 @@ export * from "./Gps";
 export * from "./Misc";
 export * from "./BlockList";
 export * from "./SupportMsg";
+
 

@@ -44,6 +44,7 @@ class EventsView extends Component {
 		this.showMenu2 = this.showMenu2.bind(this);
 		this.handlePress2 = this.handlePress2.bind(this);
 		this.reportEvent = this.reportEvent.bind(this);
+		this.gotoEventComment = this.gotoEventComment.bind(this);
 		this.key = this.props.navigation.state.key;
 		this.events_id = this.props.navigation.state.params.events_id;
 		this.past = this.props.navigation.state.params.past;
@@ -277,8 +278,8 @@ class EventsView extends Component {
 		this.props.navigation.navigate("Profile", { user: props, user_id: user_id });
 	}
 
-	gotoEventComment(event_id) {
-		this.props.navigation.navigate("EventComment", { event_id: event_id });
+	gotoEventComment() {
+		this.props.navigation.navigate("EventComment", { event_id: this.events_id });
 	}
 
 	goToRatings(user_id) {
@@ -595,6 +596,9 @@ class EventsView extends Component {
 									</TouchableOpacity>
 								</View>
 							</View>
+							<TouchableOpacity onPress={this.gotoEventComment}>
+								<Image style={styles.eventCommentIcon} source={Images.message_friend} />
+							</TouchableOpacity>
 						</View>
 						<View style={styles.eventrow}>
 							<View style={styles.eventsDetailLeft}>
@@ -965,14 +969,6 @@ const styles = {
 		width: 60,
 		height: 60
 	},
-	btnContainerLeft: {
-		position: "absolute",
-		left: 80
-	},
-	btnContainerRight: {
-		position: "absolute",
-		left: 220
-	},
 	profileMessage: {
 		marginTop: 50,
 		justifyContent: "center",
@@ -998,8 +994,12 @@ const styles = {
 	},
 	puffyBtnContainer: {
 		flex: 1,
+		flexDirection: "row",
 		position: "absolute",
-		bottom: 200
+		justifyContent: "center",
+		bottom: 140,
+		left: 0,
+		right: 0
 	},
 	eventComment: {
 		flex: 1,
@@ -1009,10 +1009,13 @@ const styles = {
 	},
 	eventCommentIcon: {
 		position: "absolute",
-		left: 240,
+		right: 0,
 		bottom: 0,
 		height: 50,
 		width: 50
+	},
+	btnContainerRight: {
+		marginLeft: 45
 	}
 };
 

@@ -25,6 +25,7 @@ class FeedItem extends Component {
     this.togglePaused = this.togglePaused.bind(this);
     this.setPaused = this.setPaused.bind(this);
     this.triggerBufferAnimation = this.triggerBufferAnimation.bind(this);
+    this.gotoFeedComment = this.gotoFeedComment.bind(this);
 
     this.onLoad = this.onLoad.bind(this);
     this.onProgress = this.onProgress.bind(this);
@@ -129,6 +130,10 @@ class FeedItem extends Component {
     }
 
     this.setState({ paused: value });
+  }
+
+  gotoFeedComment() {
+    this.props.navigation.navigate("FeedComment", { file_id: this.file_id });
   }
 
   render() {
@@ -238,6 +243,11 @@ class FeedItem extends Component {
               )}
             </View>
           )}
+          <View style={styles.commenterContainer}>
+            <TouchableOpacity onPress={this.gotoFeedComment}>
+              <Image style={styles.commenterImg} source={Images.message_friend} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.aboutText}>{props.data.file_caption}</Text>
         </View>
         <Text style={styles.timeAgo}>{props.data.timeago}</Text>
@@ -295,6 +305,14 @@ const styles = {
     width: 40,
     height: 40
   },
+  commenterImg: {
+    width: 50,
+    height: 50,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.7,
+    shadowRadius: 2
+  },
   likerText: {
     color: "#FFF",
     fontSize: 14,
@@ -302,10 +320,10 @@ const styles = {
   },
   loveImg: {
     width: 40,
-    height: 42,
+    height: 40,
     resizeMode: "contain",
     position: "absolute",
-    bottom: 30,
+    bottom: 44,
     left: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -383,6 +401,12 @@ const styles = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.7,
     shadowRadius: 2
+  },
+  commenterContainer: {
+    position: "absolute",
+    bottom: 40,
+    left: 55,
+    backgroundColor: "transparent"
   }
 };
 
