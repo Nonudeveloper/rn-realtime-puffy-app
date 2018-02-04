@@ -24,7 +24,15 @@ class Explorer extends Component {
       refreshing: false,
       pullRefreshing: false,
       selected: false,
-      data: []
+      data: [],
+      topVideo1: null,
+      topVideo2: null,
+      topVideo3: null,
+      topVideoLoaded: 0,
+      topPhoto1: null,
+      topPhoto2: null,
+      topPhoto3: null,
+      topPhotoLoaded: 0
     };
   }
 
@@ -33,6 +41,41 @@ class Explorer extends Component {
       this.setState({
         refreshing: false,
         pullRefreshing: false
+      });
+    }
+
+    if (data["result"] == 1 && data["result_action"] == "get_explorer_feed_video_result") {
+      const topVideo1 = data["result_data"][0];
+      const topVideo2 = data["result_data"][1];
+      const topVideo3 = data["result_data"][2];
+      let topVideoLoaded = 1;
+
+      if (topVideo3 == null) {
+        topVideoLoaded = 0;
+      }
+
+      this.setState({
+        topVideo1: topVideo1,
+        topVideo2: topVideo2,
+        topVideo3: topVideo3,
+        topVideoLoaded: topVideoLoaded
+      });
+    }
+    if (data["result"] == 1 && data["result_action"] == "get_explorer_feed_photo_result") {
+      const topPhoto1 = data["result_data"][0];
+      const topPhoto2 = data["result_data"][1];
+      const topPhoto3 = data["result_data"][2];
+      let topPhotoLoaded = 1;
+
+      if (topPhoto3 == null) {
+        topPhotoLoaded = 0;
+      }
+
+      this.setState({
+        topPhoto1: topPhoto1,
+        topPhoto2: topPhoto2,
+        topPhoto3: topPhoto3,
+        topPhotoLoaded: topPhotoLoaded
       });
     }
 
@@ -157,6 +200,10 @@ class Explorer extends Component {
   }
 
   renderHeader() {
+    if (this.state.topVideoLoaded == 0 || this.state.topPhotoLoaded == 0) {
+      return <View />;
+    }
+
     let paused = true;
     if (this.routeName == this.props.screenProps.global.routeName) {
       paused = false;
@@ -166,9 +213,9 @@ class Explorer extends Component {
       <View>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topVideo1)}>
               <Video
-                source={{ uri: "https://puffy-vuploads.s3.amazonaws.com/uploads/2018/2/3/1-1517625319.mp4" }}
+                source={{ uri: this.state.topVideo1.file_large_url }}
                 ref={ref => {
                   this.player = ref;
                 }}
@@ -188,24 +235,24 @@ class Explorer extends Component {
           </View>
           <View style={styles.headerRight}>
             <View style={styles.imageBtn}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topPhoto2)}>
                 <CachedImage
                   key={1}
                   style={styles.headerImageSmall}
                   resizeMode="cover"
                   representation={"thumbnail"}
-                  source={{ uri: "https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads/2018/2/3/75416-1517625427.jpg", cache: "force-cache" }}
+                  source={{ uri: this.state.topPhoto2.file_thumbnail_url, cache: "force-cache" }}
                 />
               </TouchableWithoutFeedback>
             </View>
             <View style={styles.imageBtn}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topPhoto3)}>
                 <CachedImage
                   key={1}
                   style={styles.headerImageSmallBottom}
                   resizeMode="cover"
                   representation={"thumbnail"}
-                  source={{ uri: "https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads/2018/2/3/75416-1517625427.jpg", cache: "force-cache" }}
+                  source={{ uri: this.state.topPhoto3.file_thumbnail_url, cache: "force-cache" }}
                 />
               </TouchableWithoutFeedback>
             </View>
@@ -214,38 +261,33 @@ class Explorer extends Component {
         <View style={styles.headerBottom}>
           <View style={styles.headerBottomLeft}>
             <View style={styles.imageBtn}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topVideo2)}>
                 <CachedImage
                   key={1}
                   style={styles.headerImageSmall}
                   resizeMode="cover"
                   representation={"thumbnail"}
-                  source={{ uri: "https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads/2018/2/3/75416-1517625427.jpg", cache: "force-cache" }}
+                  source={{ uri: this.state.topVideo2.file_thumbnail_url, cache: "force-cache" }}
                 />
               </TouchableWithoutFeedback>
               <Image style={styles.vidIcon} source={Images.vid} />
             </View>
             <View style={styles.imageBtn}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topVideo3)}>
                 <CachedImage
                   key={1}
                   style={styles.headerImageSmallBottom}
                   resizeMode="cover"
                   representation={"thumbnail"}
-                  source={{ uri: "https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads/2018/2/3/75416-1517625427.jpg", cache: "force-cache" }}
+                  source={{ uri: this.state.topVideo3.file_thumbnail_url, cache: "force-cache" }}
                 />
               </TouchableWithoutFeedback>
               <Image style={styles.vidIcon} source={Images.vid} />
             </View>
           </View>
           <View style={styles.headerBottomRight}>
-            <TouchableWithoutFeedback>
-              <CachedImage
-                key={1}
-                style={styles.headerImage}
-                resizeMode="cover"
-                source={{ uri: "https://puffy-uploads.s3.amazonaws.com/uploads/2018/2/3/75444-1517626989.jpg", cache: "force-cache" }}
-              />
+            <TouchableWithoutFeedback onPress={() => this.gotoFile(this.state.topPhoto1)}>
+              <CachedImage key={1} style={styles.headerImage} resizeMode="cover" source={{ uri: this.state.topPhoto1.file_large_url, cache: "force-cache" }} />
             </TouchableWithoutFeedback>
           </View>
         </View>
