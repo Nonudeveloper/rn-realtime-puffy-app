@@ -189,6 +189,7 @@ const styles = {
 	bodyText: {
 		fontSize: 12,
 		fontFamily: "Helvetica",
+		paddingTop: 2,
 		paddingBottom: 15
 	},
 	username: {
@@ -272,7 +273,7 @@ const styles = {
 	timeAgo: {
 		fontSize: 10,
 		position: "absolute",
-		bottom: 10,
+		bottom: 9,
 		left: 65
 	}
 };
