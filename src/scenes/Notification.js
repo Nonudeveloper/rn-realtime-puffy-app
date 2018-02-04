@@ -184,6 +184,10 @@ class Notification extends Component {
 			this.props.navigation.navigate("EventsView", { events_id: rowData.event_id, events_type: 3 });
 		} else if (rowData.puffy_string_type == "event_puff") {
 			this.props.navigation.navigate("EventsView", { events_id: rowData.event_id, events_type: 3 });
+		} else if (rowData.puffy_string_type == "event_comment") {
+			this.props.navigation.navigate("EventComment", { event_id: rowData.event_id });
+		} else if (rowData.puffy_string_type == "feed_comment") {
+			this.props.navigation.navigate("FeedComment", { file_id: rowData.file_id });
 		} else {
 			rowData["id"] = rowData["user_id"];
 			rowData["name"] = rowData["user_name"];
