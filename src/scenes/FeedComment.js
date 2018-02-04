@@ -59,12 +59,12 @@ class FeedComment extends Component {
 			<View style={styles.row}>
 				<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
 				<View style={styles.body}>
-					<Text>
+					<Text style={styles.bodyText}>
 						<Text style={styles.username}>{item.user_name} </Text>
 						{item.puffy_feed_comments_text}
 					</Text>
-					<Text style={styles.timeAgo}>{item.timeago} </Text>
 				</View>
+				<Text style={styles.timeAgo}>{item.timeago} </Text>
 			</View>
 		);
 	}
@@ -182,12 +182,18 @@ const styles = {
 	},
 	body: {
 		flex: 1,
-		paddingTop: 2,
-		paddingLeft: 5,
-		justifyContent: "center"
+		paddingTop: 5,
+		paddingBottom: 5,
+		paddingLeft: 5
+	},
+	bodyText: {
+		fontSize: 12,
+		fontFamily: "Helvetica",
+		paddingBottom: 15
 	},
 	username: {
 		fontSize: 12,
+		fontFamily: "Helvetica",
 		fontWeight: "bold"
 	},
 	preview: {
@@ -264,7 +270,10 @@ const styles = {
 		resizeMode: "contain"
 	},
 	timeAgo: {
-		fontSize: 10
+		fontSize: 10,
+		position: "absolute",
+		bottom: 10,
+		left: 65
 	}
 };
 
