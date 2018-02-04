@@ -895,6 +895,12 @@ class App extends Component {
 				this.findUser();
 				this.getExplorer();
 			}
+			if (data["result_action"] == "update_business_profile_result") {
+				Alert.alert("Submitted", "One of our team members will contact you to confirm your business account.");
+				this.getUserProfile();
+				this.findUser();
+				this.getExplorer();
+			}
 			if (data["result_action"] == "update_user_interests_result") {
 				this.getUserProfile();
 			}

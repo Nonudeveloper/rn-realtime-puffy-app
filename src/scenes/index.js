@@ -14,6 +14,7 @@ export * from "./SelectPhoto";
 export * from "./ForgotPassword";
 export * from "./ProfileSettings";
 export * from "./ProfileEdit";
+export * from "./BusinessAccount";
 export * from "./Preferences";
 export * from "./Messages";
 export * from "./Message";

@@ -24,9 +24,10 @@ import {
 	Support,
 	SupportMsg,
 	Misc,
+	BusinessAccount,
 	BlockList,
 	ChangePassword,
-	EventComment,
+	EventComment
 } from "../scenes";
 
 const routes = {
@@ -110,6 +111,9 @@ const routes = {
 	},
 	Misc: {
 		screen: Misc
+	},
+	BusinessAccount: {
+		screen: BusinessAccount
 	},
 	BlockList: {
 		screen: BlockList

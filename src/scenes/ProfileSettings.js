@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, AsyncStorage, ScrollView, Switch } from "react-native";
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Image,
+	AsyncStorage,
+	ScrollView,
+	Switch
+} from "react-native";
 import Images from "../config/images";
 import Header from "../components/Header";
 
@@ -14,6 +23,7 @@ class ProfileSettings extends Component {
 		this.gotoChangePassword = this.gotoChangePassword.bind(this);
 		this.gotoMisc = this.gotoMisc.bind(this);
 		this.goBack = this.goBack.bind(this);
+		this.goToBusinessAccount = this.goToBusinessAccount.bind(this);
 
 		this.state = {
 			trueSwitchIsOn: false
@@ -40,6 +50,10 @@ class ProfileSettings extends Component {
 		this.props.navigation.navigate("Misc");
 	}
 
+	goToBusinessAccount() {
+		this.props.navigation.navigate("BusinessAccount");
+	}
+
 	goBack() {
 		this.props.navigation.goBack();
 	}
@@ -47,59 +61,104 @@ class ProfileSettings extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header deviceTheme={this.props.screenProps.deviceTheme} LeftIcon="back_arrow" LeftCallback={this.goBack} title="Settings" global={this.props.screenProps.global} />
+				<Header
+					deviceTheme={this.props.screenProps.deviceTheme}
+					LeftIcon="back_arrow"
+					LeftCallback={this.goBack}
+					title="Settings"
+					global={this.props.screenProps.global}
+				/>
 				<ScrollView style={styles.scrollview}>
-					<TouchableOpacity onPress={this.gotoEditProfile} style={styles.section}>
+					<TouchableOpacity
+						onPress={this.gotoEditProfile}
+						style={styles.section}
+					>
 						<View style={styles.row}>
 							<Text>Edit My Profile</Text>
 							<View style={styles.rowImage}>
-								<Image style={styles.imgStyle} source={Images.pencil} />
+								<Image
+									style={styles.imgStyle}
+									source={Images.pencil}
+								/>
 							</View>
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this.gotoPreferences} style={styles.section}>
+					<TouchableOpacity
+						onPress={this.gotoPreferences}
+						style={styles.section}
+					>
 						<View style={styles.row}>
 							<Text>My Interests</Text>
 							<View style={styles.rowImage}>
-								<Image style={styles.imgStyle} source={Images.pencil} />
+								<Image
+									style={styles.imgStyle}
+									source={Images.pencil}
+								/>
 							</View>
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this.gotoFilter} style={styles.section}>
+					<TouchableOpacity
+						onPress={this.gotoFilter}
+						style={styles.section}
+					>
 						<View style={styles.row}>
 							<Text>I Am Looking For</Text>
 							<View style={styles.rowImage}>
-								<Image style={styles.imgStyle} source={Images.pencil} />
+								<Image
+									style={styles.imgStyle}
+									source={Images.pencil}
+								/>
 							</View>
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this.gotoChangePassword} style={styles.section}>
+					<TouchableOpacity
+						onPress={this.gotoChangePassword}
+						style={styles.section}
+					>
 						<View style={styles.row}>
 							<Text>Change Password</Text>
 							<View style={styles.rowImage}>
-								<Image style={styles.imgStyle} source={Images.pencil} />
+								<Image
+									style={styles.imgStyle}
+									source={Images.pencil}
+								/>
 							</View>
 						</View>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this.gotoMisc} style={styles.section}>
+					<TouchableOpacity
+						onPress={this.gotoMisc}
+						style={styles.section}
+					>
 						<View style={styles.row}>
 							<Text>Miscellaneous</Text>
 							<View style={styles.rowImage}>
-								<Image style={styles.imgStyle} source={Images.pencil} />
+								<Image
+									style={styles.imgStyle}
+									source={Images.pencil}
+								/>
 							</View>
 						</View>
 					</TouchableOpacity>
 				</ScrollView>
 				<View style={styles.sectionEnd}>
-					<TouchableOpacity onPress={this.logout}>
-						<View style={styles.row}>
+					<View style={styles.row}>
+						<TouchableOpacity onPress={this.logout}>
 							<Text style={styles.logoutBtn}>Logout</Text>
+						</TouchableOpacity>
+						<View style={styles.rowImage}>
+							<TouchableOpacity
+								onPress={this.goToBusinessAccount}
+							>
+								<Text style={styles.logoutBtn}>
+									Become a business
+								</Text>
+							</TouchableOpacity>
 						</View>
-					</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 		);
