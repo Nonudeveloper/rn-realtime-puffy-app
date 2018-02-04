@@ -25,6 +25,7 @@ class FeedItem extends Component {
     this.togglePaused = this.togglePaused.bind(this);
     this.setPaused = this.setPaused.bind(this);
     this.triggerBufferAnimation = this.triggerBufferAnimation.bind(this);
+    this.gotoFeedComment = this.gotoFeedComment.bind(this);
 
     this.onLoad = this.onLoad.bind(this);
     this.onProgress = this.onProgress.bind(this);
@@ -131,6 +132,10 @@ class FeedItem extends Component {
     this.setState({ paused: value });
   }
 
+  gotoFeedComment() {
+    this.props.navigation.navigate("FeedComment", { file_id: this.file_id });
+  }
+
   render() {
     let props = this.props;
     let like_count = parseInt(props.data.like_count);
@@ -222,6 +227,12 @@ class FeedItem extends Component {
                       <Text style={styles.likerText}>Likers+</Text>
                     </View>
                   </TouchableOpacity>
+
+                  <TouchableOpacity onPress={this.gotoFeedComment}>
+                    <View>
+                      <Image style={styles.commenterImg} source={Images.message_friend} />
+                    </View>
+                  </TouchableOpacity>
                 </View>
               ) : null}
             </View>
@@ -286,6 +297,7 @@ const styles = {
     resizeMode: "contain"
   },
   loveImgContainer: {
+    flexDirection: "row",
     position: "absolute",
     bottom: 30,
     left: 10,
@@ -294,6 +306,11 @@ const styles = {
   loveImgLiker: {
     width: 40,
     height: 40
+  },
+  commenterImg: {
+    width: 50,
+    height: 50,
+    paddingBottom: 10
   },
   likerText: {
     color: "#FFF",

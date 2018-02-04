@@ -27,6 +27,7 @@ import {
 	BlockList,
 	ChangePassword,
 	EventComment,
+	FeedComment
 } from "../scenes";
 
 const routes = {
@@ -71,6 +72,9 @@ const routes = {
 	},
 	File: {
 		screen: File
+	},
+	FeedComment: {
+		screen: FeedComment
 	},
 	Photo: {
 		screen: Photo
