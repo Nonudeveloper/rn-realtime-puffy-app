@@ -33,8 +33,6 @@ class FeedComment extends Component {
 			dataSource: items
 		});
 
-		console.log(items);
-
 		let localData = JSON.stringify(items);
 	}
 
