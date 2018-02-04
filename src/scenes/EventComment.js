@@ -215,8 +215,8 @@ const styles = {
 		borderBottomWidth: 1,
 		paddingRight: 10,
 		paddingLeft: 10,
-		paddingTop: 5,
-		paddingBottom: 5,
+		paddingTop: 1,
+		paddingBottom: 1,
 		flexDirection: "row"
 	},
 	containerBottom: {
