@@ -12,8 +12,10 @@ class EventComment extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.msgListenerEventComments = this.msgListenerEventComments.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
+		this.gotoProfile = this.gotoProfile.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
+		this.user = { id: this.props.screenProps.global.user_id };
 		this.user_id = this.props.screenProps.global.user_id;
 		this.event_id = this.props.navigation.state.params.event_id;
 		this.items = [];
@@ -63,7 +65,9 @@ class EventComment extends Component {
 	renderRow({ item, index }) {
 		return (
 			<View style={styles.row}>
-				<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
+				<TouchableOpacity onPress={() => this.gotoProfile(item.user_id)}>
+					<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
+				</TouchableOpacity>
 				<View style={styles.body}>
 					<Text style={styles.bodyText}>
 						<Text style={styles.username}>{item.user_name} </Text>
@@ -92,6 +96,7 @@ class EventComment extends Component {
 		let newMessage = {
 			puffy_events_comments_text: this.state.msg_text,
 			user_name: this.props.screenProps.global.user_name,
+			user_id: this.user_id,
 			profileImage: this.props.screenProps.global.user_thumb,
 			timeago: "1s"
 		};
@@ -109,6 +114,11 @@ class EventComment extends Component {
 		this.setState({
 			msg_text: ""
 		});
+	}
+
+	gotoProfile(user_id) {
+		console.log(user_id);
+		this.props.navigation.navigate("Profile", { user: { id: user_id } });
 	}
 
 	render() {

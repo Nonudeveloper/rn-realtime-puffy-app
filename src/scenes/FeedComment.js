@@ -12,6 +12,7 @@ class FeedComment extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.msgListenerFeedComments = this.msgListenerFeedComments.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
+		this.gotoProfile = this.gotoProfilebind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
 		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
 		this.user_id = this.props.screenProps.global.user_id;
@@ -63,7 +64,9 @@ class FeedComment extends Component {
 	renderRow({ item, index }) {
 		return (
 			<View style={styles.row}>
-				<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
+				<TouchableOpacity onPress={() => this.gotoProfile(item.user_id)}>
+					<Image style={styles.profileIcon} source={{ uri: item.profileImage }} />
+				</TouchableOpacity>
 				<View style={styles.body}>
 					<Text style={styles.bodyText}>
 						<Text style={styles.username}>{item.user_name} </Text>
@@ -73,6 +76,10 @@ class FeedComment extends Component {
 				<Text style={styles.timeAgo}>{item.timeago} </Text>
 			</View>
 		);
+	}
+
+	gotoProfile(user_id) {
+		this.props.navigation.navigate("Profile", { user: { id: user_id } });
 	}
 
 	sendMsg() {
