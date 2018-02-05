@@ -99,6 +99,7 @@ class FeedComment extends Component {
 		let newMessage = {
 			puffy_feed_comments_text: this.state.msg_text,
 			user_name: this.props.screenProps.global.user_name,
+			user_id: this.user_id,
 			profileImage: this.props.screenProps.global.user_thumb,
 			timeago: "1s"
 		};
