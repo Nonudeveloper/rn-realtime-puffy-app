@@ -4,6 +4,7 @@ import Images from "../config/images";
 import FilterInput from "../components/FilterInput";
 import { NavigationActions } from "react-navigation";
 import HeaderSearch from "../components/HeaderSearch";
+import Header from "../components/Header";
 
 class Likers extends Component {
 	constructor(props) {
@@ -21,12 +22,19 @@ class Likers extends Component {
 
 		this.state = {
 			data: [],
-			items: []
+			items: [],
+			noLikes: 0
 		};
 	}
 
 	msgListener(data) {
 		//append feed images
+		if (data["result"] == 0 && data["result_action"] == "get_feed_likes_result") {
+			this.setState({
+				noLikes: 1
+			});
+		}
+
 		if (data["result"] == 1 && data["result_action"] == "get_feed_likes_result") {
 			this.setState({
 				data: data.result_data,
@@ -116,7 +124,33 @@ class Likers extends Component {
 		);
 	}
 
+	noLikes() {
+		return (
+			<View style={styles.container}>
+				<Header
+					LeftIcon="back_arrow"
+					LeftCallback={this.props.navigation.goBack}
+					placeholder="Search"
+					deviceTheme={this.props.screenProps.deviceTheme}
+					onChange={this.onChange}
+					global={this.props.screenProps.global}
+				/>
+				<View style={styles.section}>
+					<Text style={styles.boldHeader}>Likers</Text>
+				</View>
+				<View style={styles.noData}>
+					<Image style={styles.noDataImg} source={Images.neutral_big} />
+					<Text style={styles.noDataText}>Has no Likes</Text>
+				</View>
+			</View>
+		);
+	}
+
 	render() {
+		if (this.state.noLikes == 1) {
+			return this.noLikes();
+		}
+
 		return (
 			<View style={styles.container}>
 				<HeaderSearch
@@ -257,6 +291,26 @@ const styles = {
 		fontWeight: "bold",
 		textAlign: "center",
 		color: "#7A7D83"
+	},
+	noData: {
+		marginTop: 50,
+		marginLeft: 10,
+		marginRight: 10,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	noDataImg: {
+		height: 80,
+		width: 80,
+		resizeMode: "contain"
+	},
+	noDataText: {
+		fontSize: 22,
+		fontWeight: "bold",
+		textAlign: "center",
+		color: "#777980",
+		marginTop: 20,
+		marginBottom: 10
 	}
 };
 
