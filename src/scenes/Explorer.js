@@ -52,6 +52,12 @@ class Explorer extends Component {
 
       if (topVideo3 == null) {
         topVideoLoaded = 0;
+      } else {
+        let localData = JSON.stringify(data.result_data);
+
+        if (localData) {
+          AsyncStorage.setItem("TopFeedVideo", localData);
+        }
       }
 
       this.setState({
@@ -69,8 +75,13 @@ class Explorer extends Component {
 
       if (topPhoto3 == null) {
         topPhotoLoaded = 0;
-      }
+      } else {
+        let localData = JSON.stringify(data.result_data);
 
+        if (localData) {
+          AsyncStorage.setItem("TopFeedPhoto", localData);
+        }
+      }
       this.setState({
         topPhoto1: topPhoto1,
         topPhoto2: topPhoto2,
@@ -135,6 +146,39 @@ class Explorer extends Component {
   }
 
   componentDidMount() {
+    AsyncStorage.getItem("TopFeedPhoto", (err, result) => {
+      if (!err && result != null) {
+        let items = JSON.parse(result);
+
+        const topPhoto1 = items[0];
+        const topPhoto2 = items[1];
+        const topPhoto3 = items[2];
+
+        this.setState({
+          topPhoto1: topPhoto1,
+          topPhoto2: topPhoto2,
+          topPhoto3: topPhoto3,
+          topPhotoLoaded: 1
+        });
+      }
+    });
+    AsyncStorage.getItem("TopFeedVideo", (err, result) => {
+      if (!err && result != null) {
+        let items = JSON.parse(result);
+
+        const topVideo1 = items[0];
+        const topVideo2 = items[1];
+        const topVideo3 = items[2];
+
+        this.setState({
+          topVideo1: topVideo1,
+          topVideo2: topVideo2,
+          topVideo3: topVideo3,
+          topVideoLoaded: 1
+        });
+      }
+    });
+
     AsyncStorage.getItem("ExplorerFeedRows", (err, result) => {
       if (!err && result != null) {
         let items = JSON.parse(result);
@@ -200,10 +244,6 @@ class Explorer extends Component {
   }
 
   renderHeader() {
-    if (this.state.topVideoLoaded == 0 || this.state.topPhotoLoaded == 0) {
-      return <View />;
-    }
-
     let paused = true;
     if (this.routeName == this.props.screenProps.global.routeName) {
       paused = false;
@@ -309,6 +349,9 @@ class Explorer extends Component {
   render() {
     if (this.state.isLoaded === 0) {
       return <View style={styles.container} />;
+    }
+    if (this.state.topVideoLoaded == 0 || this.state.topPhotoLoaded == 0) {
+      return <View />;
     }
 
     return (

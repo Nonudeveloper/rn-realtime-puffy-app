@@ -967,7 +967,8 @@ const styles = {
 	},
 	stampBtn: {
 		width: 60,
-		height: 60
+		height: 60,
+		resizeMode: "contain"
 	},
 	profileMessage: {
 		marginTop: 50,
@@ -1010,12 +1011,12 @@ const styles = {
 	eventCommentIcon: {
 		position: "absolute",
 		right: 0,
-		bottom: 0,
-		height: 50,
-		width: 50
+		bottom: 5,
+		height: 43,
+		width: 43
 	},
 	btnContainerRight: {
-		marginLeft: 45
+		marginLeft: 43
 	}
 };
 

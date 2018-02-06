@@ -3,7 +3,7 @@ const images = {
 	group_icon: require("../img/group_icon.png"),
 	camera_icon: require("../img/camera_icon.png"),
 	explore_icon: require("../img/explore_off.png"),
-	heart_icon: require("../img/heart_icon.png"),
+	heart_icon: require("../img/heart_icon_dark.png"),
 	notification_icon: require("../img/notification_icon.png"),
 	profile_icon: require("../img/profile_icon.png"),
 	home_icon_active: require("../img/home_icon_selected.png"),

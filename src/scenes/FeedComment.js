@@ -12,9 +12,9 @@ class FeedComment extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.msgListenerFeedComments = this.msgListenerFeedComments.bind(this);
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
-		this.gotoProfile = this.gotoProfilebind(this);
+		this.gotoProfile = this.gotoProfile.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
-		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
+		this.placeHolder = "Write a comment as " + this.props.screenProps.global.user_name;
 		this.user_id = this.props.screenProps.global.user_id;
 		this.file_id = this.props.navigation.state.params.file_id;
 		this.items = [];

@@ -217,44 +217,50 @@ class FeedItem extends Component {
               <CachedImage style={styles.itemUri} source={{ uri: props.data.file_large_url }} />
             </TouchableWithoutFeedback>
           )}
-          {props.myPost == 1 ? (
-            <View>
+          <Text style={styles.aboutText}>{props.data.file_caption}</Text>
+        </View>
+
+        {props.myPost == 1 ? (
+          <View>
+            <View style={styles.actionContainer}>
               {like_count > 0 ? (
-                <View style={styles.loveImgContainer}>
-                  <TouchableOpacity onPress={this.gotoLikers}>
-                    <View>
-                      <Image style={styles.loveImgLiker} source={Images.love_on} />
-                      <Text style={styles.likerText}>Likers+</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ) : null}
+                <TouchableWithoutFeedback onPress={this.gotoLikers}>
+                  <View>
+                    <Image style={styles.loveImg} source={Images.love_on} />
+                    <Text style={styles.likerText}>Likers+</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              ) : (
+                <TouchableWithoutFeedback onPress={this.gotoLikers}>
+                  <Image style={styles.loveImg} source={Images.heart_icon} />
+                </TouchableWithoutFeedback>
+              )}
+              <TouchableOpacity onPress={this.gotoFeedComment}>
+                <Image style={styles.commenterImg} source={Images.message_friend} />
+              </TouchableOpacity>
+              <Text style={styles.timeAgo}>{props.data.timeago}</Text>
             </View>
-          ) : (
-            <View>
+            <ActionSheet ref={o => (this.ActionSheet = o)} options={["Cancel", "Delete Post"]} cancelButtonIndex={0} onPress={this.handlePress} />
+          </View>
+        ) : (
+          <View>
+            <View style={styles.actionContainer}>
               {props.data.likes == null ? (
                 <TouchableWithoutFeedback onPress={() => props.likePhoto(props.data)}>
-                  <Image style={styles.loveImg} source={Images.love_off} />
+                  <Image style={styles.loveImg} source={Images.heart_icon} />
                 </TouchableWithoutFeedback>
               ) : (
                 <TouchableWithoutFeedback onPress={() => props.unlikePhoto(props.data)}>
                   <Image style={styles.loveImg} source={Images.love_on} />
                 </TouchableWithoutFeedback>
               )}
+              <TouchableOpacity onPress={this.gotoFeedComment}>
+                <Image style={styles.commenterImg} source={Images.message_friend} />
+              </TouchableOpacity>
+              <Text style={styles.timeAgo}>{props.data.timeago}</Text>
             </View>
-          )}
-          <View style={styles.commenterContainer}>
-            <TouchableOpacity onPress={this.gotoFeedComment}>
-              <Image style={styles.commenterImg} source={Images.message_friend} />
-            </TouchableOpacity>
+            <ActionSheet ref={o => (this.ActionSheet = o)} options={["Cancel", "Report Post"]} cancelButtonIndex={0} onPress={this.handlePress} />
           </View>
-          <Text style={styles.aboutText}>{props.data.file_caption}</Text>
-        </View>
-        <Text style={styles.timeAgo}>{props.data.timeago}</Text>
-        {props.myPost == 1 ? (
-          <ActionSheet ref={o => (this.ActionSheet = o)} options={["Cancel", "Delete Post"]} cancelButtonIndex={0} onPress={this.handlePress} />
-        ) : (
-          <ActionSheet ref={o => (this.ActionSheet = o)} options={["Cancel", "Report Post"]} cancelButtonIndex={0} onPress={this.handlePress} />
         )}
       </View>
     );
@@ -264,7 +270,8 @@ class FeedItem extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    marginBottom: 5
   },
   header: {
     flexDirection: "row",
@@ -306,29 +313,26 @@ const styles = {
     height: 40
   },
   commenterImg: {
-    width: 50,
-    height: 50,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.7,
-    shadowRadius: 2
+    width: 41,
+    height: 41,
+    marginLeft: 5,
+    resizeMode: "contain"
   },
   likerText: {
-    color: "#FFF",
-    fontSize: 14,
-    fontFamily: "Helvetica"
+    color: "#7d7d7d",
+    fontSize: 12,
+    fontFamily: "Helvetica",
+    position: "absolute",
+    top: 32,
+    left: 8,
+    width: 50
   },
   loveImg: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     resizeMode: "contain",
-    position: "absolute",
-    bottom: 44,
-    left: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.7,
-    shadowRadius: 2
+    marginTop: 5,
+    marginLeft: 10
   },
   aboutText: {
     position: "absolute",
@@ -337,7 +341,7 @@ const styles = {
     right: 0,
     height: 30,
     color: "#FFFFFF",
-    backgroundColor: "#60606050",
+    backgroundColor: "#00000099",
     fontFamily: "Helvetica",
     fontSize: 16,
     textAlign: "center",
@@ -361,12 +365,15 @@ const styles = {
     marginLeft: "auto"
   },
   timeAgo: {
-    color: "#505050",
+    color: "#7d7d7d",
     marginLeft: 15,
     marginTop: 5,
     marginBottom: 5,
-    fontSize: 13,
-    fontFamily: "Helvetica"
+    fontSize: 14,
+    fontFamily: "Helvetica",
+    position: "absolute",
+    top: 4,
+    right: 15
   },
   nativeVideoControls: {
     width: null,
@@ -407,6 +414,9 @@ const styles = {
     bottom: 40,
     left: 55,
     backgroundColor: "transparent"
+  },
+  actionContainer: {
+    flexDirection: "row"
   }
 };
 

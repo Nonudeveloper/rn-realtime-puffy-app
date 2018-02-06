@@ -14,7 +14,7 @@ class EventComment extends Component {
 		this.handleEmit = this.props.screenProps.handleEmit.bind(this);
 		this.gotoProfile = this.gotoProfile.bind(this);
 		this.puffyChannel = this.props.screenProps.puffyChannel;
-		this.placeHolder = "Write a a comment as " + this.props.screenProps.global.user_name;
+		this.placeHolder = "Write a comment as " + this.props.screenProps.global.user_name;
 		this.user = { id: this.props.screenProps.global.user_id };
 		this.user_id = this.props.screenProps.global.user_id;
 		this.event_id = this.props.navigation.state.params.event_id;

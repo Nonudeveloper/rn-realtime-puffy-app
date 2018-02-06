@@ -214,7 +214,7 @@ const styles = {
 		marginLeft: 2,
 		height: 50,
 		width: 50,
-		resizeMode: "contain"
+		resizeMode: "cover"
 	},
 	body: {
 		paddingTop: 2,
