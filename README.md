@@ -11,10 +11,10 @@ You should be able to run the following command after the installation procedure
 below.
 
     $ node --version
-    v0.10.24
+    v8.11.2
 
     $ npm --version
-    1.3.21
+    6.1.0
 
 #### Node installation on OS X
 
@@ -72,8 +72,6 @@ Edit src/config/config.js file to add the url where you have setup:
 
     $ cd puffy.app.com
     $ react-native run-android
-
-    --------OR------
 
 ## Running your React Native application in IOS
 
