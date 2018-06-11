@@ -48,4 +48,4 @@ ios/Frameworks
 buck-out/
 \.buckd/
 android/app/libs
-*.keystore
+android/keystores/*
