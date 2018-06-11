@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { KeyboardAvoidingView, Text, View, Image, Alert } from "react-native";
+import { Platform, KeyboardAvoidingView, Text, View, Image, Alert } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LinearGradient from "react-native-linear-gradient";
