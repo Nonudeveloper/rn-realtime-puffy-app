@@ -8,8 +8,8 @@ export default async function videoUpload(fileURL, thumb, handleEmit, user_id, p
   var day = dateObj.getUTCDate();
   var year = dateObj.getUTCFullYear();
 
-  var path = "uploads/" + year + "/" + month + "/" + day + "/";
-  var pathThumb = "resized-uploads/" + year + "/" + month + "/" + day + "/";
+  var path = "vuploads/uploads/" + year + "/" + month + "/" + day + "/";
+  var pathThumb = "uploadsresized/resized-uploads/" + year + "/" + month + "/" + day + "/";
   var fileName = user_id + "-" + now + ".mp4";
   var fileNameThumb = user_id + "-" + now + ".jpg";
 
@@ -27,19 +27,19 @@ export default async function videoUpload(fileURL, thumb, handleEmit, user_id, p
 
   const options = {
     keyPrefix: path,
-    bucket: "puffy-vuploads",
-    region: "us-west-1",
-    accessKey: "AKIAJ3LTVPA3X7BLP7CA",
-    secretKey: "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",
+    bucket: "puffy.assets",
+    region: "us-west-2",
+    accessKey: "AKIAJ4QG3VEWSQN46YIQ",
+    secretKey: "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",
     successActionStatus: 201
   };
 
   const options_thumb = {
     keyPrefix: pathThumb,
-    bucket: "puffy-uploadsresized",
-    region: "us-west-1",
-    accessKey: "AKIAJ3LTVPA3X7BLP7CA",
-    secretKey: "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",
+    bucket: "puffy.assets",
+    region: "us-west-2",
+    accessKey: "AKIAJ4QG3VEWSQN46YIQ",
+    secretKey: "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",
     successActionStatus: 201
   };
 
