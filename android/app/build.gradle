@@ -150,7 +150,7 @@ dependencies {
     compile project(':react-native-fs')
     compile project(':react-native-appsflyer')
     compile project(':react-native-fcm')
-    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-core:16.0.0'
     compile project(':react-native-video')
     compile project(':react-native-restart')
     compile project(':react-native-exception-handler')
@@ -167,7 +167,7 @@ dependencies {
         exclude group: "com.google.android.gms"
     }
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:appcompat-v7:26.0.0-beta1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-open-settings')
 }
