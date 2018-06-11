@@ -90,8 +90,8 @@ android {
         applicationId "com.puffy"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 11
-        versionName "11.78"
+        versionCode 12
+        versionName "12.24"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
