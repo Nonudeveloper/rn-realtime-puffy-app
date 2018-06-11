@@ -11,7 +11,7 @@ You should be able to run the following command after the installation procedure
 below.
 
     $ node --version
-    v8.11.2
+    v10.4.0
 
     $ npm --version
     6.1.0
@@ -70,12 +70,12 @@ Edit src/config/config.js file to add the url where you have setup:
 
 ## Running your React Native application in Android
 
-    $ cd puffy.app.com
+    $ cd mobile-react
     $ react-native run-android
 
 ## Running your React Native application in IOS
 
-    $ cd puffy.app.com
+    $ cd mobile-react
     $ react-native run-ios
 
 ## Simple build for production
@@ -127,3 +127,6 @@ Then it will try a production build.
 Whenever react native is upgraded please run this command.
 
 rm -rf node_modules/ && npm cache clean && npm install
+
+NOTE: when debug on device; if you get red missing script errors, run:
+$ANDROID_HOME/platform-tools/adb reverse tcp:8081 tcp:8081
