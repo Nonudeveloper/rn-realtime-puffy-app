@@ -318,7 +318,7 @@ class Login extends Component {
 						</View>
 					</Swiper>
 					<View style={styles.content}>
-						<InputTextLogin
+						{/* <InputTextLogin
 							inputRef={node => (this.email = node)}
 							value={this.state.email}
 							placeholderTextColor="#FFF"
@@ -341,19 +341,29 @@ class Login extends Component {
 							theme="light"
 							onSubmitEditing={this.checkLogin}
 							onChangeText={password => this.setState({ password })}
-						/>
-						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
+						/> */}
+						{
+							this.state.devCount > 4 ? 
+							<BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : 
+							<View>
+								<BtnWhiteSmall value="Sign up for free" onPress={this.showRegister} />
+								<BtnOutline value="Login" onPress={this.checkLogin} />
+							</View>
+						}
+
 						<TouchableOpacity style={this.deviceTheme == "IphoneX" ? styles.btnForgotLarge : styles.btnForgot} onPress={this.showForgot}>
 							<Text style={styles.btnForgotText}>Forgot password?</Text>
 						</TouchableOpacity>
-						<View style={styles.facebook}>
-							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
-						</View>
+					
 					</View>
 				</KeyboardAwareScrollView>
+				
 				<View style={this.deviceTheme == "IphoneX" ? styles.footerX : styles.footer}>
-					<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-					<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
+					{/* <Text style={styles.textNotPuffer}>Not a puffer yet?</Text> */}
+					{/* <BtnOutline value="Sign up for free!" onPress={this.showRegister} /> */}
+					<View style={styles.facebook}>
+						<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
+					</View>
 				</View>
 			</LinearGradient>
 		);
@@ -532,15 +542,14 @@ const styles = {
 	},
 	footerSmall: {
 		position: "absolute",
-		bottom: 15,
 		left: 50,
 		right: 50
 	},
 	footer: {
 		position: "absolute",
 		bottom: 20,
-		left: 50,
-		right: 50
+		left: 35,
+		right: 35
 	},
 	footerX: {
 		position: "absolute",
