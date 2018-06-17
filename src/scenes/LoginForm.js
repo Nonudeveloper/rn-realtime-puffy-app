@@ -12,6 +12,7 @@ class LoginForm extends Component {
     this.login = this.login.bind(this);
     this.loginAdmin = this.loginAdmin.bind(this);
     this.setDevCount = this.setDevCount.bind(this);
+    this.focusNextField = this.focusNextField.bind(this);
 
     let email = this.props.screenProps.user_email;
     this.state = {
@@ -19,6 +20,10 @@ class LoginForm extends Component {
       password: "",
       devCount: 0
     };
+  }
+
+  focusNextField(id) {
+    this[id].focus();
   }
 
   loginAdmin() {
