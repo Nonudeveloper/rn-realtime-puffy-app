@@ -1,5 +1,6 @@
 export * from "./Login";
 export * from "./Register";
+export * from "./LoginForm";
 export * from "./Home";
 export * from "./Profile";
 export * from "./MyProfile";
