@@ -1212,23 +1212,6 @@ class App extends Component {
 	}
 
 	render() {
-		return (
-			<Auth
-				screenProps={{
-					bug: this.bug,
-					global: this.state,
-					setGlobal: this.setGlobal,
-					deviceTheme: this.deviceTheme,
-					handleEmit: this.handleEmit,
-					puffyChannel: this.puffyChannel,
-					push_token: this.state.push_token,
-					user_email: this.state.user_email,
-					loginUser: this.loginUser,
-					loginUserAdmin: this.loginUserAdmin
-				}}
-			/>
-		)
-
 		if (this.state.isLoaded === false) {
 			return (
 				<View style={styles.container}>

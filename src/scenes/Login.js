@@ -26,7 +26,6 @@ class Login extends Component {
 		this.fbLogin = this.fbLogin.bind(this);
 		this.showRegister = this.showRegister.bind(this);
 		this.showLogin = this.showLogin.bind(this);
-		this.showForgot = this.showForgot.bind(this);
 		this.loginUser = this.props.screenProps.loginUser.bind(this);
 		this.width = Dimensions.get("window").width;
 	}
@@ -71,10 +70,6 @@ class Login extends Component {
 
 	showLogin() {
 		this.props.navigation.navigate("LoginForm");
-	}
-
-	showForgot() {
-		this.props.navigation.navigate("ForgotPassword");
 	}
 
 	renderSmall() {
@@ -163,9 +158,7 @@ class Login extends Component {
 							onChangeText={password => this.setState({ password })}
 						/>
 						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
-						<TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
-							<Text style={styles.btnForgotText}>Forgot password?</Text>
-						</TouchableOpacity>
+						
 						<View style={styles.facebook}>
 							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
 						</View>
@@ -245,16 +238,10 @@ class Login extends Component {
 					</Swiper>
 					
 					<View style={styles.content}>
-						<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
 						<View>
-							<BtnWhiteSmall value="Sign up for free" onPress={this.showRegister} />
+							<BtnWhite value="Sign up" onPress={this.showRegister} />
 							<BtnOutline value="Login" onPress={this.showLogin} />
-						</View>
-
-						<TouchableOpacity style={this.deviceTheme == "IphoneX" ? styles.btnForgotLarge : styles.btnForgot} onPress={this.showForgot}>
-							<Text style={styles.btnForgotText}>Forgot password?</Text>
-						</TouchableOpacity>
-					
+						</View>	
 					</View>
 				</KeyboardAwareScrollView>
 				

@@ -3,6 +3,7 @@ import { Alert, Text, ScrollView, View, Button, TouchableOpacity } from "react-n
 import Header from "../components/Header";
 import InputText from "../components/InputText";
 import ajaxPost from "../lib/ajaxPost";
+import ajaxPostDev from "../lib/ajaxPostDev";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class LoginForm extends Component {
     this.loginAdmin = this.loginAdmin.bind(this);
     this.setDevCount = this.setDevCount.bind(this);
     this.focusNextField = this.focusNextField.bind(this);
-
+    this.showForgot = this.showForgot.bind(this);
+    this.showRegister = this.showRegister.bind(this);
+    
     let email = this.props.screenProps.user_email;
     this.state = {
       email: email,
@@ -88,6 +91,13 @@ class LoginForm extends Component {
     }
   }
 
+  showForgot() {
+    this.props.navigation.navigate("ForgotPassword");
+  }
+    
+  showRegister() {
+		this.props.navigation.navigate("Register");
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -96,7 +106,7 @@ class LoginForm extends Component {
           LeftIcon="back_arrow"
           LeftCallback={this.props.navigation.goBack}
           RightIcon="checkmark_button"
-          RightCallback={this.state.devCount > 4 ? this.login : this.loginAdmin}
+          RightCallback={this.state.devCount < 4 ? this.login : this.loginAdmin}
           title="Login!"
           global={this.props.screenProps.global}
         />
@@ -127,10 +137,21 @@ class LoginForm extends Component {
             />
           
         </View>
-        <View style={styles.footer}>
+        <View>
             <TouchableOpacity style={styles.btnDevMode} onPress={this.setDevCount}>
                 <Text style={styles.btnDevModeText} />
+                <TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
+							<Text style={styles.btnForgotText}>Forgot password?</Text>
+				</TouchableOpacity>
             </TouchableOpacity>
+        </View>
+        <View style={styles.footer}>
+            <View style={styles.btnSignup}>
+				<Text style={styles.btnSignupText}>Don't have an account? </Text>
+                <TouchableOpacity onPress={this.showRegister}>
+                    <Text style={styles.btnSignupUnderlineText}>Sign Up</Text>
+                </TouchableOpacity>
+			</View>
         </View>
       </View>
     );
@@ -149,7 +170,45 @@ const styles = {
   },
   btnDevMode: {
    
-  }
+  },
+  btnForgot: {
+      marginTop: 7,
+      marginBottom: 5,
+      marginLeft: 2,
+      alignItems: 'center',
+  },
+  btnSignup: {
+      marginTop: 7,
+      marginBottom: 5,
+      marginLeft: 2,
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center'
+  },
+  btnForgotLarge: {
+      marginTop: 10,
+      marginBottom: 8,
+      marginLeft: 2,
+  },
+  btnForgotText: {
+      fontSize: 12,
+      color: "#0FB7ED",
+      textDecorationLine : 'underline'
+  },
+  btnSignupText: {
+      fontSize: 12,
+  },
+  btnSignupUnderlineText: {
+      fontSize: 12,
+      color: "#0FB7ED",
+      textDecorationLine : 'underline'
+  },
+  footer: {
+    position: "absolute",
+    bottom: 30,
+    left: 35,
+    right: 35
+  },
  
 };
 
