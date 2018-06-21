@@ -344,7 +344,7 @@ class App extends Component {
 		AsyncStorage.removeItem("HomeItem");
 		AsyncStorage.removeItem("UserProfile");
 		AsyncStorage.clear();
-
+		Instabug.logOut();
 		PushNotification.setApplicationIconBadgeNumber(0);
 
 		this.puffyChannel.removeListener("data_channel", this.appEventListener);
