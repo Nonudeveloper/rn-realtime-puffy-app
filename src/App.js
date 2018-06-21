@@ -17,6 +17,7 @@ import RNRestart from "react-native-restart";
 import { setJSExceptionHandler } from "react-native-exception-handler";
 import ajaxPostDev from "./lib/ajaxPostDev";
 import appsFlyer from "react-native-appsflyer";
+import Instabug from 'instabug-reactnative';
 
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from "react-native-fcm";
 
@@ -30,6 +31,8 @@ const aspectRatio = height / width;
 class App extends Component {
 	constructor(props) {
 		super(props);
+
+		Instabug.startWithToken('dda9da27cd350702efec4ebefd63f507', Instabug.invocationEvent.shake);
 
 		this.appVersion = APP_VERSION;
 		this.logout = this.logout.bind(this);
@@ -622,7 +625,7 @@ class App extends Component {
 		AsyncStorage.setItem("UserToken", String(result["user_token"]));
 		AsyncStorage.setItem("UserEmail", String(result["user_email"]));
 		AsyncStorage.setItem("devMode", String(0));
-
+		Instabug.identifyUserWithEmail(String(result["user_email"]), "John Doe");
 		this.setState(
 			{
 				user_id: UserID,

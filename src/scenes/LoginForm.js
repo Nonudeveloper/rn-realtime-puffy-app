@@ -42,6 +42,7 @@ class LoginForm extends Component {
         //success
         if (result.result == 1) {
             console.log(result);
+            Instabug.identifyUserWithEmail("john.appleseed@apple.com", "John Appleseed");
             $this.loginUserAdmin(result);
         } else if (result == -1) {
             Alert.alert("Incorrect", "You have no internet connection");

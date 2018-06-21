@@ -31,6 +31,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.opensettings.OpenSettingsPackage;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +72,13 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGLPackage(),
             new ReactNativePushNotificationPackage(),
             new ImageResizerPackage(),
-            new OpenSettingsPackage()
+            new OpenSettingsPackage(),
+            new RNInstabugReactnativePackage.Builder("dda9da27cd350702efec4ebefd63f507",MainApplication.this)
+							.setInvocationEvent("shake")
+							.setPrimaryColor("#1D82DC")
+							.setFloatingEdge("left")
+							.setFloatingButtonOffsetFromTop(250)
+							.build()
       );
     }
   };
