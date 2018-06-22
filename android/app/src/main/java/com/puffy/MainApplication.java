@@ -73,7 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativePushNotificationPackage(),
             new ImageResizerPackage(),
             new OpenSettingsPackage(),
-            new RNInstabugReactnativePackage.Builder("dda9da27cd350702efec4ebefd63f507",MainApplication.this)
+            new RNInstabugReactnativePackage.Builder("4f408f4f2f5eebb2a90292701e2c451e",MainApplication.this)
 							.setInvocationEvent("shake")
 							.setPrimaryColor("#1D82DC")
 							.setFloatingEdge("left")
