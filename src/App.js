@@ -32,7 +32,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		Instabug.startWithToken('dda9da27cd350702efec4ebefd63f507', Instabug.invocationEvent.shake);
+		Instabug.startWithToken('4f408f4f2f5eebb2a90292701e2c451e', Instabug.invocationEvent.shake);
 
 		this.appVersion = APP_VERSION;
 		this.logout = this.logout.bind(this);
