@@ -8,7 +8,7 @@ export default async function fileUploadFeed(fileURL, handleEmit, user_id, profi
   var day = dateObj.getUTCDate();
   var year = dateObj.getUTCFullYear();
 
-  var path = "uploads/" + year + "/" + month + "/" + day + "/";
+  var path = "uploads/uploads/" + year + "/" + month + "/" + day + "/";
   var fileName = user_id + "-" + now + ".jpg";
 
   const file = {
@@ -19,10 +19,10 @@ export default async function fileUploadFeed(fileURL, handleEmit, user_id, profi
 
   const options = {
     keyPrefix: path,
-    bucket: "puffy-uploads",
-    region: "us-west-1",
-    accessKey: "AKIAJ3LTVPA3X7BLP7CA",
-    secretKey: "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",
+    bucket: "puffy.assets",
+    region: "us-west-2",
+    accessKey: "AKIAJ4QG3VEWSQN46YIQ",
+    secretKey: "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",
     successActionStatus: 201
   };
 
@@ -40,8 +40,8 @@ export default async function fileUploadFeed(fileURL, handleEmit, user_id, profi
 
       let location = decodeURIComponent(response.body.postResponse.location);
 
-      let thumb = location.replace("puffy-uploads", "puffy-uploadsresized");
-      let thumb_url = thumb.replace("amazonaws.com/uploads", "amazonaws.com/resized-uploads");
+      let thumb = location.replace("puffy.aseets/uploads", "puffy.aseets/uploadsresized");
+      let thumb_url = thumb.replace("amazonaws.com/uploads/uploads", "amazonaws.com/uploadsresized/resized-uploads");
 
       let dataString = {
         user_action: "file_upload",
