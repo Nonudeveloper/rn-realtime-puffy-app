@@ -170,6 +170,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:26.0.0-beta1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-open-settings')
+    compile project(':instabug-reactnative')
 }
 
 // Run this once to be able to run the application with BUCK

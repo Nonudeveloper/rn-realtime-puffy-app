@@ -1,10 +1,14 @@
 import { StackNavigator } from 'react-navigation';
-import { Login, Register, ForgotPassword, Reset } from '../scenes';
+import { Login, Register, ForgotPassword, Reset, LoginForm } from '../scenes';
 
 const Auth = StackNavigator({
   Login: {
     screen: Login,
     path: '/',
+  },
+  LoginForm: {
+    screen: LoginForm,
+    path: '/'
   },
   Register: {
     screen: Register,

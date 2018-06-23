@@ -17,6 +17,7 @@ import RNRestart from "react-native-restart";
 import { setJSExceptionHandler } from "react-native-exception-handler";
 import ajaxPostDev from "./lib/ajaxPostDev";
 import appsFlyer from "react-native-appsflyer";
+import Instabug from 'instabug-reactnative';
 
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from "react-native-fcm";
 
@@ -30,6 +31,8 @@ const aspectRatio = height / width;
 class App extends Component {
 	constructor(props) {
 		super(props);
+
+		Instabug.startWithToken('4f408f4f2f5eebb2a90292701e2c451e', Instabug.invocationEvent.shake);
 
 		this.appVersion = APP_VERSION;
 		this.logout = this.logout.bind(this);
@@ -341,7 +344,7 @@ class App extends Component {
 		AsyncStorage.removeItem("HomeItem");
 		AsyncStorage.removeItem("UserProfile");
 		AsyncStorage.clear();
-
+		Instabug.logOut();
 		PushNotification.setApplicationIconBadgeNumber(0);
 
 		this.puffyChannel.removeListener("data_channel", this.appEventListener);
@@ -622,7 +625,7 @@ class App extends Component {
 		AsyncStorage.setItem("UserToken", String(result["user_token"]));
 		AsyncStorage.setItem("UserEmail", String(result["user_email"]));
 		AsyncStorage.setItem("devMode", String(0));
-
+		Instabug.identifyUserWithEmail(String(result["user_email"]), "John Doe");
 		this.setState(
 			{
 				user_id: UserID,

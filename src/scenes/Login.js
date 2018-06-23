@@ -23,24 +23,11 @@ class Login extends Component {
 		super(props);
 
 		this.deviceTheme = this.props.screenProps.deviceTheme;
-		this.checkLogin = this.checkLogin.bind(this);
-		this.checkLoginAdmin = this.checkLoginAdmin.bind(this);
 		this.fbLogin = this.fbLogin.bind(this);
 		this.showRegister = this.showRegister.bind(this);
-		this.showForgot = this.showForgot.bind(this);
-		this.focusNextField = this.focusNextField.bind(this);
-		this.setDevCount = this.setDevCount.bind(this);
+		this.showLogin = this.showLogin.bind(this);
 		this.loginUser = this.props.screenProps.loginUser.bind(this);
-		this.loginUserAdmin = this.props.screenProps.loginUserAdmin.bind(this);
 		this.width = Dimensions.get("window").width;
-
-		let email = this.props.screenProps.user_email;
-
-		this.state = {
-			email: email,
-			password: "",
-			devCount: 0
-		};
 	}
 
 	fbLogin() {
@@ -77,78 +64,12 @@ class Login extends Component {
 		);
 	}
 
-	setDevCount() {
-		let devCount = this.state.devCount + 1;
-
-		if (devCount > 5) {
-			this.setState({ devCount: 0 });
-		} else {
-			this.setState({ devCount: devCount });
-		}
-	}
-
-	checkLogin() {
-		if (this.state.email === "" || this.state.password === "") {
-			Alert.alert("Error", "Please enter registered email and password");
-			return false;
-		}
-
-		let $this = this;
-		let dataString = { user_email: this.state.email, user_password1: this.state.password };
-
-		ajaxPost(dataString, "checkLogin", function(result) {
-			//success
-			if (result.result == 1) {
-				console.log(result);
-				$this.loginUser(result);
-			} else if (result == -1) {
-				Alert.alert("Incorrect", "You have no internet connection");
-			} else {
-				//fail
-				Alert.alert("Incorrect", "You entered the wrong Username and Password. Please try again.", [
-					{ text: "Try again", onPress: () => console.log("try agan!") },
-					{ text: "Forgot?", onPress: () => $this.showForgot() }
-				]);
-			}
-		});
-	}
-
-	checkLoginAdmin() {
-		if (this.state.email === "" || this.state.password === "") {
-			Alert.alert("Error", "Please enter registered email and password");
-			return false;
-		}
-
-		let $this = this;
-		let dataString = { user_email: this.state.email, user_password1: this.state.password };
-
-		ajaxPostDev(dataString, "checkLoginAdmin", function(result) {
-			//success
-			if (result.result == 1) {
-				console.log(result);
-				$this.loginUserAdmin(result);
-			} else if (result == -1) {
-				Alert.alert("Incorrect", "You have no internet connection");
-			} else {
-				//fail
-				Alert.alert("Incorrect", "You entered the wrong Username and Password or You are not an admin. Please try again.", [
-					{ text: "Try again", onPress: () => console.log("try agan!") },
-					{ text: "Forgot?", onPress: () => $this.showForgot() }
-				]);
-			}
-		});
-	}
-
 	showRegister() {
 		this.props.navigation.navigate("Register");
 	}
 
-	showForgot() {
-		this.props.navigation.navigate("ForgotPassword");
-	}
-
-	focusNextField(id) {
-		this[id].focus();
+	showLogin() {
+		this.props.navigation.navigate("LoginForm");
 	}
 
 	renderSmall() {
@@ -237,9 +158,7 @@ class Login extends Component {
 							onChangeText={password => this.setState({ password })}
 						/>
 						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
-						<TouchableOpacity style={styles.btnForgot} onPress={this.showForgot}>
-							<Text style={styles.btnForgotText}>Forgot password?</Text>
-						</TouchableOpacity>
+						
 						<View style={styles.facebook}>
 							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
 						</View>
@@ -317,43 +236,19 @@ class Login extends Component {
 							<Image style={styles.slideImg} source={Images.slide3} />
 						</View>
 					</Swiper>
+					
 					<View style={styles.content}>
-						<InputTextLogin
-							inputRef={node => (this.email = node)}
-							value={this.state.email}
-							placeholderTextColor="#FFF"
-							placeholder="Email"
-							returnKeyType="done"
-							keyboardType="email-address"
-							theme="light"
-							maxLength={50}
-							onSubmitEditing={() => this.focusNextField("password")}
-							onChangeText={email => this.setState({ email })}
-						/>
-						<InputTextLogin
-							inputRef={node => (this.password = node)}
-							value={this.state.password}
-							placeholderTextColor="#FFF"
-							placeholder="Password"
-							returnKeyType="done"
-							keyboardType="default"
-							secureTextEntry={true}
-							theme="light"
-							onSubmitEditing={this.checkLogin}
-							onChangeText={password => this.setState({ password })}
-						/>
-						{this.state.devCount > 4 ? <BtnWhiteSmall value="Login DEV" onPress={this.checkLoginAdmin} /> : <BtnWhiteSmall value="Login" onPress={this.checkLogin} />}
-						<TouchableOpacity style={this.deviceTheme == "IphoneX" ? styles.btnForgotLarge : styles.btnForgot} onPress={this.showForgot}>
-							<Text style={styles.btnForgotText}>Forgot password?</Text>
-						</TouchableOpacity>
-						<View style={styles.facebook}>
-							<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
-						</View>
+						<View>
+							<BtnWhite value="Sign up" onPress={this.showRegister} />
+							<BtnOutline value="Login" onPress={this.showLogin} />
+						</View>	
 					</View>
 				</KeyboardAwareScrollView>
+				
 				<View style={this.deviceTheme == "IphoneX" ? styles.footerX : styles.footer}>
-					<Text style={styles.textNotPuffer}>Not a puffer yet?</Text>
-					<BtnOutline value="Sign up for free!" onPress={this.showRegister} />
+					<View style={styles.facebook}>
+						<BtnWhiteIcon icon="fb_icon" value="Login with Facebook" onPress={this.fbLogin} />
+					</View>
 				</View>
 			</LinearGradient>
 		);
@@ -532,15 +427,14 @@ const styles = {
 	},
 	footerSmall: {
 		position: "absolute",
-		bottom: 15,
 		left: 50,
 		right: 50
 	},
 	footer: {
 		position: "absolute",
-		bottom: 20,
-		left: 50,
-		right: 50
+		bottom: 40,
+		left: 35,
+		right: 35
 	},
 	footerX: {
 		position: "absolute",
