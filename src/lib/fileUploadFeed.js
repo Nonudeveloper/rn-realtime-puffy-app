@@ -40,7 +40,7 @@ export default async function fileUploadFeed(fileURL, handleEmit, user_id, profi
 
       let location = decodeURIComponent(response.body.postResponse.location);
 
-      let thumb = location.replace("puffy.aseets/uploads", "puffy.aseets/uploadsresized");
+      let thumb = location.replace("puffy.assets/uploads", "puffy.assets/uploadsresized");
       let thumb_url = thumb.replace("amazonaws.com/uploads/uploads", "amazonaws.com/uploadsresized/resized-uploads");
 
       let dataString = {
