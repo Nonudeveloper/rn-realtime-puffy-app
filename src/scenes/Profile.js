@@ -902,7 +902,7 @@ class Profile extends Component {
             <View style={styles.profileLeft}>
               <TouchableOpacity onPress={this.setVisibleToTrue}>
                 <CachedImage style={styles.userPhoto} source={{ uri: this.state.user_photo_thumb, cache: "force-cache" }} />
-              </TouchableOpacity>
+              </TouchableOpacity> 
             </View>
             <View style={styles.profileRight}>
               <View style={styles.detailContainer}>

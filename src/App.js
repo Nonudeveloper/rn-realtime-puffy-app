@@ -31,7 +31,6 @@ const aspectRatio = height / width;
 class App extends Component {
 	constructor(props) {
 		super(props);
-
 		Instabug.startWithToken('4f408f4f2f5eebb2a90292701e2c451e', Instabug.invocationEvent.shake);
 
 		this.appVersion = APP_VERSION;

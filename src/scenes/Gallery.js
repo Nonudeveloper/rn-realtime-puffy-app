@@ -94,7 +94,7 @@ class Gallery extends Component {
 						//console.log("User tapped custom button: ", response.customButton);
 					} else {
 						let source = { uri: response.uri };
-
+						
 						this.uploadImage(response.uri);
 					}
 				});

@@ -29,12 +29,10 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
   RNS3.put(file, options)
     .then(response => {
       if (response.status !== 201) {
-        //console.log(response);
         callback(0);
         return false;
       }
 
-      //console.log(response);
 
       let location = decodeURIComponent(response.body.postResponse.location);
 
@@ -62,7 +60,7 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
       callback(1);
     })
     .catch(err => {
-      //console.log(err);
+      console.log(err);
       setGlobal("upload", false);
       callback(0);
     });

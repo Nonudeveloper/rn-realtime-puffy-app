@@ -152,6 +152,7 @@ class PhotoConfirm extends Component {
 	}
 
 	uploadImage(base64) {
+		console.log(this.feed);
 		if (this.state.uploading == true) {
 			return false;
 		}
@@ -181,7 +182,6 @@ class PhotoConfirm extends Component {
 					);
 				})
 				.catch(err => {
-					//console.log(err);
 					this.setState({ uploading: false });
 					return Alert.alert("Upload Failed", "Please try to upload image again");
 				});
@@ -246,6 +246,7 @@ class PhotoConfirm extends Component {
 									$this.setState({ visible: false, uploading: false });
 								}, 350);
 								setTimeout(function() {
+									console.log(result);
 									Alert.alert("Upload Failed", "Please try to upload image again");
 								}, 500);
 							}

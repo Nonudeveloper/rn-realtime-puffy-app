@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.puffy"
-    android:versionCode="11.77"
-    android:versionName="11.77">
+    android:versionCode="25"
+    android:versionName="12.25">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>

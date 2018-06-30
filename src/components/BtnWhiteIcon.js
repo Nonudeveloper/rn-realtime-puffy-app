@@ -13,7 +13,7 @@ const BtnWhiteIcon = props => {
 
 const styles = {
   btn: {
-    height: 35,
+    height: 40,
     borderRadius: 5,
     backgroundColor: "#FFF",
     marginBottom: 10,
