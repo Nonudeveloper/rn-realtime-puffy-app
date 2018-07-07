@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableWithoutFeedback, Platform } from "react-native";
+import { View, Text, Image, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableWithoutFeedback, Platform, ActivityIndicator } from "react-native";
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
 import Video from "react-native-video";
@@ -351,7 +351,12 @@ class Explorer extends Component {
       return <View style={styles.container} />;
     }
     if (this.state.topVideoLoaded == 0 || this.state.topPhotoLoaded == 0) {
-      return <View />;
+        return <View style={styles.noFeedContainer}>
+                <Image style={styles.lockedEye} source={Images.camera_plus} />
+                <Text style={styles.noFeedHeader}>No Top Feeds</Text>
+                <Text style={styles.noFeed}>Lets begin posting on your feed by clicking </Text>
+                <Text style={styles.noFeed}>the Share Button on the top right</Text>
+              </View>;
     }
 
     return (
@@ -455,7 +460,31 @@ const styles = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.7,
     shadowRadius: 2
-  }
+  },
+  noFeedContainer: {
+		marginTop: 50,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	lockedEye: {
+		height: 100,
+		width: 100,
+		resizeMode: "contain"
+	},
+	noFeedHeader: {
+		fontSize: 22,
+		fontWeight: "bold",
+		textAlign: "center",
+		color: "#777980",
+		marginTop: 10,
+		marginBottom: 10
+	},
+	noFeed: {
+		fontSize: 14,
+		textAlign: "center",
+		color: "#777980"
+	}
+  
 };
 
 export { Explorer };
