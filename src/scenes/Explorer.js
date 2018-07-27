@@ -3,6 +3,7 @@ import { View, Text, Image, AsyncStorage, FlatList, Dimensions, RefreshControl, 
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
 import Video from "react-native-video";
+import Instabug from 'instabug-reactnative';
 
 class Explorer extends Component {
   constructor(props) {
@@ -347,6 +348,9 @@ class Explorer extends Component {
   }
 
   render() {
+
+    Instabug.logInfo("Top Video Loaded", this.state.topVideoLoaded);
+    Instabug.logInfo("Top Photo Loaded", this.state.topPhotoLoaded);
     if (this.state.isLoaded === 0) {
       return <View style={styles.container} />;
     }

@@ -1,5 +1,6 @@
 import { RNS3 } from "react-native-aws3";
 import { NavigationActions } from "react-navigation";
+import Instabug from 'instabug-reactnative';
 
 export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, event, message_user_id, photoPermission, caption, setGlobal, callback) {
   var dateObj = new Date();
@@ -55,12 +56,14 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
           caption: caption
         }
       };
+      Instabug.logInfo("after file upload", JSON.stringify(dataString));
       handleEmit(dataString);
       setGlobal("upload", false);
       callback(1);
     })
     .catch(err => {
       console.log(err);
+      Instabug.logInfo("after file upload", JSON.stringify(err));
       setGlobal("upload", false);
       callback(0);
     });
