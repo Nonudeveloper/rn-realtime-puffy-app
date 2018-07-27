@@ -154,7 +154,8 @@ class PhotoConfirm extends Component {
 
 	uploadImage(base64) {
 		console.log(this.feed);
-		Instabug.logInfo("feed", this.feed);
+		Instabug.logInfo("feed");
+		Instabug.logInfo(this.feed);
 		if (this.state.uploading == true) {
 			return false;
 		}

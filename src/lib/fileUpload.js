@@ -56,14 +56,16 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
           caption: caption
         }
       };
-      Instabug.logInfo("after file upload", JSON.stringify(dataString));
+      Instabug.logInfo("after file upload");
+      Instabug.logInfo(JSON.stringify(dataString));
       handleEmit(dataString);
       setGlobal("upload", false);
       callback(1);
     })
     .catch(err => {
       console.log(err);
-      Instabug.logInfo("after file upload", JSON.stringify(err));
+      Instabug.logError("after file upload");
+      Instabug.logError(JSON.stringify(err));
       setGlobal("upload", false);
       callback(0);
     });

@@ -349,8 +349,10 @@ class Explorer extends Component {
 
   render() {
 
-    Instabug.logInfo("Top Video Loaded", this.state.topVideoLoaded);
-    Instabug.logInfo("Top Photo Loaded", this.state.topPhotoLoaded);
+    Instabug.logInfo("Top Video Loaded");
+    Instabug.logInfo(JSON.stringify(this.state.topVideoLoaded));
+    Instabug.logInfo("Top Photo Loaded");
+    Instabug.logInfo(JSON.stringify(this.state.topPhotoLoaded));
     if (this.state.isLoaded === 0) {
       return <View style={styles.container} />;
     }
