@@ -337,10 +337,14 @@ class Explorer extends Component {
   }
 
   renderRow(row) {
+    let { file_thumbnail_url } = row.item;
+		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/')){
+			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/');
+		}
     return (
       <View style={styles.imageBtn}>
         <TouchableWithoutFeedback onPress={() => this.gotoFile(row.item)}>
-          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: row.item.file_thumbnail_url, cache: "force-cache" }} />
+          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: file_thumbnail_url, cache: "force-cache" }} />
         </TouchableWithoutFeedback>
         {row.item.file_type == "video/mp4" ? <Image style={styles.vidIcon} source={Images.vid} /> : null}
       </View>

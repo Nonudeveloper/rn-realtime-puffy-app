@@ -36,10 +36,11 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
 
 
       let location = decodeURIComponent(response.body.postResponse.location);
-
+      console.log(location)
       let thumb = location.replace("puffy.assets/uploads", "puffy.assets/uploadsresized");
       let thumb_url = thumb.replace("puffy.assets/uploads/uploads", "puffy.assets/uploadsresized/resized-uploads");
-
+      console.log(thumb)
+      console.log(thumb_url)
       let dataString = {
         user_action: "file_upload",
         user_data: {

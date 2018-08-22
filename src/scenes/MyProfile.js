@@ -484,7 +484,7 @@ class MyProfile extends Component {
           RightIconStyle="settingsIcon"
           global={this.props.screenProps.global}
         />
-
+  {console.log(this.props.screenProps.global)}
         <View style={styles.containerProfile}>
           <View style={styles.profileContainer}>
             <View style={styles.profileLeft}>

@@ -156,12 +156,15 @@ class FeedItem extends Component {
         transform: [{ rotate: interpolatedAnimation }]
       };
     }
-
+    let { file_thumbnail_url } = props.data;
+		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/')){
+			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/');
+		}
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => props.gotoProfile(props.data)}>
-            <CachedImage style={styles.avatar} source={{ uri: props.data.file_thumbnail_url }} />
+            <CachedImage style={styles.avatar} source={{ uri: file_thumbnail_url }} />
           </TouchableOpacity>
           <View style={styles.nameContainer}>
             <TouchableOpacity onPress={() => props.gotoProfile(props.data)}>
