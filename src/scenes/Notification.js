@@ -226,6 +226,13 @@ class Notification extends Component {
 	}
 
 	renderRow({ item, index }) {
+		let { profileImage } = item;
+		if (profileImage.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			profileImage = profileImage.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (profileImage.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			profileImage = profileImage.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+		}
 		return (
 			<TouchableHighlight
 				key={index}
@@ -237,7 +244,7 @@ class Notification extends Component {
 				<View style={styles.row}>
 					<TouchableOpacity disabled={this.state.isNavigating} onPress={() => this.gotoProfile(item)}>
 						<View style={styles.avatar}>
-							{item.profileImage == null ? null : <CachedImage style={styles.avatarImg} source={{ uri: item.profileImage, cache: "force-cache" }} />}
+							{item.profileImage == null ? null : <CachedImage style={styles.avatarImg} source={{ uri: profileImage, cache: "force-cache" }} />}
 						</View>
 					</TouchableOpacity>
 					<View style={styles.body}>

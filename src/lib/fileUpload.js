@@ -1,5 +1,6 @@
 import { RNS3 } from "react-native-aws3";
 import { NavigationActions } from "react-navigation";
+import Instabug from 'instabug-reactnative';
 
 export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, event, message_user_id, photoPermission, caption, setGlobal, callback) {
   var dateObj = new Date();
@@ -35,10 +36,8 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
 
 
       let location = decodeURIComponent(response.body.postResponse.location);
-
       let thumb = location.replace("puffy.assets/uploads", "puffy.assets/uploadsresized");
-      let thumb_url = thumb.replace("amazonaws.com/uploads/uploads", "amazonaws.com/uploadsresized/resized-uploads");
-
+      let thumb_url = thumb.replace("puffy.assets/uploads/uploads", "puffy.assets/uploadsresized/resized-uploads");
       let dataString = {
         user_action: "file_upload",
         user_data: {
@@ -55,12 +54,16 @@ export default function fileUpload(fileURL, handleEmit, user_id, profile, feed, 
           caption: caption
         }
       };
+      Instabug.logInfo("after file upload");
+      Instabug.logInfo(JSON.stringify(dataString));
       handleEmit(dataString);
       setGlobal("upload", false);
       callback(1);
     })
     .catch(err => {
       console.log(err);
+      Instabug.logError("after file upload");
+      Instabug.logError(JSON.stringify(err));
       setGlobal("upload", false);
       callback(0);
     });

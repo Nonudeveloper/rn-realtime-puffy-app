@@ -11,6 +11,7 @@ import { ImageCrop } from "react-native-image-cropper";
 import BtnOption from "../components/BtnOption";
 import InputTextMultiIcon from "../components/InputTextMultiIcon";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Instabug from 'instabug-reactnative';
 
 class PhotoConfirm extends Component {
 	constructor(props) {
@@ -153,6 +154,8 @@ class PhotoConfirm extends Component {
 
 	uploadImage(base64) {
 		console.log(this.feed);
+		Instabug.logInfo("feed");
+		Instabug.logInfo(this.feed);
 		if (this.state.uploading == true) {
 			return false;
 		}

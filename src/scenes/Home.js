@@ -678,7 +678,10 @@ class Home extends Component {
 			x: 0.1,
 			y: 6.2
 		};
-
+		let { file } = cardObject;
+		if (file.includes('https://puffy-uploads.s3.amazonaws.com/uploads')){
+			file = file.replace('https://puffy-uploads.s3.amazonaws.com/uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploads/uploads');
+		}
 		return (
 			<View key={cardObject.id} style={styles.card}>
 				<View style={styles.cardHeaderContainer}>
@@ -693,7 +696,7 @@ class Home extends Component {
 				</View>
 				<View style={styles.cardImageContainer}>
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
-						<CachedImage style={styles.cardImage} source={{ uri: cardObject.file, cache: "force-cache" }} />
+						<CachedImage style={styles.cardImage} source={{ uri: file, cache: "force-cache" }} />
 					</TouchableWithoutFeedback>
 					<TouchableWithoutFeedback disabled={this.state.isNavigating} onPress={this.gotoProfile}>
 						<View style={styles.cardNameContainer}>

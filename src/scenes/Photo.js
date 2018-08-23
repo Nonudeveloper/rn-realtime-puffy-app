@@ -6,6 +6,7 @@ import { HeaderCamera } from "../components";
 import ImageResizer from "react-native-image-resizer";
 import Permissions from "react-native-permissions";
 import OpenSettings from "react-native-open-settings";
+import Instabug from 'instabug-reactnative';
 
 class Photo extends Component {
   constructor(props) {
@@ -140,9 +141,10 @@ class Photo extends Component {
   takePicture() {
     if (this.state.photoClick == 1) {
       console.log("taking photo");
+      Instabug.logInfo("taking photo");
       return false;
     }
-
+    
     this.setState(
       {
         photoClick: 1
@@ -187,7 +189,7 @@ class Photo extends Component {
         offset: { x: 0, y: yValue },
         size: { width: w, height: w }
       };
-
+    
       ImageEditor.cropImage(
         data.path,
         cropData,
@@ -198,6 +200,7 @@ class Photo extends Component {
         error => {
           $this.setState({ photoClick: 0 });
           console.log("cropImage,", error);
+          Instabug.logError("cropImage,", JSON.stringify(error));
         }
       );
     });

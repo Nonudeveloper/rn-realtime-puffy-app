@@ -84,9 +84,15 @@ class Pending extends Component {
 		if (item.loc == null || item.loc == "" || item.loc == "Location" || item.loc == "Location (Optional)") {
 			item.loc = "United States";
 		}
-
+		let { profileImage } = item;
+		if (profileImage.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			profileImage = profileImage.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (profileImage.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			profileImage = profileImage.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+		}
 		return (
-			<UserRow id={item.user_id} name={item.user_name} icon={item.profileImage} location={item.loc} user={item} callback={this.gotoProfile}>
+			<UserRow id={item.user_id} name={item.user_name} icon={profileImage} location={item.loc} user={item} callback={this.gotoProfile}>
 				<TouchableOpacity style={styles.xButtonContainer} onPress={() => this.removePending(item, index)}>
 					<Image style={styles.xButton} source={Images.close_out_x_icon} />
 				</TouchableOpacity>

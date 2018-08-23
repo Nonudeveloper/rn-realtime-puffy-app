@@ -210,6 +210,13 @@ class Messages extends Component {
 	}
 
 	renderRow(rowData) {
+		let { profileImage } = rowData;
+		if (profileImage.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			profileImage = profileImage.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (profileImage.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			profileImage = profileImage.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+		}
 		return (
 			<TouchableHighlight
 				onPress={() => {
@@ -218,7 +225,7 @@ class Messages extends Component {
 			>
 				<View style={styles.row}>
 					<View style={styles.avatar}>
-						{rowData.profileImage == null ? null : <CachedImage style={styles.avatarImg} source={{ uri: rowData.profileImage, cache: "force-cache" }} />}
+						{rowData.profileImage == null ? null : <CachedImage style={styles.avatarImg} source={{ uri: profileImage, cache: "force-cache" }} />}
 					</View>
 					<View style={styles.body}>
 						<Text style={styles.username}>{rowData.user_name}</Text>

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, Image, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableWithoutFeedback, Platform } from "react-native";
+import { View, Text, Image, AsyncStorage, FlatList, Dimensions, RefreshControl, TouchableWithoutFeedback, Platform, ActivityIndicator } from "react-native";
 import { CachedImage } from "react-native-img-cache";
 import Images from "../config/images";
 import Video from "react-native-video";
+import Instabug from 'instabug-reactnative';
 
 class Explorer extends Component {
   constructor(props) {
@@ -336,10 +337,14 @@ class Explorer extends Component {
   }
 
   renderRow(row) {
+    let { file_thumbnail_url } = row.item;
+		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/')){
+			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/');
+		}
     return (
       <View style={styles.imageBtn}>
         <TouchableWithoutFeedback onPress={() => this.gotoFile(row.item)}>
-          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: row.item.file_thumbnail_url, cache: "force-cache" }} />
+          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: file_thumbnail_url, cache: "force-cache" }} />
         </TouchableWithoutFeedback>
         {row.item.file_type == "video/mp4" ? <Image style={styles.vidIcon} source={Images.vid} /> : null}
       </View>
@@ -347,11 +352,21 @@ class Explorer extends Component {
   }
 
   render() {
+
+    Instabug.logInfo("Top Video Loaded");
+    Instabug.logInfo(JSON.stringify(this.state.topVideoLoaded));
+    Instabug.logInfo("Top Photo Loaded");
+    Instabug.logInfo(JSON.stringify(this.state.topPhotoLoaded));
     if (this.state.isLoaded === 0) {
       return <View style={styles.container} />;
     }
     if (this.state.topVideoLoaded == 0 || this.state.topPhotoLoaded == 0) {
-      return <View />;
+        return <View style={styles.noFeedContainer}>
+                <Image style={styles.lockedEye} source={Images.camera_plus} />
+                <Text style={styles.noFeedHeader}>No Top Feeds</Text>
+                <Text style={styles.noFeed}>Lets begin posting on your feed by clicking </Text>
+                <Text style={styles.noFeed}>the Share Button on the top right</Text>
+              </View>;
     }
 
     return (
@@ -455,7 +470,31 @@ const styles = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.7,
     shadowRadius: 2
-  }
+  },
+  noFeedContainer: {
+		marginTop: 50,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	lockedEye: {
+		height: 100,
+		width: 100,
+		resizeMode: "contain"
+	},
+	noFeedHeader: {
+		fontSize: 22,
+		fontWeight: "bold",
+		textAlign: "center",
+		color: "#777980",
+		marginTop: 10,
+		marginBottom: 10
+	},
+	noFeed: {
+		fontSize: 14,
+		textAlign: "center",
+		color: "#777980"
+	}
+  
 };
 
 export { Explorer };

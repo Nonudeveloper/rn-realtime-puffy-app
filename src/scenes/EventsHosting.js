@@ -65,6 +65,11 @@ class EventsHosting extends Component {
     }
 
     renderRow(rowData) {
+        let { events_picture } = rowData.item;
+		if (events_picture.includes('https://puffy-uploads.s3.amazonaws.com/uploads')){
+			events_picture = events_picture.replace('https://puffy-uploads.s3.amazonaws.com/uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploads/uploads');
+        }
+        
         return (
             <View style={styles.row}>
                 <View style={styles.upperEventView}>
@@ -96,7 +101,7 @@ class EventsHosting extends Component {
                 </View>
                 <TouchableWithoutFeedback onPress={() => this.gotoEventsView(rowData.item.key)}>
                     <View style={styles.eventImageContainer}>
-                        <CachedImage style={styles.eventImage} source={{ uri: rowData.item.events_picture, cache: "force-cache" }} />
+                        <CachedImage style={styles.eventImage} source={{ uri: events_picture, cache: "force-cache" }} />
                         <View style={styles.eventLocationView}>
                             <Text style={styles.eventLocation}>{rowData.item.puffy_events_location_name}</Text>
                             <Text style={styles.eventLocation}>{rowData.item.puffy_events_location_address}</Text>

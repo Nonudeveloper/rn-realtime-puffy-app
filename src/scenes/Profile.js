@@ -886,6 +886,14 @@ class Profile extends Component {
         </View>
       );
     }
+    let { user_photo_thumb } = this.state;
+		if (user_photo_thumb.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			user_photo_thumb = user_photo_thumb.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+    }
+		if (user_photo_thumb.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			user_photo_thumb = user_photo_thumb.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+    }
+    
     return (
       <View style={styles.container}>
         <Header
@@ -901,7 +909,7 @@ class Profile extends Component {
           <View style={styles.profileContainer}>
             <View style={styles.profileLeft}>
               <TouchableOpacity onPress={this.setVisibleToTrue}>
-                <CachedImage style={styles.userPhoto} source={{ uri: this.state.user_photo_thumb, cache: "force-cache" }} />
+                <CachedImage style={styles.userPhoto} source={{ uri: user_photo_thumb, cache: "force-cache" }} />
               </TouchableOpacity> 
             </View>
             <View style={styles.profileRight}>

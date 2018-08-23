@@ -445,6 +445,13 @@ class MyProfile extends Component {
   }
 
   renderRow(data) {
+    let { file_thumbnail_url } = data.item;
+		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (file_thumbnail_url.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			file_thumbnail_url = file_thumbnail_url.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+		}
     return (
       <View style={styles.imageBtn}>
         <TouchableWithoutFeedback onPress={() => this.gotoFile(data.item)}>
@@ -484,7 +491,6 @@ class MyProfile extends Component {
           RightIconStyle="settingsIcon"
           global={this.props.screenProps.global}
         />
-
         <View style={styles.containerProfile}>
           <View style={styles.profileContainer}>
             <View style={styles.profileLeft}>

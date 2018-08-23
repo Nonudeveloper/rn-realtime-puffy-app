@@ -70,9 +70,15 @@ class Approval extends Component {
 		}
 
 		let newCheck = parseInt(item.new_check);
-
+		let { profileImage } = item;
+		if (profileImage.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			profileImage = profileImage.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (profileImage.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			profileImage = profileImage.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+		}
 		return (
-			<UserRow id={item.user_id} new={newCheck > 7 ? 0 : 1} name={item.user_name} icon={item.profileImage} location={item.loc} user={item} callback={this.gotoProfile}>
+			<UserRow id={item.user_id} new={newCheck > 7 ? 0 : 1} name={item.user_name} icon={profileImage} location={item.loc} user={item} callback={this.gotoProfile}>
 				{this.props.screenProps.deviceTheme === "IphoneSmall" ? (
 					<TouchableOpacity style={styles.btnPass} onPress={() => this.passPuffRequest(item, index, -1)}>
 						<Image style={styles.stampBtnSmall} source={Images.pass_stamp} />
