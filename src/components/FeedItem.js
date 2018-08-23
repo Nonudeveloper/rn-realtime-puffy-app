@@ -159,7 +159,15 @@ class FeedItem extends Component {
     let { file_thumbnail_url } = props.data;
 		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/')){
 			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/');
-		}
+    }
+    
+    let { file_large_url } = props.data;
+    if (file_large_url.includes('https://puffy-uploads.s3.amazonaws.com/uploads/')){
+			file_large_url = file_large_url.replace('https://puffy-uploads.s3.amazonaws.com/uploads/', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads/');
+    }
+    if (file_large_url.includes('https://puffy-vuploads.s3.amazonaws.com/uploads/')){
+			file_large_url = file_large_url.replace('https://puffy-vuploads.s3.amazonaws.com/uploads/', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads/');
+    }
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -217,7 +225,7 @@ class FeedItem extends Component {
             </TouchableWithoutFeedback>
           ) : (
             <TouchableWithoutFeedback onPress={() => props.likePhoto(props.data)}>
-              <CachedImage style={styles.itemUri} source={{ uri: props.data.file_large_url }} />
+              <CachedImage style={styles.itemUri} source={{ uri: file_large_url }} />
             </TouchableWithoutFeedback>
           )}
           <Text style={styles.aboutText}>{props.data.file_caption}</Text>

@@ -890,6 +890,10 @@ class Profile extends Component {
 		if (user_photo_thumb.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
 			user_photo_thumb = user_photo_thumb.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
     }
+		if (user_photo_thumb.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			user_photo_thumb = user_photo_thumb.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+    }
+    
     return (
       <View style={styles.container}>
         <Header
