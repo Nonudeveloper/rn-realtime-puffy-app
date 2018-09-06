@@ -531,7 +531,7 @@ class Profile extends Component {
           last_id = user_profile["files"][file_count - 1]["file_id"];
         }
 
-        console.log("file_count", file_count);
+        // console.log("file_count", file_count);
 
         this.setState({
           isLoaded: 1,
@@ -745,10 +745,18 @@ class Profile extends Component {
   }
 
   renderRow(data) {
+    let { file_thumbnail_url } = data.item;
+		if (file_thumbnail_url.includes('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads')){
+			file_thumbnail_url = file_thumbnail_url.replace('https://puffy-uploadsresized.s3.amazonaws.com/resized-uploads', 'https://s3-us-west-2.amazonaws.com/puffy.assets/uploadsresized/resized-uploads');
+		}
+		if (file_thumbnail_url.includes('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads')){
+			file_thumbnail_url = file_thumbnail_url.replace('http://puffy.assets.s3.amazonaws.com/uploadsresized/resized-uploads', 'http://puffy.assets.s3.amazonaws.com/uploads/uploads');
+    }
+
     return (
       <View style={styles.imageBtn}>
         <TouchableWithoutFeedback onPress={() => this.gotoFile(data.item)}>
-          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: data.item.file_thumbnail_url, cache: "force-cache" }} />
+          <CachedImage key={1} style={styles.image} resizeMode="cover" representation={"thumbnail"} source={{ uri: file_thumbnail_url, cache: "force-cache" }} />
         </TouchableWithoutFeedback>
         {data.item.file_type == "video/mp4" ? <Image style={styles.vidIcon} source={Images.vid} /> : null}
       </View>
